@@ -1,5 +1,14 @@
 // @flow
 
+export const UPDATE_TODO : string = 'update_todo';
+
 export type Action = {
-    type: String
+    type: string
+};
+
+export type UpdateTodoAction = {
+    type: string,
+    id: string,
+    checked: boolean,
+    title: string
 };

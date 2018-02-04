@@ -53,7 +53,6 @@ class TodoListItem extends React.Component<Props, State> {
     }
 
     render(): React$Element<any> {
-        var { item } = this.props;
         var { checked, title } = this.state;
 
         return (
