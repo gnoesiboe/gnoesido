@@ -5,18 +5,21 @@ import { connect } from 'react-redux';
 import type { Connector } from 'react-redux';
 import TodoListItem from './components/todoListItem/TodoListItem';
 import type { Todo } from '../../model/type/Todo';
+import type { Project } from '../../model/type/Project';
 import type { GlobalStateType } from '../../store/globalStateType';
 import { createUpdateTodoAction } from '../../action/actionFactory';
 import type { Action } from '../../action/types';
 
 type Props = {
     items: Array<Todo>,
+    projects: Array<Project>,
     dispatch: (action: Action) => void,
     filter: (todo: Todo) => void
 };
 
 type OwnProps = {
-    items: Array<Todo>
+    items: Array<Todo>,
+    projects: Array<Project>
 }
 
 class TodoList extends React.Component<Props> {
@@ -30,10 +33,15 @@ class TodoList extends React.Component<Props> {
     }
 
     _renderItem(item: Todo): React$Element<any> {
+
+        // $ExpectError
+        var project : Project = this.props.projects.find((project) => project.id === item.projectId);
+
         return (
             <li key={ item.id }>
                 <TodoListItem
                     item={ item}
+                    project={ project }
                     onChange={ this._onTodoChanged.bind(this, item.id) }
                 />
             </li>
@@ -61,7 +69,8 @@ class TodoList extends React.Component<Props> {
 
 function _mapGlobalStateToProps(globalState: GlobalStateType) : OwnProps {
     return {
-        items: globalState.todos
+        items: globalState.todos,
+        projects: globalState.projects
     };
 }
 

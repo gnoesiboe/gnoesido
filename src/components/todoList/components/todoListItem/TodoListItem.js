@@ -2,11 +2,13 @@
 
 import React from 'react';
 import type { Todo } from '../../../../model/type/Todo';
+import type { Project } from '../../../../model/type/Project';
 
 export type OnChangeCallback = (checked: boolean, title: string) => void;
 
 type Props = {
     item: Todo,
+    project: Project,
     onChange: OnChangeCallback
 };
 
@@ -71,7 +73,7 @@ class TodoListItem extends React.Component<Props, State> {
     }
 
     _renderTitle(): React$Element<any> | string {
-        var { item } = this.props;
+        var { item, project } = this.props;
         var { editTitle } = this.state;
 
         if (editTitle) {
@@ -92,7 +94,7 @@ class TodoListItem extends React.Component<Props, State> {
 
         return (
             <div onDoubleClick={ this._onTitleDoubleClick.bind(this) }>
-                { item.title }
+                <strong>{ project.abbrevation }</strong> — { item.title }
             </div>
         );
     }

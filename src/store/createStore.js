@@ -26,11 +26,13 @@ export function createStore(): Object {
     var initialProjects : Array<Project> = [
         {
             id: firstProjectId,
-            title: 'Ridiculus Aenean'
+            title: 'Theaters Tilburg',
+            abbrevation: 'TT'
         },
         {
             id: secondProjectId,
-            title: 'Dolor Pellentesque'
+            title: 'GGZ Standaarden',
+            abbrevation: 'GZS'
         }
     ];
 
