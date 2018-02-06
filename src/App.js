@@ -9,7 +9,7 @@ import type { Todo } from './model/type/Todo';
 type Props = {};
 
 class App extends React.Component<Props> {
-    render() {
+    render() : React$Element<any> {
         var store = createStore();
 
         return (

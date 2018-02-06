@@ -9,6 +9,8 @@ import type { Project } from '../../model/type/Project';
 import type { GlobalStateType } from '../../store/globalStateType';
 import { createUpdateTodoAction } from '../../action/actionFactory';
 import type { Action } from '../../action/types';
+import Modal from '../shared/Modal';
+import TodoForm from './components/todoForm/TodoForm';
 
 type Props = {
     items: Array<Todo>,
@@ -22,7 +24,15 @@ type OwnProps = {
     projects: Array<Project>
 }
 
-class TodoList extends React.Component<Props> {
+type State = {
+    showAddTodoModal: boolean
+}
+
+class TodoList extends React.Component<Props, State> {
+
+    state : State = {
+        showAddTodoModal: true
+    }
 
     _onTodoChanged(id: string, checked: boolean, title: string): void {
         var { dispatch } = this.props;
@@ -48,6 +58,47 @@ class TodoList extends React.Component<Props> {
         );
     }
 
+    _onAddModalClose() : void {
+        this._hideAddModal();
+    }
+
+    _renderAddTodoModalIfRequired() : ?React$Element<any>{
+        if (!this.state.showAddTodoModal) {
+            return null;
+        }
+
+        return (
+            <Modal onClose={ this._onAddModalClose.bind(this) }>
+                <h1>Toevoegen</h1>
+                <TodoForm />
+            </Modal>
+        );
+    }
+
+    _showAddModal() : void {
+        this.setState(currentState => {
+            return {
+                ...currentState,
+                showAddTodoModal: true
+            }
+        })
+    }
+
+    _hideAddModal() : void {
+        this.setState(currentState => {
+            return {
+                ...currentState,
+                showAddTodoModal: false
+            }
+        })
+    }
+
+    _onAddClick(event: SyntheticInputEvent<HTMLInputElement>) : void {
+        event.preventDefault();
+
+        this._showAddModal();
+    }
+
     render(): ?React$Element<any> {
         var { items, filter } = this.props;
 
@@ -59,6 +110,10 @@ class TodoList extends React.Component<Props> {
 
         return (
             <div className="todo-list">
+                <button className="pull-right btn-link" onClick={ this._onAddClick.bind(this) }>
+                    <i className="glyphicon glyphicon-plus-sign" />
+                </button>
+                { this._renderAddTodoModalIfRequired() }
                 <ul className="list-unstyled">
                     { filteredItems.map((item) => this._renderItem(item)) }
                 </ul>
