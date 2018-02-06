@@ -46,18 +46,6 @@ class TodoListItem extends React.Component<Props, State> {
         );
     }
 
-    _onTitleEditClick(event: SyntheticInputEvent<HTMLInputElement>): void {
-        event.preventDefault();
-        event.stopPropagation();
-
-        this.setState((currentState: State) => {
-            return {
-                ...currentState,
-                editTitle: true
-            }
-        });
-    }
-
     _onTitleInputBlur(event: SyntheticInputEvent<HTMLInputElement>): void {
         this.setState((currentState: State) => {
             return {
@@ -71,6 +59,15 @@ class TodoListItem extends React.Component<Props, State> {
         if (event.key === 'Enter' && this._titleInputEl) {
             this._titleInputEl.blur();
         }
+    }
+
+    _onTitleDoubleClick(event: SyntheticInputEvent<HTMLInputElement>): void {
+        this.setState((currentState: State) => {
+            return {
+                ...currentState,
+                editTitle: true
+            }
+        });
     }
 
     _renderTitle(): React$Element<any> | string {
@@ -94,11 +91,8 @@ class TodoListItem extends React.Component<Props, State> {
         }
 
         return (
-            <div>
-                { item.title }&nbsp;
-                <a href="" onClick={ this._onTitleEditClick.bind(this) } className="form-control-static">
-                    <i className="glyphicon glyphicon-pencil" />
-                </a>
+            <div onDoubleClick={ this._onTitleDoubleClick.bind(this) }>
+                { item.title }
             </div>
         );
     }

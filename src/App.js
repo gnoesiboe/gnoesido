@@ -17,6 +17,7 @@ class App extends React.Component<Props> {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-6 col-md-offset-3">
+                            <h2>Active</h2>
                             <TodoList filter={ (todo: Todo) => todo.active === true }/>
                         </div>
                     </div>

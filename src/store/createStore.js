@@ -30,7 +30,7 @@ export function createStore(): Object {
         },
         {
             id: secondProjectId,
-            title: 'Dolor Pellentesque Adipiscing Aenean'
+            title: 'Dolor Pellentesque'
         }
     ];
 

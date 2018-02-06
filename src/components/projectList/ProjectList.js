@@ -34,12 +34,8 @@ class ProjectList extends React.Component<Props> {
         }
 
         return (
-            <div className="project-list">
-                <div className="row">
-                    <ul>
-                        { items.map((item: Project) => this._renderItem(item)) }
-                    </ul>
-                </div>
+            <div className="row project-list">
+                { items.map((item: Project) => this._renderItem(item)) }
             </div>
         );
     }

@@ -51,7 +51,7 @@ class TodoList extends React.Component<Props> {
 
         return (
             <div className="todo-list">
-                <ul>
+                <ul className="list-unstyled">
                     { filteredItems.map((item) => this._renderItem(item)) }
                 </ul>
             </div>
