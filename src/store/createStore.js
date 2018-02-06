@@ -7,30 +7,59 @@ import thunkMiddleware from 'redux-thunk';
 import reducers from './../reducers/reducers'
 import uuid from 'uuid';
 import type { Todo } from './../model/type/Todo';
+import type { Project } from '../model/type/Project';
 
-export function createStore(): Array<Function> {
-    var middleware = [
+export function createStore(): Object {
+    var middleware : Array<Function> = [
         createLogger({ collapsed: true }),
         promiseMiddleware(),
         thunkMiddleware
     ];
 
-    var createStoreWithMiddleware = applyMiddleware(...middleware)(reduxCreateStore);
+    type StoreFactoryType = (reducers: Function, initialState: Object) => Object;
+
+    var createStoreWithMiddleware : StoreFactoryType = applyMiddleware(...middleware)(reduxCreateStore);
+
+    var firstProjectId : string = uuid(),
+        secondProjectId : string = uuid();
+
+    var initialProjects : Array<Project> = [
+        {
+            id: firstProjectId,
+            title: 'Ridiculus Aenean'
+        },
+        {
+            id: secondProjectId,
+            title: 'Dolor Pellentesque Adipiscing Aenean'
+        }
+    ];
 
     var initialTodos : Array<Todo> = [
         {
             id: uuid(),
+            projectId: firstProjectId,
+            active: true,
             title: 'Magna Ullamcorper Fringilla Bibendum',
             checked: false
         },
         {
             id: uuid(),
+            projectId: firstProjectId,
+            active: false,
+            title: 'Adipiscing Nibh Sit Inceptos',
+            checked: false
+        },
+        {
+            id: uuid(),
+            projectId: secondProjectId,
+            active: true,
             title: 'Tristique Fermentum Ultricies Nibh',
             checked: true
         }
     ];
 
     return createStoreWithMiddleware(reducers, {
-        todos: initialTodos
+        todos: initialTodos,
+        projects: initialProjects
     });
 }

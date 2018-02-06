@@ -3,33 +3,24 @@ import * as React from 'react';
 import { createStore } from './store/createStore';
 import { Provider } from 'react-redux';
 import TodoList from './components/todoList/TodoList';
+import ProjectList from './components/projectList/ProjectList';
+import type { Todo } from './model/type/Todo';
 
 type Props = {};
 
 class App extends React.Component<Props> {
     render() {
+        var store = createStore();
+
         return (
-            <Provider store={ createStore() }>
+            <Provider store={ store }>
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-6 col-md-offset-3">
-                            <TodoList />
+                            <TodoList filter={ (todo: Todo) => todo.active === true }/>
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-md-3">
-                            <TodoList />
-                        </div>
-                        <div className="col-md-3">
-                            <TodoList />
-                        </div>
-                        <div className="col-md-3">
-                            <TodoList />
-                        </div>
-                        <div className="col-md-3">
-                            <TodoList />
-                        </div>
-                    </div>
+                    <ProjectList />
                 </div>
             </Provider>
         );

@@ -11,7 +11,8 @@ import type { Action } from '../../action/types';
 
 type Props = {
     items: Array<Todo>,
-    dispatch: (action: Action) => void
+    dispatch: (action: Action) => void,
+    filter: (todo: Todo) => void
 };
 
 type OwnProps = {
@@ -30,37 +31,40 @@ class TodoList extends React.Component<Props> {
 
     _renderItem(item: Todo): React$Element<any> {
         return (
-            <TodoListItem
-                key={ item.id }
-                item={ item}
-                onChange={ this._onTodoChanged.bind(this, item.id) }
-            />
+            <li key={ item.id }>
+                <TodoListItem
+                    item={ item}
+                    onChange={ this._onTodoChanged.bind(this, item.id) }
+                />
+            </li>
         );
     }
 
     render(): ?React$Element<any> {
-        var { items } = this.props;
+        var { items, filter } = this.props;
 
         if (items.length === 0) {
             return null;
         }
 
+        var filteredItems : Array<Todo> = items.filter(filter);
+
         return (
             <div className="todo-list">
-                <ul className="list-unstyled">
-                    { items.map((item) => this._renderItem(item)) }
+                <ul>
+                    { filteredItems.map((item) => this._renderItem(item)) }
                 </ul>
             </div>
         );
     }
 }
 
-function _mapGlobalStateToProps(globalState: GlobalStateType ): OwnProps {
+function _mapGlobalStateToProps(globalState: GlobalStateType) : OwnProps {
     return {
         items: globalState.todos
     };
 }
 
-const connector: Connector<{}, Props> = connect(_mapGlobalStateToProps);
+var connector: Connector<{}, Props> = connect(_mapGlobalStateToProps);
 
 export default connector(TodoList);

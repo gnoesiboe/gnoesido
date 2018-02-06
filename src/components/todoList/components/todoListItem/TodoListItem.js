@@ -96,7 +96,7 @@ class TodoListItem extends React.Component<Props, State> {
         return (
             <div>
                 { item.title }&nbsp;
-                <a href="" onClick={ this._onTitleEditClick.bind(this) }>
+                <a href="" onClick={ this._onTitleEditClick.bind(this) } className="form-control-static">
                     <i className="glyphicon glyphicon-pencil" />
                 </a>
             </div>
@@ -110,15 +110,13 @@ class TodoListItem extends React.Component<Props, State> {
             <div className="todo-list-item">
                 <form className="form" onSubmit={ (event: SyntheticInputEvent<HTMLInputElement>) : void => event.preventDefault() }>
                     <div className="checkbox">
-                        <label>
-                            <input
-                                name="checked"
-                                onChange={ this._onInputChange.bind(this) }
-                                type="checkbox"
-                                checked={ item.checked }
-                            />
-                            { this._renderTitle() }
-                        </label>
+                        <input
+                            name="checked"
+                            onChange={ this._onInputChange.bind(this) }
+                            type="checkbox"
+                            checked={ item.checked }
+                        />
+                        { this._renderTitle() }
                     </div>
                 </form>
             </div>

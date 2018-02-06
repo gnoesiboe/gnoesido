@@ -27,7 +27,7 @@ function _handleUpdateTodoAction(currentState: Array<Todo>, action: Action | Upd
     });
 }
 
-export function todosReducer(currentState: Array<Todo> = [], action: UpdateTodoAction | Action) {
+export function todosReducer(currentState: Array<Todo> = [], action: UpdateTodoAction | Action) : Array<Todo> {
     switch (action.type) {
         case UPDATE_TODO:
             return _handleUpdateTodoAction(currentState, action);
