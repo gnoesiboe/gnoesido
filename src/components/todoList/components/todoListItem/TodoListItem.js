@@ -11,67 +11,113 @@ type Props = {
 };
 
 type State = {
-    checked: boolean,
-    title: string
-}
+    editTitle: boolean
+};
+
+type ChangeSet = {
+    title: string,
+    checked: boolean
+};
 
 class TodoListItem extends React.Component<Props, State> {
 
-    constructor(props: Props) {
-        super(props);
-
-        this.state = {
-            checked: props.item.checked,
-            title: props.item.title
-        };
+    state: State = {
+        editTitle: false
     }
 
-    _onInputChange(event: SyntheticInputEvent<HTMLInputElement>) {
+    _titleInputEl: ?HTMLInputElement
+
+    _onInputChange(event: SyntheticInputEvent<HTMLInputElement>): void {
         var target = event.target,
             newValue = target.type === 'checkbox' ? target.checked : target.value,
             name = target.name;
 
-        this.setState({
-            [name]: newValue
-        });
+        var { item } = this.props;
 
-        if (target.type === 'checkbox') {
-            this._triggerChange();
+        var normalizedValues : ChangeSet = {
+            checked: item.checked,
+            title: item.title,
+            [name]: newValue
+        };
+
+        this.props.onChange(
+            normalizedValues.checked,
+            normalizedValues.title
+        );
+    }
+
+    _onTitleEditClick(event: SyntheticInputEvent<HTMLInputElement>): void {
+        event.preventDefault();
+        event.stopPropagation();
+
+        this.setState((currentState: State) => {
+            return {
+                ...currentState,
+                editTitle: true
+            }
+        });
+    }
+
+    _onTitleInputBlur(event: SyntheticInputEvent<HTMLInputElement>): void {
+        this.setState((currentState: State) => {
+            return {
+                ...currentState,
+                editTitle: false
+            }
+        });
+    }
+
+    _onTitleInputKeyPress(event: SyntheticInputEvent<HTMLInputElement>): void {
+        if (event.key === 'Enter' && this._titleInputEl) {
+            this._titleInputEl.blur();
         }
     }
 
-    _triggerChange() : void {
-        var { checked, title } = this.state;
+    _renderTitle(): React$Element<any> | string {
+        var { item } = this.props;
+        var { editTitle } = this.state;
 
-        this.props.onChange(checked, title);
-    }
+        if (editTitle) {
+            return (
+                <input
+                    autoFocus={ true }
+                    type="text"
+                    name="title"
+                    onKeyPress={ this._onTitleInputKeyPress.bind(this) }
+                    onChange={ this._onInputChange.bind(this) }
+                    onBlur={ this._onTitleInputBlur.bind(this) }
+                    value={ item.title }
+                    className="form-control"
+                    ref={ (el) => this._titleInputEl = el }
+                />
+            );
+        }
 
-    _onSubmit(event: SyntheticEvent<HTMLElement>) : void {
-        event.preventDefault();
-
-        this._triggerChange();
+        return (
+            <div>
+                { item.title }&nbsp;
+                <a href="" onClick={ this._onTitleEditClick.bind(this) }>
+                    <i className="glyphicon glyphicon-pencil" />
+                </a>
+            </div>
+        );
     }
 
     render(): React$Element<any> {
-        var { checked, title } = this.state;
+        var { item } = this.props;
 
         return (
             <div className="todo-list-item">
-                <form className="form" onSubmit={ this._onSubmit.bind(this) }>
+                <form className="form" onSubmit={ (event: SyntheticInputEvent<HTMLInputElement>) : void => event.preventDefault() }>
                     <div className="checkbox">
                         <label>
                             <input
                                 name="checked"
                                 onChange={ this._onInputChange.bind(this) }
                                 type="checkbox"
-                                checked={ checked }
+                                checked={ item.checked }
                             />
-                            <input
-                                type="text"
-                                name="title"
-                                onChange={ this._onInputChange.bind(this) }
-                                value={ title }
-                            />
+                            { this._renderTitle() }
                         </label>
                     </div>
                 </form>

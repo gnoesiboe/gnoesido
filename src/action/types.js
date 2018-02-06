@@ -2,13 +2,13 @@
 
 export const UPDATE_TODO : string = 'update_todo';
 
-export type Action = {
+export type Action = $ReadOnly<{
     type: string
-};
+}>;
 
-export type UpdateTodoAction = {
+export type UpdateTodoAction = $ReadOnly<{
     type: string,
     id: string,
     checked: boolean,
     title: string
-};
+}>;

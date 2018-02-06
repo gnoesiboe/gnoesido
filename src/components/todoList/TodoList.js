@@ -7,10 +7,11 @@ import TodoListItem from './components/todoListItem/TodoListItem';
 import type { Todo } from '../../model/type/Todo';
 import type { GlobalStateType } from '../../store/globalStateType';
 import { createUpdateTodoAction } from '../../action/actionFactory';
+import type { Action } from '../../action/types';
 
 type Props = {
     items: Array<Todo>,
-    dispatch: Function
+    dispatch: (action: Action) => void
 };
 
 type OwnProps = {
