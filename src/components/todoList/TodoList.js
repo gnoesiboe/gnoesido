@@ -14,12 +14,13 @@ import TodoForm from './components/todoForm/TodoForm';
 
 type Props = {
     items: Array<Todo>,
+    currentProject: ?Project,
     projects: Array<Project>,
     dispatch: (action: Action) => void,
     filter: (todo: Todo) => void
 };
 
-type OwnProps = {
+type ReduxProvidedProps = {
     items: Array<Todo>,
     projects: Array<Project>
 }
@@ -32,7 +33,7 @@ class TodoList extends React.Component<Props, State> {
 
     state : State = {
         showAddTodoModal: true
-    }
+    };
 
     _onTodoChanged(id: string, checked: boolean, title: string): void {
         var { dispatch } = this.props;
@@ -43,19 +44,21 @@ class TodoList extends React.Component<Props, State> {
     }
 
     _renderItem(item: Todo): React$Element<any> {
-
-        // $ExpectError
-        var project : Project = this.props.projects.find((project) => project.id === item.projectId);
-
         return (
             <li key={ item.id }>
                 <TodoListItem
                     item={ item}
-                    project={ project }
+                    project={ this._determineCurrentProjectForItem(item) }
                     onChange={ this._onTodoChanged.bind(this, item.id) }
                 />
             </li>
         );
+    }
+
+    _determineCurrentProjectForItem(item: Todo) : Project {
+
+        // $ExpectError
+        return this.props.projects.find((project) => project.id === item.projectId);
     }
 
     _onAddModalClose() : void {
@@ -70,7 +73,10 @@ class TodoList extends React.Component<Props, State> {
         return (
             <Modal onClose={ this._onAddModalClose.bind(this) }>
                 <h1>Toevoegen</h1>
-                <TodoForm />
+                <TodoForm
+                    projects={ this.props.projects }
+                    project={ this.props.currentProject }
+                />
             </Modal>
         );
     }
@@ -122,7 +128,7 @@ class TodoList extends React.Component<Props, State> {
     }
 }
 
-function _mapGlobalStateToProps(globalState: GlobalStateType) : OwnProps {
+function _mapGlobalStateToProps(globalState: GlobalStateType) : ReduxProvidedProps {
     return {
         items: globalState.todos,
         projects: globalState.projects

@@ -21,7 +21,10 @@ class ProjectList extends React.Component<Props> {
         return (
             <div className="col-md-3" key={ item.id }>
                 <h3><strong>[{ item.abbrevation }]</strong> { item.title }</h3>
-                <TodoList filter={ (todo: Todo) => todo.projectId === item.id } />
+                <TodoList
+                    currentProject={ item }
+                    filter={ (todo: Todo) => todo.projectId === item.id }
+                />
             </div>
         );
     }

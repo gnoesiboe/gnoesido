@@ -1,4 +1,5 @@
 // @flow
+
 import * as React from 'react';
 import { createStore } from './store/createStore';
 import { Provider } from 'react-redux';
@@ -9,6 +10,7 @@ import type { Todo } from './model/type/Todo';
 type Props = {};
 
 class App extends React.Component<Props> {
+
     render() : React$Element<any> {
         var store = createStore();
 
