@@ -6,6 +6,7 @@ import FormState from './../../../../lib/forms/model/FormState';
 import FormInput from './../../../../lib/forms/component/FormInput';
 import FormSelect from './../../../../lib/forms/component/FormSelect';
 import FormCheckbox from './../../../../lib/forms/component/FormCheckbox';
+import FormGroup from '../../../shared/FormGroup';
 import Form from './../../../../lib/forms/component/Form';
 import { createTodoFormState } from '../../../../form/factory/formStateFactory';
 
@@ -41,10 +42,11 @@ export default class TodoForm extends React.Component<Props, State> {
 
     render() : React$Element<any> {
         var { formState } = this.state;
+        var { projects } = this.props;
 
         return (
             <Form className="form" formState={ formState }>
-                <div className="form-group">
+                <FormGroup element={ formState.getElementState('title') }>
                     <label htmlFor="title">Title</label>
                     <FormInput
                         element={ formState.getElementState('title')  }
@@ -53,8 +55,8 @@ export default class TodoForm extends React.Component<Props, State> {
                         id="title"
                         name="title"
                     />
-                </div>
-                <div className="form-group">
+                </FormGroup>
+                <FormGroup element={ formState.getElementState('project') }>
                     <label htmlFor="project">Project</label>
                     <FormSelect
                         element={ formState.getElementState('project') }
@@ -63,17 +65,14 @@ export default class TodoForm extends React.Component<Props, State> {
                     >
                         <option value="">-- choose a project --</option>
 
-                        { this.props.projects.map(project => (
-                            <option
-                                key={ project.id }
-                                value={ project.id }
-                            >
+                        { projects.map(project => (
+                            <option key={ project.id } value={ project.id }>
                                 { project.title }
                             </option>
                         )) }
                     </FormSelect>
-                </div>
-                <div className="form-group">
+                </FormGroup>
+                <FormGroup element={ formState.getElementState('active') }>
                     <label htmlFor="active">Active</label>
                     <div className="checkbox">
                         <label>
@@ -82,7 +81,7 @@ export default class TodoForm extends React.Component<Props, State> {
                             /> Active
                         </label>
                     </div>
-                </div>
+                </FormGroup>
                 <button type="submit" className="btn btn-success">Save</button>
             </Form>
         );

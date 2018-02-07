@@ -7,6 +7,7 @@
     "redux-devtools": "^3.4.1"
   },
   "dependencies": {
+    "classnames": "^2.2.5",
     "flow-bin": "^0.64.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
