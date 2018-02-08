@@ -12,7 +12,7 @@ export default class FormElementState {
     _constraintSet : ?Object
     _touched : boolean
 
-    constructor(data : string = '', errors : Array<string> = [], onChange : OnChangeCallbackType, constraintSet : ?Object = null) {
+    constructor(data : string | boolean = '', errors : Array<string> = [], onChange : OnChangeCallbackType, constraintSet : ?Object = null) {
         this._data = data;
         this._errors = errors;
         this._onChange = onChange;

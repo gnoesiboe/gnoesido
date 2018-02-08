@@ -20,7 +20,7 @@ export default class FormState {
         this._elements = {};
     }
 
-    addElement(key : string, data : string = '', errors : Array<string> = []) {
+    addElement(key : string, data : string | boolean = '', errors : Array<string> = []) {
         var constraintSetForField = typeof this._constraintSet[key] !== 'undefined' ? this._constraintSet[key] : null,
             onChangeCallback = this._onFieldChange.bind(this, key);
 
