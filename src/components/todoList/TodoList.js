@@ -33,7 +33,7 @@ type State = {
 class TodoList extends React.Component<Props, State> {
 
     state : State = {
-        showAddTodoModal: true
+        showAddTodoModal: false
     };
 
     _onTodoChanged(id: string, checked: boolean, title: string): void {
