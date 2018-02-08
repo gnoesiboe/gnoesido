@@ -11,7 +11,7 @@ export function createTodoFormState(onChange: OnChangeCallbackType, onFormValid 
     var form = new FormState(onChange, onFormValid, constraintSet);
 
     form.addElement('title');
-    form.addElement('project');
+    form.addElement('projectId');
     form.addElement('active');
 
     return form;

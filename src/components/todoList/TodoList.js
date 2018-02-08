@@ -7,10 +7,11 @@ import TodoListItem from './components/todoListItem/TodoListItem';
 import type { Todo } from '../../model/type/Todo';
 import type { Project } from '../../model/type/Project';
 import type { GlobalStateType } from '../../store/globalStateType';
-import { createUpdateTodoAction } from '../../action/actionFactory';
+import { createUpdateTodoAction, createAddTodoAction } from '../../action/actionFactory';
 import type { Action } from '../../action/types';
 import Modal from '../shared/Modal';
 import TodoForm from './components/todoForm/TodoForm';
+import type { TodoFormData } from './components/todoForm/TodoForm';
 
 type Props = {
     items: Array<Todo>,
@@ -65,6 +66,12 @@ class TodoList extends React.Component<Props, State> {
         this._hideAddModal();
     }
 
+    _onAddFormSubmit(data: TodoFormData) : void {
+        this.props.dispatch(
+            createAddTodoAction(data)
+        );
+    }
+
     _renderAddTodoModalIfRequired() : ?React$Element<any>{
         if (!this.state.showAddTodoModal) {
             return null;
@@ -72,10 +79,11 @@ class TodoList extends React.Component<Props, State> {
 
         return (
             <Modal onClose={ this._onAddModalClose.bind(this) }>
-                <h1>Toevoegen</h1>
+                <h1>Add todo</h1>
                 <TodoForm
                     projects={ this.props.projects }
                     project={ this.props.currentProject }
+                    onSubmit={ this._onAddFormSubmit.bind(this) }
                 />
             </Modal>
         );

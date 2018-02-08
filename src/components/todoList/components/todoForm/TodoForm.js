@@ -11,8 +11,15 @@ import FormErrorList from '../../../shared/formErrorList/FormErrorList';
 import Form from './../../../../lib/forms/component/Form';
 import { createTodoFormState } from '../../../../form/factory/formStateFactory';
 
+export type TodoFormData = {
+    title: string,
+    projectId: string,
+    active: boolean
+}
+
 type Props = {
-    projects: Array<Project>
+    projects: Array<Project>,
+    onSubmit: (data: TodoFormData) => void
 }
 
 type State = {
@@ -24,13 +31,9 @@ export default class TodoForm extends React.Component<Props, State> {
     state : State = {
         formState: createTodoFormState(
             this._onFormChange.bind(this),
-            this._onFormSubmit.bind(this)
+            this.props.onSubmit
         )
     };
-
-    _onFormSubmit(data : { [string] : string }) {
-        console.log('_onFormSubmit', data);
-    }
 
     _onFormChange(newFormState : FormState) {
         this.setState((currentState: State) => {
@@ -58,11 +61,11 @@ export default class TodoForm extends React.Component<Props, State> {
                     />
                     <FormErrorList errors={ formState.getElementState('title').errors } />
                 </FormGroup>
-                <FormGroup element={ formState.getElementState('project') }>
+                <FormGroup element={ formState.getElementState('projectId') }>
                     <label htmlFor="project">Project</label>
                     <FormSelect
-                        element={ formState.getElementState('project') }
-                        id="project"
+                        element={ formState.getElementState('projectId') }
+                        id="projectId"
                         className="form-control"
                     >
                         <option value="">-- choose a project --</option>
@@ -73,7 +76,7 @@ export default class TodoForm extends React.Component<Props, State> {
                             </option>
                         )) }
                     </FormSelect>
-                    <FormErrorList errors={ formState.getElementState('project').errors } />
+                    <FormErrorList errors={ formState.getElementState('projectId').errors } />
                 </FormGroup>
                 <FormGroup element={ formState.getElementState('active') }>
                     <label htmlFor="active">Active</label>
