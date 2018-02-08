@@ -7,6 +7,7 @@ import FormInput from './../../../../lib/forms/component/FormInput';
 import FormSelect from './../../../../lib/forms/component/FormSelect';
 import FormCheckbox from './../../../../lib/forms/component/FormCheckbox';
 import FormGroup from '../../../shared/FormGroup';
+import FormErrorList from '../../../shared/formErrorList/FormErrorList';
 import Form from './../../../../lib/forms/component/Form';
 import { createTodoFormState } from '../../../../form/factory/formStateFactory';
 
@@ -55,6 +56,7 @@ export default class TodoForm extends React.Component<Props, State> {
                         id="title"
                         name="title"
                     />
+                    <FormErrorList errors={ formState.getElementState('title').errors } />
                 </FormGroup>
                 <FormGroup element={ formState.getElementState('project') }>
                     <label htmlFor="project">Project</label>
@@ -71,6 +73,7 @@ export default class TodoForm extends React.Component<Props, State> {
                             </option>
                         )) }
                     </FormSelect>
+                    <FormErrorList errors={ formState.getElementState('project').errors } />
                 </FormGroup>
                 <FormGroup element={ formState.getElementState('active') }>
                     <label htmlFor="active">Active</label>
@@ -81,6 +84,7 @@ export default class TodoForm extends React.Component<Props, State> {
                             /> Active
                         </label>
                     </div>
+                    <FormErrorList errors={ formState.getElementState('active').errors } />
                 </FormGroup>
                 <button type="submit" className="btn btn-success">Save</button>
             </Form>
