@@ -8,9 +8,11 @@ import reducers from './../reducers/reducers'
 import uuid from 'uuid';
 import type { Todo } from './../model/type/Todo';
 import type { Project } from '../model/type/Project';
+import localPersistingMiddleware from '../middleware/localPersistingMiddleware';
 
 export function createStore(): Object {
     var middleware : Array<Function> = [
+        localPersistingMiddleware,
         createLogger({ collapsed: true }),
         promiseMiddleware(),
         thunkMiddleware
