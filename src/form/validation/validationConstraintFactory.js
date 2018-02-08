@@ -12,7 +12,7 @@ var title = {
     }
 };
 
-var project = {
+var projectId = {
     presence: {
         allowEmpty: false,
     }
@@ -26,5 +26,5 @@ var active = {
 }
 
 export function createTodoFormConstraintSet() : ConstraintSet {
-    return { title, project, active };
+    return { title, projectId, active };
 }

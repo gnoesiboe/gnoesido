@@ -26,6 +26,7 @@ export default class FormCheckbox extends React.Component<Props> {
         return (
             <input
                 { ...restOfProps }
+                checked={ element.data }
                 type="checkbox"
                 onChange={ this._onFieldChange.bind(this) }
                 onBlur={ this._onFieldBlur.bind(this) }

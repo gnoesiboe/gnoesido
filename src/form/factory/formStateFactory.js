@@ -12,7 +12,7 @@ export function createTodoFormState(onChange: OnChangeCallbackType, onFormValid 
 
     form.addElement('title');
     form.addElement('projectId');
-    form.addElement('active');
+    form.addElement('active', true);
 
     return form;
 }
