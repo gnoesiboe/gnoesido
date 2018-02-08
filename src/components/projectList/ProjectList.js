@@ -18,7 +18,7 @@ class ProjectList extends React.Component<Props> {
 
     _renderItem(item: Project) : React$Element<any> {
         return (
-            <div className="col-md-3" key={ item.id }>
+            <div className="col-md-4" key={ item.id }>
                 <h3><strong>[{ item.abbrevation }]</strong> { item.title }</h3>
                 <TodoList
                     currentProject={ item }

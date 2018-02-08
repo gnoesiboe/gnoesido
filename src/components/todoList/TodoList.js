@@ -7,7 +7,7 @@ import TodoListItem from './components/todoListItem/TodoListItem';
 import type { Todo } from '../../model/type/Todo';
 import type { Project } from '../../model/type/Project';
 import type { GlobalStateType } from '../../store/globalStateType';
-import { createUpdateTodoAction, createAddTodoAction } from '../../action/actionFactory';
+import { createUpdateTodoAction, createAddTodoAction, createDeleteTodoAction } from '../../action/actionFactory';
 import type { Action } from '../../action/types';
 import Modal from '../shared/Modal';
 import TodoForm from './components/todoForm/TodoForm';
@@ -44,6 +44,14 @@ class TodoList extends React.Component<Props, State> {
         );
     }
 
+    _onTodoDelete(id: string): void {
+        if (window.confirm('Are you sure?')) {
+            this.props.dispatch(
+                createDeleteTodoAction(id)
+            );
+        }
+    }
+
     _renderItem(item: Todo): React$Element<any> {
         return (
             <li key={ item.id }>
@@ -51,6 +59,7 @@ class TodoList extends React.Component<Props, State> {
                     item={ item}
                     project={ this._determineCurrentProjectForItem(item) }
                     onChange={ this._onTodoChanged.bind(this, item.id) }
+                    onDelete={ this._onTodoDelete.bind(this, item.id) }
                 />
             </li>
         );
@@ -142,9 +151,11 @@ class TodoList extends React.Component<Props, State> {
 
         return (
             <div className="todo-list">
-                <button className="todo-list--add btn-link" onClick={ this._onAddClick.bind(this) }>
-                    <i className="glyphicon glyphicon-plus-sign" />
-                </button>
+                <div className="spacer-m">
+                    <button className="todo-list--add btn btn-default" onClick={ this._onAddClick.bind(this) }>
+                        <i className="glyphicon glyphicon-plus" /> Add
+                    </button>
+                </div>
                 { this._renderAddTodoModalIfRequired() }
                 <ul className="list-unstyled">
                     { filteredItems.map((item) => this._renderItem(item)) }

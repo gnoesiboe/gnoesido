@@ -2,6 +2,7 @@
 
 export const UPDATE_TODO : string = 'update_todo';
 export const ADD_TODO : string = 'add_todo';
+export const DELETE_TODO : string = 'delete_todo';
 
 export type Action = $ReadOnly<{
     type: string
@@ -20,3 +21,8 @@ export type AddTodoAction = $ReadOnly<{
     projectId: string,
     active: boolean
 }>;
+
+export type DeleteTodoAction = $ReadOnly<{
+    type: string,
+    id: string
+}>

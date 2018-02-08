@@ -5,7 +5,6 @@ import { createLogger } from 'redux-logger';
 import promiseMiddleware from 'redux-promise-middleware';
 import thunkMiddleware from 'redux-thunk';
 import reducers from './../reducers/reducers'
-import uuid from 'uuid';
 import localPersistingMiddleware from '../middleware/localPersistingMiddleware';
 import * as localStorageRepository from './../repository/localStorageRepository';
 

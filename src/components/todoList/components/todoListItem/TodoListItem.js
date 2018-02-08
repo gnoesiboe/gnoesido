@@ -5,11 +5,13 @@ import type { Todo } from '../../../../model/type/Todo';
 import type { Project } from '../../../../model/type/Project';
 
 export type OnChangeCallback = (checked: boolean, title: string) => void;
+export type OnDeleteCallback = (id: string) => void;
 
 type Props = {
     item: Todo,
     project: Project,
-    onChange: OnChangeCallback
+    onChange: OnChangeCallback,
+    onDelete: OnDeleteCallback
 };
 
 type State = {
@@ -100,12 +102,15 @@ class TodoListItem extends React.Component<Props, State> {
     }
 
     render(): React$Element<any> {
-        var { item } = this.props;
+        var { item, onDelete } = this.props;
 
         return (
-            <div className="todo-list-item">
+            <div className="todo-list-item spacer-m">
                 <form className="form" onSubmit={ (event: SyntheticInputEvent<HTMLInputElement>) : void => event.preventDefault() }>
                     <div className="checkbox">
+                        <button className="pull-right btn-link" onClick={ onDelete }>
+                            <i className="glyphicon glyphicon-remove" />
+                        </button>
                         <input
                             name="checked"
                             onChange={ this._onInputChange.bind(this) }
