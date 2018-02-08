@@ -142,7 +142,7 @@ class TodoList extends React.Component<Props, State> {
 
         return (
             <div className="todo-list">
-                <button className="pull-right btn-link" onClick={ this._onAddClick.bind(this) }>
+                <button className="todo-list--add btn-link" onClick={ this._onAddClick.bind(this) }>
                     <i className="glyphicon glyphicon-plus-sign" />
                 </button>
                 { this._renderAddTodoModalIfRequired() }
