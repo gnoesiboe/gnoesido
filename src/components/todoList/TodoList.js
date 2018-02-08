@@ -143,10 +143,6 @@ class TodoList extends React.Component<Props, State> {
     render(): ?React$Element<any> {
         var { items } = this.props;
 
-        if (items.length === 0) {
-            return null;
-        }
-
         var filteredItems : Array<Todo> = this._filterOutTodosThatShouldNotBeInThisSpecificTodoList(items);
 
         return (
