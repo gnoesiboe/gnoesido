@@ -15,10 +15,10 @@ import type { TodoFormData } from './components/todoForm/TodoForm';
 
 type Props = {
     items: Array<Todo>,
+    showOnlyActive: boolean,
     currentProject: ?Project,
     projects: Array<Project>,
-    dispatch: (action: Action) => void,
-    filter: (todo: Todo) => void
+    dispatch: (action: Action) => void
 };
 
 type ReduxProvidedProps = {
@@ -81,6 +81,8 @@ class TodoList extends React.Component<Props, State> {
             <Modal onClose={ this._onAddModalClose.bind(this) }>
                 <h1>Add todo</h1>
                 <TodoForm
+                    active={ this.props.showOnlyActive }
+                    currentProject={ this.props.currentProject }
                     projects={ this.props.projects }
                     project={ this.props.currentProject }
                     onSubmit={ this._onAddFormSubmit.bind(this) }
@@ -113,14 +115,30 @@ class TodoList extends React.Component<Props, State> {
         this._showAddModal();
     }
 
+    _filterOutTodosThatShouldNotBeInThisSpecificTodoList(items: Array<Todo>) : Array<Todo> {
+        var { showOnlyActive, currentProject } = this.props;
+
+        return items.filter((item) => {
+            if (showOnlyActive && !item.active) {
+                return false;
+            }
+
+            if (currentProject && currentProject.id !== item.projectId) {
+                return false;
+            }
+
+            return true;
+        })
+    }
+
     render(): ?React$Element<any> {
-        var { items, filter } = this.props;
+        var { items } = this.props;
 
         if (items.length === 0) {
             return null;
         }
 
-        var filteredItems : Array<Todo> = items.filter(filter);
+        var filteredItems : Array<Todo> = this._filterOutTodosThatShouldNotBeInThisSpecificTodoList(items);
 
         return (
             <div className="todo-list">

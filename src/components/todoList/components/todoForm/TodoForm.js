@@ -18,6 +18,8 @@ export type TodoFormData = {
 }
 
 type Props = {
+    currentProject: ?Project,
+    active: boolean,
     projects: Array<Project>,
     onSubmit: (data: TodoFormData) => void
 }
@@ -31,7 +33,9 @@ export default class TodoForm extends React.Component<Props, State> {
     state : State = {
         formState: createTodoFormState(
             this._onFormChange.bind(this),
-            this.props.onSubmit
+            this.props.onSubmit,
+            this.props.active,
+            this.props.currentProject ? this.props.currentProject.id : ''
         )
     };
 

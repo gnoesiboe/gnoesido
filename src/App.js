@@ -5,7 +5,6 @@ import { createStore } from './store/createStore';
 import { Provider } from 'react-redux';
 import TodoList from './components/todoList/TodoList';
 import ProjectList from './components/projectList/ProjectList';
-import type { Todo } from './model/type/Todo';
 
 type Props = {};
 
@@ -20,7 +19,10 @@ class App extends React.Component<Props> {
                     <div className="row">
                         <div className="col-md-6 col-md-offset-3">
                             <h2>Active</h2>
-                            <TodoList filter={ (todo: Todo) => todo.active === true }/>
+                            <TodoList
+                                currentProject={ null }
+                                showOnlyActive={ true }
+                            />
                         </div>
                     </div>
                     <ProjectList />

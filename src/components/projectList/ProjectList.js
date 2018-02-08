@@ -1,6 +1,5 @@
 import React from 'react';
 import type { Project } from '../../model/type/Project';
-import type { Todo } from '../../model/type/Todo';
 import type { GlobalStateType } from '../../store/globalStateType';
 import type { Connector } from 'react-redux';
 import { connect } from 'react-redux';
@@ -23,7 +22,7 @@ class ProjectList extends React.Component<Props> {
                 <h3><strong>[{ item.abbrevation }]</strong> { item.title }</h3>
                 <TodoList
                     currentProject={ item }
-                    filter={ (todo: Todo) => todo.projectId === item.id }
+                    showOnlyActive={ false }
                 />
             </div>
         );
