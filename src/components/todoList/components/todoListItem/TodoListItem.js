@@ -85,13 +85,15 @@ class TodoListItem extends React.Component<Props, State> {
 
         if (showEditForm) {
             return (
-                <TodoForm
-                    onSubmit={ this._onEditFormSubmit.bind(this) }
-                    currentProject={ null }
-                    active={ item.active }
-                    projects={ this.props.projects }
-                    currentTodo={ item }
-                />
+                <div className="todo-list-item-edit-form">
+                    <TodoForm
+                        onSubmit={ this._onEditFormSubmit.bind(this) }
+                        currentProject={ null }
+                        active={ item.active }
+                        projects={ this.props.projects }
+                        currentTodo={ item }
+                    />
+                </div>
             );
         } else {
             return (
