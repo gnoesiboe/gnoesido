@@ -12,6 +12,7 @@ import type { Action } from '../../action/types';
 import Modal from '../shared/Modal';
 import TodoForm from './components/todoForm/TodoForm';
 import type { TodoFormData } from './components/todoForm/TodoForm';
+import createClassName from 'classnames';
 
 type Props = {
     items: Array<Todo>,
@@ -151,19 +152,23 @@ class TodoList extends React.Component<Props, State> {
     }
 
     render(): ?React$Element<any> {
-        var { items } = this.props;
+        var { items, showOnlyActive } = this.props;
 
         var filteredItems : Array<Todo> = this._filterOutTodosThatShouldNotBeInThisSpecificTodoList(items);
 
+        var className = createClassName('todo-list', {
+            'todo-list--active': showOnlyActive
+        });
+
         return (
-            <div className="todo-list">
+            <div className={ className }>
                 { this._renderAddTodoModalIfRequired() }
                 <div className="spacer-m">
                     <ul className="list-unstyled">
                         { filteredItems.map((item) => this._renderItem(item)) }
                     </ul>
                 </div>
-                <div className="text-center">
+                <div className="text-center spacer-m">
                     <button className="todo-list--add btn btn-default" onClick={ this._onAddClick.bind(this) }>
                         <i className="glyphicon glyphicon-plus" /> Add todo
                     </button>

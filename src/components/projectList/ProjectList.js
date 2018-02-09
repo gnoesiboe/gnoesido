@@ -107,14 +107,18 @@ class ProjectList extends React.Component<Props, State> {
         }
 
         return (
-            <div className="row project-list">
+            <div className="project-list">
                 { this._renderAddFormModalIfRequired() }
-                <Equalizer>
-                    { items.map((item: Project) => this._renderItem(item)) }
-                </Equalizer>
-                <button className="btn btn-default project-list--add-button" onClick={ this._onAddClick.bind(this) }>
-                    <i className="glyphicon glyphicon-plus" /> Add project
-                </button>
+                <div className="row">
+                    <Equalizer>
+                        { items.map((item: Project) => this._renderItem(item)) }
+                    </Equalizer>
+                </div>
+                <div className="row">
+                    <button className="btn btn-default btn-lg project-list--add-button" onClick={ this._onAddClick.bind(this) }>
+                        <i className="glyphicon glyphicon-plus" /> Add project
+                    </button>
+                </div>
             </div>
         );
     }
