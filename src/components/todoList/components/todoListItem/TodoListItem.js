@@ -69,18 +69,8 @@ class TodoListItem extends React.Component<Props, State> {
         });
     }
 
-    _renderTitle(): React$Element<any> | string {
-        var { item, project } = this.props;
-
-        return (
-            <div onDoubleClick={ this._onTitleDoubleClick.bind(this) }>
-                <strong>{ project.abbrevation }</strong> — { item.title }
-            </div>
-        );
-    }
-
     _renderInner(): React$Element<any> {
-        var { item, onDelete } = this.props;
+        var { item, project, onDelete } = this.props;
         var { showEditForm } = this.state;
 
         if (showEditForm) {
@@ -108,7 +98,9 @@ class TodoListItem extends React.Component<Props, State> {
                             type="checkbox"
                             checked={ item.checked }
                         />
-                        { this._renderTitle() }
+                        <div onDoubleClick={ this._onTitleDoubleClick.bind(this) } className={ item.checked ? 'todo-list-item-title--checked' : '' }>
+                            <strong>{ project.abbrevation }</strong> — { item.title }
+                        </div>
                     </div>
                 </form>
             );

@@ -26,3 +26,8 @@ body {
     border: 1px solid #ddd;
     margin: 10px 0 15px -20px;
 }
+
+.todo-list-item-title--checked {
+    text-decoration: line-through;
+    color: #ccc;
+}
