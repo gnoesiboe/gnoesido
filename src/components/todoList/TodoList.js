@@ -77,9 +77,13 @@ class TodoList extends React.Component<Props, State> {
     }
 
     _onAddFormSubmit(data: TodoFormData) : void {
-        this.props.dispatch(
-            createAddTodoAction(data)
-        );
+        var callback = () => {
+            this.props.dispatch(
+                createAddTodoAction(data)
+            );
+        }
+
+        this._hideAddModal(callback);
     }
 
     _renderAddTodoModalIfRequired() : ?React$Element<any>{
@@ -111,11 +115,15 @@ class TodoList extends React.Component<Props, State> {
         })
     }
 
-    _hideAddModal() : void {
+    _hideAddModal(callback : ?() => void = null) : void {
         this.setState(currentState => {
             return {
                 ...currentState,
                 showAddTodoModal: false
+            }
+        }, () => {
+            if (callback) {
+                callback();
             }
         })
     }
