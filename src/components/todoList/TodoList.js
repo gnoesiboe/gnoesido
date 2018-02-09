@@ -157,7 +157,7 @@ class TodoList extends React.Component<Props, State> {
                 </div>
                 <div className="text-center">
                     <button className="todo-list--add btn btn-default" onClick={ this._onAddClick.bind(this) }>
-                        <i className="glyphicon glyphicon-plus" /> Add
+                        <i className="glyphicon glyphicon-plus" /> Add todo
                     </button>
                 </div>
             </div>

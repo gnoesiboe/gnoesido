@@ -2,18 +2,31 @@
 
 import FormState from '../../lib/forms/model/FormState';
 import type { Todo } from '../../model/type/Todo';
-import { createTodoFormConstraintSet } from '../validation/validationConstraintFactory';
+import { createTodoFormConstraintSet, createProjectFormConstraintSet } from '../validation/validationConstraintFactory';
 
 import type { OnChangeCallbackType, OnFormValidCallback } from '../../lib/forms/model/FormState';
 
 export function createTodoFormState(currentState: ?Todo, onChange: OnChangeCallbackType, onFormValid : OnFormValidCallback, active: boolean = false, projectId: string = '') : FormState {
     var constraintSet = createTodoFormConstraintSet();
 
-    var form = new FormState(onChange, onFormValid, constraintSet);
+    var formState = new FormState(onChange, onFormValid, constraintSet);
 
-    form.addElement('title', currentState ? currentState.title : undefined);
-    form.addElement('projectId', currentState ? currentState.projectId : projectId);
-    form.addElement('active', currentState ? currentState.active : active);
+    formState.addElement('title', currentState ? currentState.title : undefined);
+    formState.addElement('projectId', currentState ? currentState.projectId : projectId);
+    formState.addElement('active', currentState ? currentState.active : active);
 
-    return form;
+    return formState;
+}
+
+export function createProjectFormState(onChange : OnChangeCallbackType, onFormValid : OnFormValidCallback) : FormState {
+
+    // @todo setup constraint set
+    var constraintSet = createProjectFormConstraintSet();
+
+    var formState = new FormState(onChange, onFormValid, constraintSet);
+
+    formState.addElement('title');
+    formState.addElement('abbrevation');
+
+    return formState;
 }

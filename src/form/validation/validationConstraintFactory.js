@@ -25,6 +25,16 @@ var active = {
     inclusion: [true, false]
 }
 
+var abbrevation = {
+    presence: {
+        allowEmpty: false,
+    }
+}
+
 export function createTodoFormConstraintSet() : ConstraintSet {
     return { title, projectId, active };
+}
+
+export function createProjectFormConstraintSet() : ConstraintSet {
+    return { title, abbrevation };
 }

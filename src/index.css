@@ -29,3 +29,8 @@ body {
     text-decoration: line-through;
     color: #ccc;
 }
+
+.project-list--add-button {
+    display: block;
+    margin: 100px auto 0;
+}
