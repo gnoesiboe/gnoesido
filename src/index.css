@@ -4,19 +4,17 @@ body {
   font-family: sans-serif;
 }
 
+.spacer-m {
+    margin-bottom: 20px;
+}
+
 .todo-list {
     background: #f1f1f1;
-    padding: 40px 5px 5px 30px;
+    padding: 20px 5px 5px 30px;
     position: relative;
     border: 1px solid #ddd;
     border-radius: 8px;
     border-top: 5px solid #000;
-}
-
-.todo-list--add {
-    position: absolute;
-    top: 5px;
-    right: 5px;
 }
 
 .todo-list-item-edit-form {

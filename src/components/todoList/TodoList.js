@@ -149,15 +149,17 @@ class TodoList extends React.Component<Props, State> {
 
         return (
             <div className="todo-list">
+                { this._renderAddTodoModalIfRequired() }
                 <div className="spacer-m">
+                    <ul className="list-unstyled">
+                        { filteredItems.map((item) => this._renderItem(item)) }
+                    </ul>
+                </div>
+                <div className="text-center">
                     <button className="todo-list--add btn btn-default" onClick={ this._onAddClick.bind(this) }>
                         <i className="glyphicon glyphicon-plus" /> Add
                     </button>
                 </div>
-                { this._renderAddTodoModalIfRequired() }
-                <ul className="list-unstyled">
-                    { filteredItems.map((item) => this._renderItem(item)) }
-                </ul>
             </div>
         );
     }
