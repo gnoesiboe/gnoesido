@@ -12,7 +12,9 @@ export type UpdateTodoAction = $ReadOnly<{
     type: string,
     id: string,
     checked: boolean,
-    title: string
+    title: string,
+    projectId: string,
+    active: boolean
 }>;
 
 export type AddTodoAction = $ReadOnly<{

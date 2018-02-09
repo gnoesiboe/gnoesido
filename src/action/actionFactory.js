@@ -4,8 +4,8 @@ import type { UpdateTodoAction, AddTodoAction, DeleteTodoAction } from './types'
 import { UPDATE_TODO, ADD_TODO, DELETE_TODO } from './types';
 import type { TodoFormData } from '../components/todoList/components/todoForm/TodoForm';
 
-export function createUpdateTodoAction(id: string, checked: boolean, title: string) : UpdateTodoAction {
-    return { type: UPDATE_TODO, id, checked, title };
+export function createUpdateTodoAction(id: string, checked: boolean, title: string, projectId: string, active: boolean) : UpdateTodoAction {
+    return { type: UPDATE_TODO, id, checked, title, projectId, active };
 }
 
 export function createAddTodoAction(data: TodoFormData) : AddTodoAction {

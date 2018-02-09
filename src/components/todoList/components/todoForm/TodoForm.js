@@ -2,6 +2,7 @@
 
 import React from 'react';
 import type { Project } from '../../../../model/type/Project';
+import type { Todo } from '../../../../model/type/Todo';
 import FormState from './../../../../lib/forms/model/FormState';
 import FormInput from './../../../../lib/forms/component/FormInput';
 import FormSelect from './../../../../lib/forms/component/FormSelect';
@@ -19,6 +20,7 @@ export type TodoFormData = {
 
 type Props = {
     currentProject: ?Project,
+    currentTodo: ?Todo,
     active: boolean,
     projects: Array<Project>,
     onSubmit: (data: TodoFormData) => void
@@ -32,6 +34,7 @@ export default class TodoForm extends React.Component<Props, State> {
 
     state : State = {
         formState: createTodoFormState(
+            this.props.currentTodo,
             this._onFormChange.bind(this),
             this.props.onSubmit,
             this.props.active,
@@ -57,6 +60,7 @@ export default class TodoForm extends React.Component<Props, State> {
                 <FormGroup element={ formState.getElementState('title') }>
                     <label htmlFor="title">Title</label>
                     <FormInput
+                        autoFocus={ true }
                         element={ formState.getElementState('title')  }
                         type="text"
                         className="form-control"

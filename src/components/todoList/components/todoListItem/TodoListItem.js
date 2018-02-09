@@ -3,96 +3,74 @@
 import React from 'react';
 import type { Todo } from '../../../../model/type/Todo';
 import type { Project } from '../../../../model/type/Project';
+import type { TodoFormData } from '../todoForm/TodoForm';
+import TodoForm from '../todoForm/TodoForm';
 
-export type OnChangeCallback = (checked: boolean, title: string) => void;
+export type OnChangeCallback = (checked: boolean, title: string, projectId: string, active: boolean) => void;
 export type OnDeleteCallback = (id: string) => void;
 
 type Props = {
     item: Todo,
     project: Project,
+    projects: Array<Project>,
     onChange: OnChangeCallback,
     onDelete: OnDeleteCallback
 };
 
 type State = {
-    editTitle: boolean
-};
-
-type ChangeSet = {
-    title: string,
-    checked: boolean
+    showEditForm: boolean
 };
 
 class TodoListItem extends React.Component<Props, State> {
 
     state: State = {
-        editTitle: false
+        showEditForm: false
     }
 
     _titleInputEl: ?HTMLInputElement
 
-    _onInputChange(event: SyntheticInputEvent<HTMLInputElement>): void {
-        var target = event.target,
-            newValue = target.type === 'checkbox' ? target.checked : target.value,
-            name = target.name;
+    _onCheckboxChange(event: SyntheticInputEvent<HTMLInputElement>): void {
+        var target = event.target;
 
         var { item } = this.props;
 
-        var normalizedValues : ChangeSet = {
-            checked: item.checked,
-            title: item.title,
-            [name]: newValue
-        };
-
         this.props.onChange(
-            normalizedValues.checked,
-            normalizedValues.title
+            target.checked,
+            item.title,
+            item.projectId,
+            item.active
         );
     }
 
-    _onTitleInputBlur(event: SyntheticInputEvent<HTMLInputElement>): void {
+    _onEditFormSubmit(data: TodoFormData) : void {
+        var { item, onChange } = this.props;
+
         this.setState((currentState: State) => {
             return {
                 ...currentState,
-                editTitle: false
-            }
-        });
-    }
-
-    _onTitleInputKeyPress(event: SyntheticInputEvent<HTMLInputElement>): void {
-        if (event.key === 'Enter' && this._titleInputEl) {
-            this._titleInputEl.blur();
-        }
+                showEditForm: false
+            };
+        }, () => {
+            onChange(
+                item.checked,
+                data.title,
+                data.projectId,
+                data.active
+            )
+        })
     }
 
     _onTitleDoubleClick(event: SyntheticInputEvent<HTMLInputElement>): void {
         this.setState((currentState: State) => {
             return {
                 ...currentState,
-                editTitle: true
+                showEditForm: true
             }
         });
     }
 
     _renderTitle(): React$Element<any> | string {
         var { item, project } = this.props;
-        var { editTitle } = this.state;
-
-        if (editTitle) {
-            return (
-                <input
-                    autoFocus={ true }
-                    type="text"
-                    name="title"
-                    onKeyPress={ this._onTitleInputKeyPress.bind(this) }
-                    onChange={ this._onInputChange.bind(this) }
-                    onBlur={ this._onTitleInputBlur.bind(this) }
-                    value={ item.title }
-                    className="form-control"
-                    ref={ (el) => this._titleInputEl = el }
-                />
-            );
-        }
 
         return (
             <div onDoubleClick={ this._onTitleDoubleClick.bind(this) }>
@@ -101,25 +79,44 @@ class TodoListItem extends React.Component<Props, State> {
         );
     }
 
-    render(): React$Element<any> {
+    _renderInner(): React$Element<any> {
         var { item, onDelete } = this.props;
+        var { showEditForm } = this.state;
 
-        return (
-            <div className="todo-list-item spacer-m">
+        if (showEditForm) {
+            return (
+                <TodoForm
+                    onSubmit={ this._onEditFormSubmit.bind(this) }
+                    currentProject={ null }
+                    active={ item.active }
+                    projects={ this.props.projects }
+                    currentTodo={ item }
+                />
+            );
+        } else {
+            return (
                 <form className="form" onSubmit={ (event: SyntheticInputEvent<HTMLInputElement>) : void => event.preventDefault() }>
+                    <button className="pull-right btn-link" onClick={ onDelete }>
+                        <i className="glyphicon glyphicon-remove" />
+                    </button>
                     <div className="checkbox">
-                        <button className="pull-right btn-link" onClick={ onDelete }>
-                            <i className="glyphicon glyphicon-remove" />
-                        </button>
                         <input
                             name="checked"
-                            onChange={ this._onInputChange.bind(this) }
+                            onChange={ this._onCheckboxChange.bind(this) }
                             type="checkbox"
                             checked={ item.checked }
                         />
                         { this._renderTitle() }
                     </div>
                 </form>
+            );
+        }
+    }
+
+    render(): React$Element<any> {
+        return (
+            <div className="todo-list-item spacer-m">
+                { this._renderInner() }
             </div>
         );
     }

@@ -12,7 +12,9 @@ function _handleUpdateTodoAction(currentState: Array<Todo>, action: UpdateTodoAc
             return {
                 ...currentTodo,
                 checked:  action.checked,
-                title:  action.title
+                title:  action.title,
+                projectId: action.projectId,
+                active: action.active
             };
         } else {
             return { ...currentTodo };
