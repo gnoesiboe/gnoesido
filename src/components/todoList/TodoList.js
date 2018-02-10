@@ -101,7 +101,7 @@ class TodoList extends React.Component<Props, State> {
 
     _renderItem(item: Todo, index: number): React$Element<any> {
         return (
-            <SortableListItem key={ item.id } index={ index }>
+            <SortableListItem key={ item.id } index={ index } className="todo-list-li">
                 <TodoListItem
                     item={ item}
                     projects={ this.props.projects }
