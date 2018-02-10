@@ -6,6 +6,7 @@ import type { Project } from '../../../../model/type/Project';
 import type { TodoFormData } from '../todoForm/TodoForm';
 import TodoForm from '../todoForm/TodoForm';
 import createClassName from 'classnames';
+import type { ProjectsReducerState } from '../../../../reducers/projectsReducer';
 
 export type OnChangeCallback = (checked: boolean, title: string, projectId: string, active: boolean) => void;
 export type OnDeleteCallback = (id: string) => void;
@@ -13,7 +14,7 @@ export type OnDeleteCallback = (id: string) => void;
 type Props = {
     item: Todo,
     project: Project,
-    projects: Array<Project>,
+    projects: ProjectsReducerState,
     onChange: OnChangeCallback,
     onDelete: OnDeleteCallback
 };

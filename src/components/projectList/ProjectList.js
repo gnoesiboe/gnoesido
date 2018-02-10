@@ -15,15 +15,16 @@ import keyboardInputListener from 'mousetrap';
 import type { Current } from '../../reducers/currentReducer';
 import ProjectListItem from './components/ProjectListItem';
 import { determineNextList, determinePreviousList } from '../../helper/activeItemHelper';
+import type { ProjectsReducerState } from '../../reducers/projectsReducer';
 
 type Props = {
-    items: Array<Project>,
+    items: ProjectsReducerState,
     current: Current,
     dispatch: (action: Action) => void
 };
 
 type OwnProps = {
-    items: Array<Project>
+    items: ProjectsReducerState
 };
 
 type State = {

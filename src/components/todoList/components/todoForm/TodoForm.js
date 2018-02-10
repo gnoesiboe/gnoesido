@@ -11,6 +11,7 @@ import FormGroup from '../../../shared/FormGroup';
 import FormErrorList from '../../../shared/formErrorList/FormErrorList';
 import Form from './../../../../lib/forms/component/Form';
 import { createTodoFormState } from '../../../../form/factory/formStateFactory';
+import type { ProjectsReducerState } from '../../../../reducers/projectsReducer';
 
 export type TodoFormData = {
     title: string,
@@ -22,7 +23,7 @@ type Props = {
     currentProject: ?Project,
     currentTodo: ?Todo,
     active: boolean,
-    projects: Array<Project>,
+    projects: ProjectsReducerState,
     onSubmit: (data: TodoFormData) => void
 }
 

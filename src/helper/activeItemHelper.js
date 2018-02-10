@@ -1,9 +1,9 @@
 // @flow
 
 import type { Current } from '../reducers/currentReducer';
-import type { Project } from '../model/type/Project';
+import type { ProjectsReducerState } from '../reducers/projectsReducer';
 
-export function determineNextList(current: Current, projects: Array<Project>) : string {
+export function determineNextList(current: Current, projects: ProjectsReducerState) : string {
     if (projects.length === 0) {
         return 'active';
     }
@@ -23,7 +23,7 @@ export function determineNextList(current: Current, projects: Array<Project>) : 
     return 'active';
 }
 
-export function determinePreviousList(current: Current, projects: Array<Project>) : string {
+export function determinePreviousList(current: Current, projects: ProjectsReducerState) : string {
     if (projects.length === 0) {
         return 'active';
     }

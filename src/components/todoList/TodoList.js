@@ -18,19 +18,20 @@ import keyboardInputListener from 'mousetrap';
 import SortableListItem from '../shared/sortableList/components/SortableListItem';
 import SortableList from '../shared/sortableList/SortableList';
 import type { OnSortEndData } from '../shared/sortableList/SortableList';
+import type { ProjectsReducerState } from '../../reducers/projectsReducer';
 
 type Props = {
     items: Array<Todo>,
     showOnlyActive: boolean,
     currentProject: ?Project,
-    projects: Array<Project>,
+    projects: ProjectsReducerState,
     current: Current,
     dispatch: (action: Action) => void
 };
 
 type ReduxProvidedProps = {
     items: Array<Todo>,
-    projects: Array<Project>,
+    projects: ProjectsReducerState,
     current: Current
 }
 

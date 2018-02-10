@@ -5,14 +5,16 @@ import type { Action, AddProjectAction } from '../action/types';
 import { ADD_PROJECT } from '../action/types';
 import { createProjectFromAddProjectAction } from '../model/factory/projectFactory';
 
-function _handleAddProjectAction(currentState: Array<Project>, action: AddProjectAction): Array<Project> {
+export type ProjectsReducerState = Array<Project>;
+
+function _handleAddProjectAction(currentState: ProjectsReducerState, action: AddProjectAction): ProjectsReducerState {
     return [
         ...currentState,
         createProjectFromAddProjectAction(action)
     ];
 }
 
-export function projectsReducer(currentState: Array<Project> = [], action: Action) : Array<Project> {
+export function projectsReducer(currentState: ProjectsReducerState = [], action: Action) : ProjectsReducerState {
     switch (action.type) {
         case ADD_PROJECT:
             // $ExpectError
