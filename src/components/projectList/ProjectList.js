@@ -10,11 +10,14 @@ import Modal from '../shared/Modal';
 import ProjectForm from './components/ProjectForm';
 import type { ProjectFormData } from './components/ProjectForm';
 import type { Action } from '../../action/types';
-import { createAddProjectAction } from '../../action/actionFactory';
+import { createAddProjectAction, createActivatePreviousAction, createActivateNextAction } from '../../action/actionFactory';
 import Equalizer from 'react-equalizer';
+import keyboardInputListener from 'mousetrap';
+import type { Current } from '../../reducers/currentReducer';
 
 type Props = {
     items: Array<Project>,
+    current: Current,
     dispatch: (action: Action) => void
 };
 
@@ -30,6 +33,32 @@ class ProjectList extends React.Component<Props, State> {
 
     state : State = {
         showAddForm: false
+    }
+
+    componentDidMount() : void {
+        this._registerKeyboardListeners();
+    }
+
+    componentWillUnmount() : void {
+        keyboardInputListener.unbind('left', this._onPreviousKeyboardBindingPressed);
+        keyboardInputListener.unbind('right', this._onNextKeyboardBindingPressed);
+    }
+
+    _registerKeyboardListeners() : void {
+        keyboardInputListener.bind('left', this._onPreviousKeyboardBindingPressed);
+        keyboardInputListener.bind('right', this._onNextKeyboardBindingPressed);
+    }
+
+    _onPreviousKeyboardBindingPressed = () => {
+        this.props.dispatch(
+            createActivatePreviousAction()
+        );
+    }
+
+    _onNextKeyboardBindingPressed = () => {
+        this.props.dispatch(
+            createActivateNextAction()
+        )
     }
 
     _renderItem(item: Project) : React$Element<any> {
@@ -126,8 +155,9 @@ class ProjectList extends React.Component<Props, State> {
 
 function _mapGlobalStateToProps(globalState: GlobalStateType) : OwnProps {
     return {
-        items: globalState.projects
-    }
+        items: globalState.projects,
+        current: globalState.current
+    };
 }
 
 var connector: Connector<{}, Props> = connect(_mapGlobalStateToProps);
