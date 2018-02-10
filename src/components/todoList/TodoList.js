@@ -15,6 +15,9 @@ import type { TodoFormData } from './components/todoForm/TodoForm';
 import createClassName from 'classnames';
 import type { Current } from '../../reducers/currentReducer';
 import keyboardInputListener from 'mousetrap';
+import SortableListItem from '../shared/sortableList/components/SortableListItem';
+import SortableList from '../shared/sortableList/SortableList';
+import type { OnSortEndData } from '../shared/sortableList/SortableList';
 
 type Props = {
     items: Array<Todo>,
@@ -96,9 +99,9 @@ class TodoList extends React.Component<Props, State> {
         }
     }
 
-    _renderItem(item: Todo): React$Element<any> {
+    _renderItem(item: Todo, index: number): React$Element<any> {
         return (
-            <li key={ item.id }>
+            <SortableListItem key={ item.id } index={ index }>
                 <TodoListItem
                     item={ item}
                     projects={ this.props.projects }
@@ -106,7 +109,7 @@ class TodoList extends React.Component<Props, State> {
                     onChange={ this._onTodoChanged.bind(this, item.id) }
                     onDelete={ this._onTodoDelete.bind(this, item.id) }
                 />
-            </li>
+            </SortableListItem>
         );
     }
 
@@ -206,6 +209,14 @@ class TodoList extends React.Component<Props, State> {
         }
     }
 
+    _onItemSortEnd = (data: OnSortEndData) => {
+        // var { items } = this.props;
+
+        // var filteredItems = this._filterOutTodosThatShouldNotBeInThisSpecificTodoList(items);
+
+        console.log('_onItemSortEnd', data);
+    }
+
     render(): ?React$Element<any> {
         var { items } = this.props;
 
@@ -219,9 +230,14 @@ class TodoList extends React.Component<Props, State> {
             <div className={ className }>
                 { this._renderAddTodoModalIfRequired() }
                 <div className="spacer-m">
-                    <ul className="list-unstyled">
-                        { filteredItems.map((item) => this._renderItem(item)) }
-                    </ul>
+                    <SortableList
+                        className="list-unstyled"
+                        onSortEnd={ this._onItemSortEnd }
+                    >
+                        { filteredItems.map((item, index) => {
+                            return this._renderItem(item, index);
+                        }) }
+                    </SortableList>
                 </div>
                 <div className="text-center spacer-m">
                     <button className="todo-list--add btn btn-default" onClick={ this._onAddClick.bind(this) }>
