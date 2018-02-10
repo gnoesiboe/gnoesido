@@ -13,18 +13,21 @@ import Modal from '../shared/Modal';
 import TodoForm from './components/todoForm/TodoForm';
 import type { TodoFormData } from './components/todoForm/TodoForm';
 import createClassName from 'classnames';
+import type { Current } from '../../reducers/currentReducer';
 
 type Props = {
     items: Array<Todo>,
     showOnlyActive: boolean,
     currentProject: ?Project,
     projects: Array<Project>,
+    current: Current,
     dispatch: (action: Action) => void
 };
 
 type ReduxProvidedProps = {
     items: Array<Todo>,
-    projects: Array<Project>
+    projects: Array<Project>,
+    current: Current
 }
 
 type State = {
@@ -151,13 +154,25 @@ class TodoList extends React.Component<Props, State> {
         })
     }
 
+    _checkShouldBeActiveList() : boolean {
+        var { showOnlyActive, currentProject, current } = this.props;
+
+        if (showOnlyActive) {
+            return current.list === 'active';
+        } else if (currentProject) {
+            return current.list === currentProject.id;
+        } else {
+            return false;
+        }
+    }
+
     render(): ?React$Element<any> {
-        var { items, showOnlyActive } = this.props;
+        var { items } = this.props;
 
         var filteredItems : Array<Todo> = this._filterOutTodosThatShouldNotBeInThisSpecificTodoList(items);
 
         var className = createClassName('todo-list', {
-            'todo-list--active': showOnlyActive
+            'todo-list--active': this._checkShouldBeActiveList()
         });
 
         return (
@@ -181,7 +196,8 @@ class TodoList extends React.Component<Props, State> {
 function _mapGlobalStateToProps(globalState: GlobalStateType) : ReduxProvidedProps {
     return {
         items: globalState.todos,
-        projects: globalState.projects
+        projects: globalState.projects,
+        current: globalState.current
     };
 }
 

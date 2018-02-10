@@ -37,3 +37,15 @@ export type AddProjectAction = $ReadOnly<{
     title: string,
     abbrevation: string
 }>;
+
+export type ActivateNextAction = $ReadOnly<{
+    type: string,
+    list: string,
+    todo: ?string
+}>;
+
+export type ActivatePreviousAction = $ReadOnly<{
+    type: string,
+    list: string,
+    todo: ?string
+}>;

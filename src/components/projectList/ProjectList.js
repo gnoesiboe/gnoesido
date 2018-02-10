@@ -14,6 +14,7 @@ import Equalizer from 'react-equalizer';
 import keyboardInputListener from 'mousetrap';
 import type { Current } from '../../reducers/currentReducer';
 import ProjectListItem from './components/ProjectListItem';
+import { determineNextList, determinePreviousList } from '../../helper/activeItemHelper';
 
 type Props = {
     items: Array<Project>,
@@ -50,14 +51,22 @@ class ProjectList extends React.Component<Props, State> {
     }
 
     _onPreviousKeyboardBindingPressed = () => {
-        this.props.dispatch(
-            createActivatePreviousAction()
+        var { dispatch, current, items } = this.props;
+
+        dispatch(
+            createActivatePreviousAction(
+                determinePreviousList(current, items)
+            )
         );
     }
 
     _onNextKeyboardBindingPressed = () => {
-        this.props.dispatch(
-            createActivateNextAction()
+        var { dispatch, current, items } = this.props;
+
+        dispatch(
+            createActivateNextAction(
+                determineNextList(current, items)
+            )
         )
     }
 

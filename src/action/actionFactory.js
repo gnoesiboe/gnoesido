@@ -1,6 +1,6 @@
 // @flow
 
-import type { Action, UpdateTodoAction, AddTodoAction, DeleteTodoAction, AddProjectAction } from './types';
+import type { ActivateNextAction, ActivatePreviousAction, UpdateTodoAction, AddTodoAction, DeleteTodoAction, AddProjectAction } from './types';
 import { UPDATE_TODO, ADD_TODO, DELETE_TODO, ADD_PROJECT, ACTIVATE_PREVIOUS, ACTIVATE_NEXT } from './types';
 import type { TodoFormData } from '../components/todoList/components/todoForm/TodoForm';
 import type { ProjectFormData } from '../components/projectList/components/ProjectForm';
@@ -30,14 +30,10 @@ export function createAddProjectAction(data : ProjectFormData) : AddProjectActio
     };
 }
 
-export function createActivatePreviousAction() : Action {
-    return {
-        type: ACTIVATE_PREVIOUS
-    };
+export function createActivatePreviousAction(list: string, todo: ?string) : ActivatePreviousAction {
+    return { type: ACTIVATE_PREVIOUS, list, todo };
 }
 
-export function createActivateNextAction() : Action {
-    return {
-        type: ACTIVATE_NEXT
-    };
+export function createActivateNextAction(list: string, todo: ?string) : ActivateNextAction {
+    return { type: ACTIVATE_NEXT, list, todo };
 }

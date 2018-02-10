@@ -18,8 +18,8 @@ body {
 }
 
 .todo-list--active {
-    border: 3px solid #ff9900;
-    border-top: 5px solid #000;
+    border-color: #ff9900;
+    border-top-color: #ff9900;
 }
 
 .todo-list-item-edit-form {
