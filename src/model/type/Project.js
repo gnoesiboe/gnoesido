@@ -3,5 +3,6 @@
 export type Project = {
     id: string,
     title: string,
-    abbrevation: string
+    abbrevation: string,
+    sortedTodos: Array<string>
 };

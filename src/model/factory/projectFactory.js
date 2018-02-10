@@ -8,6 +8,7 @@ export function createProjectFromAddProjectAction(action: AddProjectAction) : Pr
     return {
         id: uuid(),
         title: action.title,
-        abbrevation: action.abbrevation
+        abbrevation: action.abbrevation,
+        sortedTodos: []
     };
 }

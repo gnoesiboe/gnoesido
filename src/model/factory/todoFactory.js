@@ -1,10 +1,9 @@
 import type { Todo } from '../type/Todo';
 import type { AddTodoAction } from '../../action/types';
-import uuid from 'uuid';
 
 export function createTodoFromAddTodoAction(action: AddTodoAction): Todo {
     return {
-        id: uuid(),
+        id: action.id,
         projectId: action.projectId,
         active: action.active,
         title: action.title,

@@ -18,6 +18,7 @@ import {
 } from './types';
 import type { TodoFormData } from '../components/todoList/components/todoForm/TodoForm';
 import type { ProjectFormData } from '../components/projectList/components/ProjectForm';
+import uuid from 'uuid';
 
 export function createUpdateTodoAction(id: string, checked: boolean, title: string, projectId: string, active: boolean) : UpdateTodoAction {
     return { type: UPDATE_TODO, id, checked, title, projectId, active };
@@ -26,6 +27,7 @@ export function createUpdateTodoAction(id: string, checked: boolean, title: stri
 export function createAddTodoAction(data: TodoFormData) : AddTodoAction {
     return {
         type: ADD_TODO,
+        id: uuid(),
         title: data.title,
         projectId: data.projectId,
         active: data.active

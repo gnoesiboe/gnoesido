@@ -21,6 +21,7 @@ export type UpdateTodoAction = $ReadOnly<{
 }>;
 
 export type AddTodoAction = $ReadOnly<{
+    id: string,
     type: string,
     title: string,
     projectId: string,
