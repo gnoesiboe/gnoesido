@@ -219,7 +219,7 @@ class TodoList extends React.Component<Props, State> {
         console.log('_onItemSortEnd', data);
     }
 
-    render(): ?React$Element<any> {
+    render(): React$Element<any> {
         var { items } = this.props;
 
         var filteredItems : TodosReducerState = this._filterOutTodosThatShouldNotBeInThisSpecificTodoList(items);
