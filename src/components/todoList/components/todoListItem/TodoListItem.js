@@ -7,6 +7,7 @@ import type { TodoFormData } from '../todoForm/TodoForm';
 import TodoForm from '../todoForm/TodoForm';
 import createClassName from 'classnames';
 import type { ProjectsReducerState } from '../../../../reducers/projectsReducer';
+import SortableListItemHandle from '../../../shared/sortableList/SortableHandle';
 
 export type OnChangeCallback = (checked: boolean, title: string, projectId: string, active: boolean) => void;
 export type OnDeleteCallback = (id: string) => void;
@@ -97,9 +98,9 @@ class TodoListItem extends React.Component<Props, State> {
                     <div className="checkbox">
                         <ul className="list-inline pull-right">
                             <li>
-                                <span className="todo-list-item-drag-handle">
+                                <SortableListItemHandle className="todo-list-item-drag-handle">
                                     <i className="glyphicon glyphicon-menu-hamburger" />
-                                </span>
+                                </SortableListItemHandle>
                             </li>
                             <li>
                                 <button className="btn-link" onClick={ onDelete }>

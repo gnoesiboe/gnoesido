@@ -235,6 +235,7 @@ class TodoList extends React.Component<Props, State> {
                     <SortableList
                         className="list-unstyled"
                         onSortEnd={ this._onItemSortEnd }
+                        useDragHandle={ true }
                     >
                         { filteredItems.map((item, index) => {
                             return this._renderItem(item, index);
