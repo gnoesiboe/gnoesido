@@ -46,11 +46,11 @@ class TodoList extends React.Component<Props, State> {
         showAddTodoModal: false
     };
 
-    _onTodoChanged(id: string, checked: boolean, title: string, projectId: string, active: boolean): void {
+    _onTodoChanged(item: Todo, checked: boolean, title: string, projectId: string, active: boolean): void {
         var { dispatch } = this.props;
 
         dispatch(
-            createUpdateTodoAction(id, checked, title, projectId, active)
+            createUpdateTodoAction(item.id, checked, title, item.projectId, projectId, active)
         );
     }
 
@@ -108,7 +108,7 @@ class TodoList extends React.Component<Props, State> {
                     item={ item}
                     projects={ this.props.projects }
                     project={ this._determineCurrentProjectForItem(item) }
-                    onChange={ this._onTodoChanged.bind(this, item.id) }
+                    onChange={ this._onTodoChanged.bind(this, item) }
                     onDelete={ this._onTodoDelete.bind(this, item.id) }
                 />
             </SortableListItem>
