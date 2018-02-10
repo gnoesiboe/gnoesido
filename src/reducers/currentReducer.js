@@ -1,7 +1,7 @@
 // @flow
 
-import type { Action, ActivateNextAction, ActivatePreviousAction } from '../action/types';
-import { ACTIVATE_NEXT, ACTIVATE_PREVIOUS } from '../action/types';
+import type { Action, ActivateNextProjectAction, ActivatePreviousProjectAction } from '../action/types';
+import { ACTIVATE_NEXT_PROJECT, ACTIVATE_PREVIOUS_PROJECT } from '../action/types';
 
 export type Current = $ReadOnly<{
     list: string,
@@ -13,7 +13,7 @@ const _initialState : Current = {
     todo: null
 };
 
-function _handleActivateNextAction(currentState: Current, action: ActivateNextAction): Current {
+function _handleActivateNextProjectAction(currentState: Current, action: ActivateNextProjectAction): Current {
     return {
         ...currentState,
         list: action.list,
@@ -21,7 +21,7 @@ function _handleActivateNextAction(currentState: Current, action: ActivateNextAc
     };
 }
 
-function _handleActivatePreviousAction(currentState: Current, action: ActivatePreviousAction): Current {
+function _handleActivatePreviousProjectAction(currentState: Current, action: ActivatePreviousProjectAction): Current {
     return {
         ...currentState,
         list: action.list,
@@ -31,15 +31,15 @@ function _handleActivatePreviousAction(currentState: Current, action: ActivatePr
 
 export function currentReducer(currentState: Current = _initialState, action: Action) : Current {
     switch (action.type) {
-        case ACTIVATE_NEXT:
+        case ACTIVATE_NEXT_PROJECT:
             // $ExpectError
             var activateNextAction : ActivateNextAction = (action: Action);
-            return _handleActivateNextAction(currentState, activateNextAction);
+            return _handleActivateNextProjectAction(currentState, activateNextAction);
 
-        case ACTIVATE_PREVIOUS:
+        case ACTIVATE_PREVIOUS_PROJECT:
             // $ExpectError
             var activatePreviousAction : ActivatePreviousAction = (action : Action);
-            return _handleActivatePreviousAction(currentState, activatePreviousAction);
+            return _handleActivatePreviousProjectAction(currentState, activatePreviousAction);
 
         default:
             return currentState;

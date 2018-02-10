@@ -9,7 +9,7 @@ import Modal from '../shared/Modal';
 import ProjectForm from './components/ProjectForm';
 import type { ProjectFormData } from './components/ProjectForm';
 import type { Action } from '../../action/types';
-import { createAddProjectAction, createActivatePreviousAction, createActivateNextAction } from '../../action/actionFactory';
+import { createAddProjectAction, createActivatePreviousProjectAction, createActivateNextProjectAction } from '../../action/actionFactory';
 import Equalizer from 'react-equalizer';
 import keyboardInputListener from 'mousetrap';
 import type { Current } from '../../reducers/currentReducer';
@@ -37,34 +37,30 @@ class ProjectList extends React.Component<Props, State> {
     }
 
     componentDidMount() : void {
-        this._registerKeyboardListeners();
+        keyboardInputListener.bind('k', this._onPreviousProjectKeyboardBindingPressed);
+        keyboardInputListener.bind('j', this._onNextProjectKeyboardBindingPressed);
     }
 
     componentWillUnmount() : void {
-        keyboardInputListener.unbind('left', this._onPreviousKeyboardBindingPressed);
-        keyboardInputListener.unbind('right', this._onNextKeyboardBindingPressed);
+        keyboardInputListener.unbind('k', this._onPreviousProjectKeyboardBindingPressed);
+        keyboardInputListener.unbind('j', this._onNextProjectKeyboardBindingPressed);
     }
 
-    _registerKeyboardListeners() : void {
-        keyboardInputListener.bind('left', this._onPreviousKeyboardBindingPressed);
-        keyboardInputListener.bind('right', this._onNextKeyboardBindingPressed);
-    }
-
-    _onPreviousKeyboardBindingPressed = () => {
+    _onPreviousProjectKeyboardBindingPressed = () => {
         var { dispatch, current, items } = this.props;
 
         dispatch(
-            createActivatePreviousAction(
+            createActivatePreviousProjectAction(
                 determinePreviousList(current, items)
             )
         );
     }
 
-    _onNextKeyboardBindingPressed = () => {
+    _onNextProjectKeyboardBindingPressed = () => {
         var { dispatch, current, items } = this.props;
 
         dispatch(
-            createActivateNextAction(
+            createActivateNextProjectAction(
                 determineNextList(current, items)
             )
         )
