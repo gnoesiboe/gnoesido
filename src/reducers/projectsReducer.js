@@ -5,12 +5,14 @@ import type {
     Action,
     AddProjectAction,
     AddTodoAction,
-    UpdateTodoAction
+    UpdateTodoAction,
+    DeleteTodoAction
 } from '../action/types';
 import {
     ADD_PROJECT,
     ADD_TODO,
-    UPDATE_TODO
+    UPDATE_TODO,
+    DELETE_TODO
 } from '../action/types';
 import { createProjectFromAddProjectAction } from '../model/factory/projectFactory';
 
@@ -59,6 +61,19 @@ function _handleUpdateTodoAction(currentState: ProjectsReducerState, action: Upd
     });
 }
 
+function _handleDeleteTodoAction(currentState: ProjectsReducerState, action: DeleteTodoAction): ProjectsReducerState {
+    return currentState.map((project: Project) => {
+        if (project.sortedTodos.indexOf(action.id) !== -1) {
+            return {
+                ...project,
+                sortedTodos: project.sortedTodos.filter((todoId) => todoId !== action.id)
+            };
+        }
+
+        return project;
+    });
+}
+
 export function projectsReducer(currentState: ProjectsReducerState = [], action: Action) : ProjectsReducerState {
     switch (action.type) {
         case ADD_PROJECT:
@@ -75,6 +90,11 @@ export function projectsReducer(currentState: ProjectsReducerState = [], action:
             // $ExpectError
             var updateTodoAction : UpdateTodoAction = (action: Action);
             return _handleUpdateTodoAction(currentState, updateTodoAction);
+
+        case DELETE_TODO:
+            // $ExpectError
+            var deleteTodoAction : DeleteTodoAction = (action: Action);
+            return _handleDeleteTodoAction(currentState, deleteTodoAction);
 
         default:
             return currentState;
