@@ -14,6 +14,7 @@ import TodoForm from './components/todoForm/TodoForm';
 import type { TodoFormData } from './components/todoForm/TodoForm';
 import createClassName from 'classnames';
 import type { Current } from '../../reducers/currentReducer';
+import keyboardInputListener from 'mousetrap';
 
 type Props = {
     items: Array<Todo>,
@@ -46,6 +47,45 @@ class TodoList extends React.Component<Props, State> {
         dispatch(
             createUpdateTodoAction(id, checked, title, projectId, active)
         );
+    }
+
+    componentDidMount() {
+        if (this._checkIsActiveList()) {
+            this._registerAddKeyboardListener();
+        }
+    }
+
+    _registerAddKeyboardListener() {
+        keyboardInputListener.bind('a', this._onAddTodoKeyboardShortcutPressed)
+    }
+
+    componentWillUnmount() {
+        this._unregisterAddKeyboardListener();
+    }
+
+    _unregisterAddKeyboardListener() {
+        keyboardInputListener.unbind('a', this._onAddTodoKeyboardShortcutPressed);
+    }
+
+    componentDidUpdate(prevProps: Props, prevState: State) : void {
+        if (this._checkIsActiveList()) {
+            this._registerAddKeyboardListener();
+        } else {
+            this._unregisterAddKeyboardListener();
+        }
+    }
+
+    _onAddTodoKeyboardShortcutPressed = (event: SyntheticInputEvent<HTMLInputElement>) => {
+
+        // prevent typing in autofocussed first field of add todo form
+        event.preventDefault();
+
+        this.setState((currentState: State) : State => {
+            return {
+                ...currentState,
+                showAddTodoModal: true
+            };
+        })
     }
 
     _onTodoDelete(id: string): void {
@@ -154,7 +194,7 @@ class TodoList extends React.Component<Props, State> {
         })
     }
 
-    _checkShouldBeActiveList() : boolean {
+    _checkIsActiveList() : boolean {
         var { showOnlyActive, currentProject, current } = this.props;
 
         if (showOnlyActive) {
@@ -172,7 +212,7 @@ class TodoList extends React.Component<Props, State> {
         var filteredItems : Array<Todo> = this._filterOutTodosThatShouldNotBeInThisSpecificTodoList(items);
 
         var className = createClassName('todo-list', {
-            'todo-list--active': this._checkShouldBeActiveList()
+            'todo-list--active': this._checkIsActiveList()
         });
 
         return (
