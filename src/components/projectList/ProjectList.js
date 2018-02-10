@@ -5,7 +5,6 @@ import type { Project } from '../../model/type/Project';
 import type { GlobalStateType } from '../../store/globalStateType';
 import type { Connector } from 'react-redux';
 import { connect } from 'react-redux';
-import TodoList from './../todoList/TodoList';
 import Modal from '../shared/Modal';
 import ProjectForm from './components/ProjectForm';
 import type { ProjectFormData } from './components/ProjectForm';
@@ -14,6 +13,7 @@ import { createAddProjectAction, createActivatePreviousAction, createActivateNex
 import Equalizer from 'react-equalizer';
 import keyboardInputListener from 'mousetrap';
 import type { Current } from '../../reducers/currentReducer';
+import ProjectListItem from './components/ProjectListItem';
 
 type Props = {
     items: Array<Project>,
@@ -59,18 +59,6 @@ class ProjectList extends React.Component<Props, State> {
         this.props.dispatch(
             createActivateNextAction()
         )
-    }
-
-    _renderItem(item: Project) : React$Element<any> {
-        return (
-            <div className="col-lg-4 col-md-6" key={ item.id }>
-                <h3><strong>[{ item.abbrevation }]</strong> { item.title }</h3>
-                <TodoList
-                    currentProject={ item }
-                    showOnlyActive={ false }
-                />
-            </div>
-        );
     }
 
     _onAddClick(event: SyntheticInputEvent<HTMLInputElement>) : void {
@@ -140,7 +128,9 @@ class ProjectList extends React.Component<Props, State> {
                 { this._renderAddFormModalIfRequired() }
                 <div className="row">
                     <Equalizer>
-                        { items.map((item: Project) => this._renderItem(item)) }
+                        { items.map((item: Project) => (
+                            <ProjectListItem item={ item} key={ item.id } />
+                        )) }
                     </Equalizer>
                 </div>
                 <div className="row">
