@@ -5,6 +5,7 @@ import type { Todo } from '../../../../model/type/Todo';
 import type { Project } from '../../../../model/type/Project';
 import type { TodoFormData } from '../todoForm/TodoForm';
 import TodoForm from '../todoForm/TodoForm';
+import createClassName from 'classnames';
 
 export type OnChangeCallback = (checked: boolean, title: string, projectId: string, active: boolean) => void;
 export type OnDeleteCallback = (id: string) => void;
@@ -86,19 +87,32 @@ class TodoListItem extends React.Component<Props, State> {
                 </div>
             );
         } else {
+            var titleClassName : string = createClassName('todo-list-item-title', {
+                'todo-list-item-title--checked': item.checked
+            });
+
             return (
                 <form className="form" onSubmit={ (event: SyntheticInputEvent<HTMLInputElement>) : void => event.preventDefault() }>
-                    <button className="pull-right btn-link" onClick={ onDelete }>
-                        <i className="glyphicon glyphicon-remove" />
-                    </button>
                     <div className="checkbox">
+                        <ul className="list-inline pull-right">
+                            <li>
+                                <span className="todo-list-item-drag-handle">
+                                    <i className="glyphicon glyphicon-menu-hamburger" />
+                                </span>
+                            </li>
+                            <li>
+                                <button className="btn-link" onClick={ onDelete }>
+                                    <i className="glyphicon glyphicon-remove" />
+                                </button>
+                            </li>
+                        </ul>
                         <input
                             name="checked"
                             onChange={ this._onCheckboxChange.bind(this) }
                             type="checkbox"
                             checked={ item.checked }
                         />
-                        <div onDoubleClick={ this._onTitleDoubleClick.bind(this) } className={ item.checked ? 'todo-list-item-title--checked' : '' }>
+                        <div onDoubleClick={ this._onTitleDoubleClick.bind(this) } className={ titleClassName }>
                             <strong>{ project.abbrevation }</strong> — { item.title }
                         </div>
                     </div>

@@ -22,6 +22,10 @@ body {
     border-top-color: #ff9900;
 }
 
+.todo-list-item-drag-handle {
+    cursor: row-resize;
+}
+
 .todo-list-item-edit-form {
     padding: 15px;
     background: white;
