@@ -20,6 +20,8 @@ import SortableList from '../shared/sortableList/SortableList';
 import type { OnSortEndData } from '../shared/sortableList/SortableList';
 import type { ProjectsReducerState } from '../../reducers/projectsReducer';
 import type { TodosReducerState } from '../../reducers/todosReducer';
+import type { ActiveSortedTodosReducerState } from '../../reducers/activeSortedTodosReducer';
+import { sortTodosWithSorting } from '../../helper/todoSortingHelper';
 
 type Props = {
     items: TodosReducerState,
@@ -27,14 +29,16 @@ type Props = {
     currentProject: ?Project,
     projects: ProjectsReducerState,
     current: Current,
+    activeSortedTodos: ActiveSortedTodosReducerState,
     dispatch: (action: Action) => void
 };
 
 type ReduxProvidedProps = {
     items: TodosReducerState,
     projects: ProjectsReducerState,
-    current: Current
-}
+    current: Current,
+    activeSortedTodos: ActiveSortedTodosReducerState
+};
 
 type State = {
     showAddTodoModal: boolean
@@ -219,10 +223,23 @@ class TodoList extends React.Component<Props, State> {
         console.log('_onItemSortEnd', data);
     }
 
+    _orderItems(filteredItems: TodosReducerState) : TodosReducerState {
+        var { currentProject, showOnlyActive, activeSortedTodos } = this.props;
+
+        if (showOnlyActive) {
+            return sortTodosWithSorting(filteredItems, activeSortedTodos);
+        } else if (currentProject) {
+            return sortTodosWithSorting(filteredItems, currentProject.sortedTodos);
+        } else {
+            throw new Error('it should not be possible to get to this point');
+        }
+    }
+
     render(): React$Element<any> {
         var { items } = this.props;
 
-        var filteredItems : TodosReducerState = this._filterOutTodosThatShouldNotBeInThisSpecificTodoList(items);
+        var filteredItems : TodosReducerState = this._filterOutTodosThatShouldNotBeInThisSpecificTodoList(items),
+            filteredAndOrderedItems : TodosReducerState = this._orderItems(filteredItems);
 
         var className = createClassName('todo-list', {
             'todo-list--active': this._checkIsActiveList()
@@ -237,7 +254,7 @@ class TodoList extends React.Component<Props, State> {
                         onSortEnd={ this._onItemSortEnd }
                         useDragHandle={ true }
                     >
-                        { filteredItems.map((item, index) => {
+                        { filteredAndOrderedItems.map((item, index) => {
                             return this._renderItem(item, index);
                         }) }
                     </SortableList>
@@ -256,7 +273,8 @@ function _mapGlobalStateToProps(globalState: GlobalStateType) : ReduxProvidedPro
     return {
         items: globalState.todos,
         projects: globalState.projects,
-        current: globalState.current
+        current: globalState.current,
+        activeSortedTodos: globalState.activeSortedTodos
     };
 }
 
