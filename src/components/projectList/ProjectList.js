@@ -124,10 +124,6 @@ class ProjectList extends React.Component<Props, State> {
     render() : ?React$Element<any> {
         var { items } = this.props;
 
-        if (items.length === 0) {
-            return null;
-        }
-
         return (
             <div className="project-list">
                 { this._renderAddFormModalIfRequired() }
