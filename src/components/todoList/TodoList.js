@@ -50,7 +50,7 @@ class TodoList extends React.Component<Props, State> {
         var { dispatch } = this.props;
 
         dispatch(
-            createUpdateTodoAction(item.id, checked, title, item.projectId, projectId, active)
+            createUpdateTodoAction(item.id, checked, title, item.projectId, projectId, item.active, active)
         );
     }
 

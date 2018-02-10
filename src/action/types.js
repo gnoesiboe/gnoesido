@@ -18,6 +18,7 @@ export type UpdateTodoAction = $ReadOnly<{
     title: string,
     previousProjectId: string,
     projectId: string,
+    previousActive: boolean,
     active: boolean
 }>;
 
