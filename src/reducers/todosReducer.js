@@ -6,7 +6,9 @@ import type { UpdateTodoAction, AddTodoAction, DeleteTodoAction } from '../actio
 import type { Todo } from '../model/type/Todo';
 import { createTodoFromAddTodoAction } from '../model/factory/todoFactory';
 
-function _handleUpdateTodoAction(currentState: Array<Todo>, action: UpdateTodoAction): Array<Todo> {
+export type TodosReducerState = Array<Todo>;
+
+function _handleUpdateTodoAction(currentState: TodosReducerState, action: UpdateTodoAction): TodosReducerState {
     return currentState.map((currentTodo: Todo) : Todo => {
         if (currentTodo.id ===  action.id) {
             return {
@@ -22,20 +24,20 @@ function _handleUpdateTodoAction(currentState: Array<Todo>, action: UpdateTodoAc
     });
 }
 
-function _handleAddTodoAction(currentState: Array<Todo>, action: AddTodoAction): Array<Todo> {
+function _handleAddTodoAction(currentState: TodosReducerState, action: AddTodoAction): TodosReducerState {
     return  [
         ...currentState,
         createTodoFromAddTodoAction(action)
     ];
 }
 
-function _handleDeleteTodoAction(currentState: Array<Todo>, action: DeleteTodoAction): Array<Todo> {
+function _handleDeleteTodoAction(currentState: TodosReducerState, action: DeleteTodoAction): TodosReducerState {
     return currentState.filter((item: Todo) => {
         return item.id !== action.id;
     });
 }
 
-export function todosReducer(currentState: Array<Todo> = [], action: UpdateTodoAction | Action) : Array<Todo> {
+export function todosReducer(currentState: TodosReducerState = [], action: UpdateTodoAction | Action) : TodosReducerState {
     switch (action.type) {
         case UPDATE_TODO:
             // $ExpectError

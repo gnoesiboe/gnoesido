@@ -19,9 +19,10 @@ import SortableListItem from '../shared/sortableList/components/SortableListItem
 import SortableList from '../shared/sortableList/SortableList';
 import type { OnSortEndData } from '../shared/sortableList/SortableList';
 import type { ProjectsReducerState } from '../../reducers/projectsReducer';
+import type { TodosReducerState } from '../../reducers/todosReducer';
 
 type Props = {
-    items: Array<Todo>,
+    items: TodosReducerState,
     showOnlyActive: boolean,
     currentProject: ?Project,
     projects: ProjectsReducerState,
@@ -30,7 +31,7 @@ type Props = {
 };
 
 type ReduxProvidedProps = {
-    items: Array<Todo>,
+    items: TodosReducerState,
     projects: ProjectsReducerState,
     current: Current
 }
@@ -182,7 +183,7 @@ class TodoList extends React.Component<Props, State> {
         this._showAddModal();
     }
 
-    _filterOutTodosThatShouldNotBeInThisSpecificTodoList(items: Array<Todo>) : Array<Todo> {
+    _filterOutTodosThatShouldNotBeInThisSpecificTodoList(items: TodosReducerState) : TodosReducerState {
         var { showOnlyActive, currentProject } = this.props;
 
         return items.filter((item) => {
@@ -221,7 +222,7 @@ class TodoList extends React.Component<Props, State> {
     render(): ?React$Element<any> {
         var { items } = this.props;
 
-        var filteredItems : Array<Todo> = this._filterOutTodosThatShouldNotBeInThisSpecificTodoList(items);
+        var filteredItems : TodosReducerState = this._filterOutTodosThatShouldNotBeInThisSpecificTodoList(items);
 
         var className = createClassName('todo-list', {
             'todo-list--active': this._checkIsActiveList()
