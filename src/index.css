@@ -17,6 +17,11 @@ body {
     border-top: 5px solid #000;
 }
 
+.todo-list-li {
+    list-style: none;
+    list-style-type: none;;
+}
+
 .todo-list--active {
     border-color: #ff9900;
     border-top-color: #ff9900;
