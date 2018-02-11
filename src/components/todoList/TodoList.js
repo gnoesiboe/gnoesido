@@ -7,7 +7,12 @@ import TodoListItem from './components/todoListItem/TodoListItem';
 import type { Todo } from '../../model/type/Todo';
 import type { Project } from '../../model/type/Project';
 import type { GlobalStateType } from '../../store/globalStateType';
-import { createUpdateTodoAction, createAddTodoAction, createDeleteTodoAction } from '../../action/actionFactory';
+import {
+    createUpdateTodoAction,
+    createAddTodoAction,
+    createDeleteTodoAction,
+    createMoveTodoAction
+} from '../../action/actionFactory';
 import type { Action } from '../../action/types';
 import Modal from '../shared/Modal';
 import TodoForm from './components/todoForm/TodoForm';
@@ -216,11 +221,16 @@ class TodoList extends React.Component<Props, State> {
     }
 
     _onItemSortEnd = (data: OnSortEndData) => {
-        // var { items } = this.props;
+        var { currentProject, showOnlyActive, dispatch } = this.props;
 
-        // var filteredItems = this._filterOutTodosThatShouldNotBeInThisSpecificTodoList(items);
-
-        console.log('_onItemSortEnd', data);
+        dispatch(
+            createMoveTodoAction(
+                data.oldIndex,
+                data.newIndex,
+                currentProject ? currentProject.id : null,
+                showOnlyActive
+            )
+        );
     }
 
     _orderItems(filteredItems: TodosReducerState) : TodosReducerState {
