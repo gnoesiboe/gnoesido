@@ -79,6 +79,7 @@ class TodoList extends React.Component<Props, State> {
         keyboardInputListener.bind('j', this._onNextTodoIndexShortcutPressed);
         keyboardInputListener.bind('k', this._onPreviousTodoIndexShortcutPressed);
         keyboardInputListener.bind('e', this._onEditCurrentTodoShortcutPressed);
+        keyboardInputListener.bind('space', this._onToggleCheckedKeyboardShortcutPressed);
     }
 
     componentWillUnmount() {
@@ -90,6 +91,7 @@ class TodoList extends React.Component<Props, State> {
         keyboardInputListener.unbind('j', this._onNextTodoIndexShortcutPressed);
         keyboardInputListener.unbind('k', this._onPreviousTodoIndexShortcutPressed);
         keyboardInputListener.unbind('e', this._onEditCurrentTodoShortcutPressed);
+        keyboardInputListener.unbind('space', this._onToggleCheckedKeyboardShortcutPressed);
     }
 
     componentDidUpdate(prevProps: Props, prevState: State) : void {
@@ -98,6 +100,31 @@ class TodoList extends React.Component<Props, State> {
         } else {
             this._unregisterAddKeyboardListener();
         }
+    }
+
+    _onToggleCheckedKeyboardShortcutPressed = (event: SyntheticInputEvent<HTMLInputElement>) => {
+        var { current, currentProject, activeSortedTodos, items, dispatch } = this.props;
+
+        var todoIds = currentProject ? currentProject.sortedTodos : activeSortedTodos,
+            todoIdToToggleCheckedStatusFor = todoIds[current.todoIndex];
+
+        var todo : ?Todo = items.find((item: Todo) => item.id === todoIdToToggleCheckedStatusFor);
+
+        if (!todo) {
+            return;
+        }
+
+        dispatch(
+            createUpdateTodoAction(
+                todo.id,
+                !todo.checked,
+                todo.title,
+                todo.projectId,
+                todo.projectId,
+                todo.active,
+                todo.active
+            )
+        )
     }
 
     _onEditCurrentTodoShortcutPressed = (event: SyntheticInputEvent<HTMLInputElement>) => {
