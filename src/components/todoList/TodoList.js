@@ -11,7 +11,9 @@ import {
     createUpdateTodoAction,
     createAddTodoAction,
     createDeleteTodoAction,
-    createMoveTodoAction
+    createMoveTodoAction,
+    createActivateNextTodoAction,
+    createActivatePreviousTodoAction
 } from '../../action/actionFactory';
 import type { Action } from '../../action/types';
 import Modal from '../shared/Modal';
@@ -27,6 +29,7 @@ import type { ProjectsReducerState } from '../../reducers/projectsReducer';
 import type { TodosReducerState } from '../../reducers/todosReducer';
 import type { ActiveSortedTodosReducerState } from '../../reducers/activeSortedTodosReducer';
 import { sortTodosWithSorting } from '../../helper/todoSortingHelper';
+import { determineNextTodoIndex, determinePreviousTodoIndex } from '../../helper/activeItemHelper';
 
 type Props = {
     items: TodosReducerState,
@@ -71,6 +74,8 @@ class TodoList extends React.Component<Props, State> {
 
     _registerAddKeyboardListener() {
         keyboardInputListener.bind('a', this._onAddTodoKeyboardShortcutPressed)
+        keyboardInputListener.bind('n', this._onNextTodoIndexShortcutPressed);
+        keyboardInputListener.bind('p', this._onPreviousTodoIndexShortcutPressed);
     }
 
     componentWillUnmount() {
@@ -79,6 +84,8 @@ class TodoList extends React.Component<Props, State> {
 
     _unregisterAddKeyboardListener() {
         keyboardInputListener.unbind('a', this._onAddTodoKeyboardShortcutPressed);
+        keyboardInputListener.unbind('n', this._onNextTodoIndexShortcutPressed);
+        keyboardInputListener.unbind('p', this._onPreviousTodoIndexShortcutPressed);
     }
 
     componentDidUpdate(prevProps: Props, prevState: State) : void {
@@ -87,6 +94,30 @@ class TodoList extends React.Component<Props, State> {
         } else {
             this._unregisterAddKeyboardListener();
         }
+    }
+
+    _onPreviousTodoIndexShortcutPressed = (event: SyntheticInputEvent<HTMLInputElement>) => {
+        var { dispatch, current, currentProject, activeSortedTodos } = this.props;
+
+        var todoIds = currentProject ? currentProject.sortedTodos : activeSortedTodos;
+
+        dispatch(
+            createActivatePreviousTodoAction(
+                determinePreviousTodoIndex(current.todoIndex, todoIds)
+            )
+        );
+    }
+
+    _onNextTodoIndexShortcutPressed = (event: SyntheticInputEvent<HTMLInputElement>) => {
+        var { dispatch, current, currentProject, activeSortedTodos } = this.props;
+
+        var todoIds = currentProject ? currentProject.sortedTodos : activeSortedTodos;
+
+        dispatch(
+            createActivateNextTodoAction(
+                determineNextTodoIndex(current.todoIndex, todoIds)
+            )
+        );
     }
 
     _onAddTodoKeyboardShortcutPressed = (event: SyntheticInputEvent<HTMLInputElement>) => {
@@ -111,9 +142,14 @@ class TodoList extends React.Component<Props, State> {
     }
 
     _renderItem(item: Todo, index: number): React$Element<any> {
+        var { current } = this.props;
+
+        var isActive = this._checkIsActiveList() && index === current.todoIndex;
+
         return (
             <SortableListItem key={ item.id } index={ index } className="todo-list-li">
                 <TodoListItem
+                    active={ isActive }
                     item={ item}
                     projects={ this.props.projects }
                     project={ this._determineCurrentProjectForItem(item) }

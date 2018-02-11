@@ -44,3 +44,17 @@ export function determinePreviousList(current: Current, projects: ProjectsReduce
 
     return 'active';
 }
+
+export function determineNextTodoIndex(currentIndex : number, todoIds : Array<string>) : number {
+    var noOfItems = todoIds.length,
+        lastIndex = noOfItems - 1;
+
+    return (currentIndex + 1) > lastIndex ? 0 : currentIndex + 1;
+}
+
+export function determinePreviousTodoIndex(currentIndex : number, todoIds : Array<string>) : number {
+    var noOfItems = todoIds.length,
+        lastIndex = noOfItems - 1;
+
+    return (currentIndex - 1) < 0 ? lastIndex : currentIndex - 1;
+}

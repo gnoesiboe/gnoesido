@@ -3,6 +3,8 @@
 import type {
     ActivateNextProjectAction,
     ActivatePreviousProjectAction,
+    ActivateNextTodoAction,
+    ActivatePreviousTodoAction,
     UpdateTodoAction,
     AddTodoAction,
     DeleteTodoAction,
@@ -16,6 +18,8 @@ import {
     ADD_PROJECT,
     ACTIVATE_PREVIOUS_PROJECT,
     ACTIVATE_NEXT_PROJECT,
+    ACTIVATE_NEXT_TODO,
+    ACTIVATE_PREVIOUS_TODO,
     MOVE_TODO
 } from './types';
 import type { TodoFormData } from '../components/todoList/components/todoForm/TodoForm';
@@ -57,12 +61,20 @@ export function createAddProjectAction(data : ProjectFormData) : AddProjectActio
     };
 }
 
-export function createActivatePreviousProjectAction(list: string, todo: ?string) : ActivatePreviousProjectAction {
-    return { type: ACTIVATE_PREVIOUS_PROJECT, list, todo };
+export function createActivatePreviousProjectAction(list: string) : ActivatePreviousProjectAction {
+    return { type: ACTIVATE_PREVIOUS_PROJECT, list };
 }
 
-export function createActivateNextProjectAction(list: string, todo: ?string) : ActivateNextProjectAction {
-    return { type: ACTIVATE_NEXT_PROJECT, list, todo };
+export function createActivateNextProjectAction(list: string) : ActivateNextProjectAction {
+    return { type: ACTIVATE_NEXT_PROJECT, list };
+}
+
+export function createActivateNextTodoAction(todoIndex: number) : ActivateNextTodoAction {
+    return { type: ACTIVATE_NEXT_TODO, todoIndex };
+}
+
+export function createActivatePreviousTodoAction(todoIndex: number) : ActivatePreviousTodoAction {
+    return { type: ACTIVATE_PREVIOUS_TODO, todoIndex };
 }
 
 export function createMoveTodoAction(oldIndex: number, newIndex: number, projectId: ?string, active: boolean) : MoveTodoAction {

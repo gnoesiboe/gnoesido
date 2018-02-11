@@ -31,6 +31,10 @@ body {
     border-top-color: #ff9900;
 }
 
+.todo-list-item--active {
+    color: #ff9900;
+}
+
 .todo-list-item-drag-handle {
     cursor: row-resize;
 }

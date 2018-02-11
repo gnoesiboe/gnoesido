@@ -17,7 +17,8 @@ type Props = {
     project: Project,
     projects: ProjectsReducerState,
     onChange: OnChangeCallback,
-    onDelete: OnDeleteCallback
+    onDelete: OnDeleteCallback,
+    active: boolean
 };
 
 type State = {
@@ -124,8 +125,14 @@ class TodoListItem extends React.Component<Props, State> {
     }
 
     render(): React$Element<any> {
+        var { active } = this.props;
+
+        var className : string = createClassName('todo-list-item', 'spacer-m', {
+            'todo-list-item--active': active
+        })
+
         return (
-            <div className="todo-list-item spacer-m">
+            <div className={ className }>
                 { this._renderInner() }
             </div>
         );
