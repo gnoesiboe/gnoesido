@@ -46,6 +46,15 @@ class TodoListItem extends React.Component<Props, State> {
         );
     }
 
+    edit() {
+        this.setState((currentState: State) => {
+            return {
+                ...currentState,
+                showEditForm: true
+            }
+        });
+    }
+
     _onEditFormSubmit(data: TodoFormData) : void {
         var { item, onChange } = this.props;
 
@@ -65,12 +74,7 @@ class TodoListItem extends React.Component<Props, State> {
     }
 
     _onTitleDoubleClick(event: SyntheticInputEvent<HTMLInputElement>): void {
-        this.setState((currentState: State) => {
-            return {
-                ...currentState,
-                showEditForm: true
-            }
-        });
+        this.edit();
     }
 
     _renderInner(): React$Element<any> {

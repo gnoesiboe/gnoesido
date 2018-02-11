@@ -54,6 +54,8 @@ type State = {
 
 class TodoList extends React.Component<Props, State> {
 
+    _refs : { [string]: any } = {}
+
     state : State = {
         showAddTodoModal: false
     };
@@ -76,6 +78,7 @@ class TodoList extends React.Component<Props, State> {
         keyboardInputListener.bind('a', this._onAddTodoKeyboardShortcutPressed)
         keyboardInputListener.bind('n', this._onNextTodoIndexShortcutPressed);
         keyboardInputListener.bind('p', this._onPreviousTodoIndexShortcutPressed);
+        keyboardInputListener.bind('e', this._onEditCurrentTodoShortcutPressed);
     }
 
     componentWillUnmount() {
@@ -86,6 +89,7 @@ class TodoList extends React.Component<Props, State> {
         keyboardInputListener.unbind('a', this._onAddTodoKeyboardShortcutPressed);
         keyboardInputListener.unbind('n', this._onNextTodoIndexShortcutPressed);
         keyboardInputListener.unbind('p', this._onPreviousTodoIndexShortcutPressed);
+        keyboardInputListener.unbind('e', this._onEditCurrentTodoShortcutPressed);
     }
 
     componentDidUpdate(prevProps: Props, prevState: State) : void {
@@ -94,6 +98,19 @@ class TodoList extends React.Component<Props, State> {
         } else {
             this._unregisterAddKeyboardListener();
         }
+    }
+
+    _onEditCurrentTodoShortcutPressed = (event: SyntheticInputEvent<HTMLInputElement>) => {
+
+        // prevent typing 'e' in edit todo form
+        event.preventDefault();
+
+        var { currentProject, activeSortedTodos, current } = this.props;
+
+        var todoIds = currentProject ? currentProject.sortedTodos : activeSortedTodos,
+            todoIdToEdit = todoIds[current.todoIndex];
+
+        this._refs[todoIdToEdit].edit();
     }
 
     _onPreviousTodoIndexShortcutPressed = (event: SyntheticInputEvent<HTMLInputElement>) => {
@@ -150,7 +167,8 @@ class TodoList extends React.Component<Props, State> {
             <SortableListItem key={ item.id } index={ index } className="todo-list-li">
                 <TodoListItem
                     active={ isActive }
-                    item={ item}
+                    ref={ (el) => this._refs[item.id] = el }
+                    item={ item }
                     projects={ this.props.projects }
                     project={ this._determineCurrentProjectForItem(item) }
                     onChange={ this._onTodoChanged.bind(this, item) }
