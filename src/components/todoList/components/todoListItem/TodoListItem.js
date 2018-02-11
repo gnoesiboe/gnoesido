@@ -101,14 +101,14 @@ class TodoListItem extends React.Component<Props, State> {
             return (
                 <form className="form" onSubmit={ (event: SyntheticInputEvent<HTMLInputElement>) : void => event.preventDefault() }>
                     <div className="checkbox">
-                        <ul className="list-inline pull-right">
+                        <ul className="list-inline pull-right todo-list-item-actions">
                             <li>
                                 <SortableListItemHandle className="todo-list-item-drag-handle">
                                     <i className="glyphicon glyphicon-menu-hamburger" />
                                 </SortableListItemHandle>
                             </li>
                             <li>
-                                <button className="btn-link" onClick={ onDelete }>
+                                <button className="btn-link todo-list-item-remove-button" onClick={ onDelete }>
                                     <i className="glyphicon glyphicon-remove" />
                                 </button>
                             </li>
