@@ -38,13 +38,13 @@ class ProjectList extends React.Component<Props, State> {
     }
 
     componentDidMount() : void {
-        keyboardInputListener.bind('k', this._onPreviousProjectKeyboardBindingPressed);
-        keyboardInputListener.bind('j', this._onNextProjectKeyboardBindingPressed);
+        keyboardInputListener.bind('p', this._onPreviousProjectKeyboardBindingPressed);
+        keyboardInputListener.bind('n', this._onNextProjectKeyboardBindingPressed);
     }
 
     componentWillUnmount() : void {
-        keyboardInputListener.unbind('k', this._onPreviousProjectKeyboardBindingPressed);
-        keyboardInputListener.unbind('j', this._onNextProjectKeyboardBindingPressed);
+        keyboardInputListener.unbind('p', this._onPreviousProjectKeyboardBindingPressed);
+        keyboardInputListener.unbind('n', this._onNextProjectKeyboardBindingPressed);
     }
 
     _onPreviousProjectKeyboardBindingPressed = () => {

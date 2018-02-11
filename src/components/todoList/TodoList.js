@@ -76,8 +76,8 @@ class TodoList extends React.Component<Props, State> {
 
     _registerAddKeyboardListener() {
         keyboardInputListener.bind('a', this._onAddTodoKeyboardShortcutPressed)
-        keyboardInputListener.bind('n', this._onNextTodoIndexShortcutPressed);
-        keyboardInputListener.bind('p', this._onPreviousTodoIndexShortcutPressed);
+        keyboardInputListener.bind('j', this._onNextTodoIndexShortcutPressed);
+        keyboardInputListener.bind('k', this._onPreviousTodoIndexShortcutPressed);
         keyboardInputListener.bind('e', this._onEditCurrentTodoShortcutPressed);
     }
 
@@ -87,8 +87,8 @@ class TodoList extends React.Component<Props, State> {
 
     _unregisterAddKeyboardListener() {
         keyboardInputListener.unbind('a', this._onAddTodoKeyboardShortcutPressed);
-        keyboardInputListener.unbind('n', this._onNextTodoIndexShortcutPressed);
-        keyboardInputListener.unbind('p', this._onPreviousTodoIndexShortcutPressed);
+        keyboardInputListener.unbind('j', this._onNextTodoIndexShortcutPressed);
+        keyboardInputListener.unbind('k', this._onPreviousTodoIndexShortcutPressed);
         keyboardInputListener.unbind('e', this._onEditCurrentTodoShortcutPressed);
     }
 
