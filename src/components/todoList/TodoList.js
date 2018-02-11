@@ -213,6 +213,7 @@ class TodoList extends React.Component<Props, State> {
                     projects={ this.props.projects }
                     project={ this.props.currentProject }
                     onSubmit={ this._onAddFormSubmit.bind(this) }
+                    onCancel={ () => this._hideAddModal() }
                 />
             </Modal>
         );

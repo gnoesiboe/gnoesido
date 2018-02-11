@@ -24,7 +24,8 @@ type Props = {
     currentTodo: ?Todo,
     active: boolean,
     projects: ProjectsReducerState,
-    onSubmit: (data: TodoFormData) => void
+    onSubmit: (data: TodoFormData) => void,
+    onCancel: () => void
 }
 
 type State = {
@@ -54,7 +55,7 @@ export default class TodoForm extends React.Component<Props, State> {
 
     render() : React$Element<any> {
         var { formState } = this.state;
-        var { projects } = this.props;
+        var { projects, onCancel } = this.props;
 
         return (
             <Form className="form" formState={ formState }>
@@ -98,7 +99,14 @@ export default class TodoForm extends React.Component<Props, State> {
                     </div>
                     <FormErrorList errors={ formState.getElementState('active').errors } />
                 </FormGroup>
-                <button type="submit" className="btn btn-success">Save</button>
+                <ul className="list-inline">
+                    <li>
+                        <button type="submit" className="btn btn-success">Save</button>
+                    </li>
+                    <li>
+                        <button className="btn btn-link" onClick={ onCancel }>Cancel</button>
+                    </li>
+                </ul>
             </Form>
         );
     }

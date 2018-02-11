@@ -47,6 +47,10 @@ class TodoListItem extends React.Component<Props, State> {
     }
 
     edit() {
+        this._showEditForm();
+    }
+
+    _showEditForm() {
         this.setState((currentState: State) => {
             return {
                 ...currentState,
@@ -55,22 +59,30 @@ class TodoListItem extends React.Component<Props, State> {
         });
     }
 
-    _onEditFormSubmit(data: TodoFormData) : void {
-        var { item, onChange } = this.props;
-
+    _hideEditForm(callback: ?Function = null) {
         this.setState((currentState: State) => {
             return {
                 ...currentState,
                 showEditForm: false
             };
         }, () => {
+            if (callback) {
+                callback();
+            }
+        });
+    }
+
+    _onEditFormSubmit(data: TodoFormData) : void {
+        var { item, onChange } = this.props;
+
+        this._hideEditForm(() => {
             onChange(
                 item.checked,
                 data.title,
                 data.projectId,
                 data.active
             )
-        })
+        });
     }
 
     _onTitleDoubleClick(event: SyntheticInputEvent<HTMLInputElement>): void {
@@ -86,6 +98,7 @@ class TodoListItem extends React.Component<Props, State> {
                 <div className="todo-list-item-edit-form">
                     <TodoForm
                         onSubmit={ this._onEditFormSubmit.bind(this) }
+                        onCancel={ () => this._hideEditForm() }
                         currentProject={ null }
                         active={ item.active }
                         projects={ this.props.projects }
