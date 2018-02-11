@@ -6,15 +6,18 @@ import type {
     AddProjectAction,
     AddTodoAction,
     UpdateTodoAction,
-    DeleteTodoAction
+    DeleteTodoAction,
+    MoveTodoAction
 } from '../action/types';
 import {
     ADD_PROJECT,
     ADD_TODO,
     UPDATE_TODO,
-    DELETE_TODO
+    DELETE_TODO,
+    MOVE_TODO
 } from '../action/types';
 import { createProjectFromAddProjectAction } from '../model/factory/projectFactory';
+import { arrayMove } from 'react-sortable-hoc';
 
 export type ProjectsReducerState = Array<Project>;
 
@@ -74,6 +77,27 @@ function _handleDeleteTodoAction(currentState: ProjectsReducerState, action: Del
     });
 }
 
+function _handleMoveTodoAction(currentState: ProjectsReducerState, action: MoveTodoAction): ProjectsReducerState {
+    if (action.active) {
+        return currentState;
+    }
+
+    if (!action.projectId) {
+        throw new Error('We should be able to expect there to be a projectId available at this poit');
+    }
+
+    return currentState.map((project: Project) => {
+        if (project.id === action.projectId) {
+            return {
+                ...project,
+                sortedTodos: arrayMove(project.sortedTodos, action.oldIndex, action.newIndex)
+            };
+        }
+
+        return project;
+    })
+}
+
 export function projectsReducer(currentState: ProjectsReducerState = [], action: Action) : ProjectsReducerState {
     switch (action.type) {
         case ADD_PROJECT:
@@ -95,6 +119,11 @@ export function projectsReducer(currentState: ProjectsReducerState = [], action:
             // $ExpectError
             var deleteTodoAction : DeleteTodoAction = (action: Action);
             return _handleDeleteTodoAction(currentState, deleteTodoAction);
+
+        case MOVE_TODO:
+            // $ExpectError
+            var moveTodoAction : MoveTodoAction = (action: Action);
+            return _handleMoveTodoAction(currentState, moveTodoAction);
 
         default:
             return currentState;
