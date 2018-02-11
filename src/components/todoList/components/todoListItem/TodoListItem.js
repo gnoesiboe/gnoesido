@@ -85,8 +85,35 @@ class TodoListItem extends React.Component<Props, State> {
         });
     }
 
+    _onActivateClick = (event: SyntheticInputEvent<HTMLInputElement>) : void => {
+        var { item, onChange } = this.props;
+
+        onChange(
+            item.checked,
+            item.title,
+            item.projectId,
+            true
+        );
+    }
+
     _onTitleDoubleClick(event: SyntheticInputEvent<HTMLInputElement>): void {
         this.edit();
+    }
+
+    _renderActivateActionIfRequired() : ?React$Element<any> {
+        var { item } = this.props;
+
+        if (item.active) {
+            return null;
+        }
+
+        return (
+            <li>
+                <button className="btn-link" onClick={ this._onActivateClick }>
+                    <i className="glyphicon glyphicon-record" />
+                </button>
+            </li>
+        );
     }
 
     _renderInner(): React$Element<any> {
@@ -115,6 +142,7 @@ class TodoListItem extends React.Component<Props, State> {
                 <form className="form" onSubmit={ (event: SyntheticInputEvent<HTMLInputElement>) : void => event.preventDefault() }>
                     <div className="checkbox">
                         <ul className="list-inline pull-right todo-list-item-actions">
+                            { this._renderActivateActionIfRequired() }
                             <li>
                                 <SortableListItemHandle className="todo-list-item-drag-handle">
                                     <i className="glyphicon glyphicon-menu-hamburger" />
