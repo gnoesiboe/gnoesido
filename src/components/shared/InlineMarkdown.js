@@ -25,6 +25,14 @@ export default class InlineMarkdown extends React.Component<Props> {
         );
     }
 
+    _renderLink(props : { children: React.Node, href: string }) : React$Element<any> {
+        return (
+            <a href={ props.href } target="_blank">
+                { props.children }
+            </a>
+        );
+    }
+
     render() : React$Element<any> {
         var disallowedTypes = [
             'break', 'thematicBreak', 'blockquote', 'image', 'imageReference', 'table',
@@ -34,7 +42,8 @@ export default class InlineMarkdown extends React.Component<Props> {
 
         var renderers = {
             root: this._renderRoot,
-            paragraph: this._renderParagraph
+            paragraph: this._renderParagraph,
+            link: this._renderLink
         };
 
         return (
