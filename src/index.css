@@ -10,6 +10,10 @@ body {
     margin-bottom: 20px;
 }
 
+.spacer-l {
+    margin-bottom: 40px;
+}
+
 .markdown-inline a {
     text-decoration: underline;
     color: #000;

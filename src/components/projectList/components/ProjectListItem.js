@@ -14,7 +14,7 @@ export default class ProjectListItem extends React.Component<Props> {
         var { item } = this.props;
 
         return (
-            <div className="col-lg-4 col-md-6">
+            <div className="col-lg-4 col-md-6 spacer-l">
                 <h3><strong>[{ item.abbrevation }]</strong> { item.title }</h3>
                 <TodoList
                     currentProject={ item }
