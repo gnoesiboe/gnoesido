@@ -5,13 +5,15 @@ import type {
     ActivateNextProjectAction,
     ActivatePreviousProjectAction,
     ActivateNextTodoAction,
-    ActivatePreviousTodoAction
+    ActivatePreviousTodoAction,
+    MoveTodoAction
 } from '../action/types';
 import {
     ACTIVATE_NEXT_PROJECT,
     ACTIVATE_PREVIOUS_PROJECT,
     ACTIVATE_NEXT_TODO,
-    ACTIVATE_PREVIOUS_TODO
+    ACTIVATE_PREVIOUS_TODO,
+    MOVE_TODO
 } from '../action/types';
 
 export type Current = $ReadOnly<{
@@ -52,6 +54,25 @@ function _handleActivatePreviousTodoAction(currentState: Current, action: Activa
     };
 }
 
+function _handleMoveTodAction(currentState : Current, action: MoveTodoAction): Current {
+    if (action.active === true && currentState.list !== 'active') {
+        return currentState;
+    }
+
+    if (action.projectId && currentState.list !== action.projectId) {
+        return currentState;
+    }
+
+    if (action.oldIndex !== currentState.todoIndex) {
+        return currentState;
+    }
+
+    return {
+        ...currentState,
+        todoIndex: action.newIndex
+    };
+}
+
 export function currentReducer(currentState: Current = _initialState, action: Action) : Current {
     switch (action.type) {
         case ACTIVATE_NEXT_PROJECT:
@@ -73,6 +94,11 @@ export function currentReducer(currentState: Current = _initialState, action: Ac
             // $ExpectError
             var activatePreviousTodoAction : ActivatePreviousTodoAction = (action: Action);
             return _handleActivatePreviousTodoAction(currentState, activatePreviousTodoAction);
+
+        case MOVE_TODO:
+            // $ExpectError
+            var moveTodoAction : MoveTodoAction = (action : Action);
+            return _handleMoveTodAction(currentState, moveTodoAction);
 
         default:
             return currentState;
