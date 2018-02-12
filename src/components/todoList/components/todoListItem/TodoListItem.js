@@ -9,6 +9,7 @@ import createClassName from 'classnames';
 import type { ProjectsReducerState } from '../../../../reducers/projectsReducer';
 import SortableListItemHandle from '../../../shared/sortableList/SortableHandle';
 import InlineMarkdown from '../../../shared/InlineMarkdown';
+import ReactTooltip from 'react-tooltip';
 
 export type OnChangeCallback = (checked: boolean, title: string, projectId: string, active: boolean) => void;
 export type OnDeleteCallback = (id: string) => void;
@@ -107,7 +108,11 @@ class TodoListItem extends React.Component<Props, State> {
         if (item.active) {
             return (
                 <li>
-                    <button className="btn-link" onClick={ this._onToggleActiveStateClick }>
+                    <button
+                        className="btn-link"
+                        onClick={ this._onToggleActiveStateClick }
+                        data-tip data-for="action-remove-from-active-list"
+                    >
                         <i className="glyphicon glyphicon-ban-circle" />
                     </button>
                 </li>
@@ -115,7 +120,11 @@ class TodoListItem extends React.Component<Props, State> {
         } else {
             return (
                 <li>
-                    <button className="btn-link" onClick={ this._onToggleActiveStateClick }>
+                    <button
+                        className="btn-link"
+                        onClick={ this._onToggleActiveStateClick }
+                        data-tip data-for="action-add-to-active-list"
+                    >
                         <i className="glyphicon glyphicon-record" />
                     </button>
                 </li>
@@ -151,12 +160,19 @@ class TodoListItem extends React.Component<Props, State> {
                         <ul className="list-inline pull-right todo-list-item-actions">
                             { this._renderToggleActiveStatusAction() }
                             <li>
-                                <SortableListItemHandle className="todo-list-item-drag-handle">
+                                <SortableListItemHandle
+                                    data-tip data-for="action-sort"
+                                    className="todo-list-item-drag-handle"
+                                >
                                     <i className="glyphicon glyphicon-menu-hamburger" />
                                 </SortableListItemHandle>
                             </li>
                             <li>
-                                <button className="btn-link todo-list-item-remove-button" onClick={ onDelete }>
+                                <button
+                                    className="btn-link todo-list-item-remove-button"
+                                    onClick={ onDelete }
+                                    data-tip data-for="action-delete"
+                                >
                                     <i className="glyphicon glyphicon-remove" />
                                 </button>
                             </li>
@@ -173,6 +189,18 @@ class TodoListItem extends React.Component<Props, State> {
                             <InlineMarkdown source={ item.title } />
                         </div>
                     </div>
+                    <ReactTooltip id="action-remove-from-active-list">
+                        <span>Remove item from active list</span>
+                    </ReactTooltip>
+                    <ReactTooltip id="action-add-to-active-list">
+                        <span>Add item to active list</span>
+                    </ReactTooltip>
+                    <ReactTooltip id="action-sort">
+                        <span>Drag to sort</span>
+                    </ReactTooltip>
+                    <ReactTooltip id="action-delete">
+                        <span>Remove item</span>
+                    </ReactTooltip>
                 </form>
             );
         }
