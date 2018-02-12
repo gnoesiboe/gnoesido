@@ -20,6 +20,7 @@ type Props = {
     projects: ProjectsReducerState,
     onChange: OnChangeCallback,
     onDelete: OnDeleteCallback,
+    onNewProject: (title: string) => void,
     active: boolean
 };
 
@@ -146,6 +147,7 @@ class TodoListItem extends React.Component<Props, State> {
                         active={ item.active }
                         projects={ this.props.projects }
                         currentTodo={ item }
+                        onNewProject={ this.props.onNewProject }
                     />
                 </div>
             );

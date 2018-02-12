@@ -13,7 +13,8 @@ import {
     createDeleteTodoAction,
     createMoveTodoAction,
     createActivateNextTodoAction,
-    createActivatePreviousTodoAction
+    createActivatePreviousTodoAction,
+    createAddProjectAction
 } from '../../action/actionFactory';
 import type { Action } from '../../action/types';
 import Modal from '../shared/Modal';
@@ -200,6 +201,7 @@ class TodoList extends React.Component<Props, State> {
                     project={ this._determineCurrentProjectForItem(item) }
                     onChange={ this._onTodoChanged.bind(this, item) }
                     onDelete={ this._onTodoDelete.bind(this, item.id) }
+                    onNewProject={ this._onNewProject }
                 />
             </SortableListItem>
         );
@@ -225,6 +227,17 @@ class TodoList extends React.Component<Props, State> {
         this._hideAddModal(callback);
     }
 
+    _onNewProject = (title: string) => {
+        var { dispatch } = this.props;
+
+        dispatch(
+            createAddProjectAction({
+                title,
+                abbrevation: title.substring(0, 2).toUpperCase()
+            })
+        )
+    }
+
     _renderAddTodoModalIfRequired() : ?React$Element<any>{
         if (!this.state.showAddTodoModal) {
             return null;
@@ -241,6 +254,7 @@ class TodoList extends React.Component<Props, State> {
                     project={ this.props.currentProject }
                     onSubmit={ this._onAddFormSubmit.bind(this) }
                     onCancel={ () => this._hideAddModal() }
+                    onNewProject={ this._onNewProject }
                 />
             </Modal>
         );

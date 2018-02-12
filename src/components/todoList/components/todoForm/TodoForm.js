@@ -5,13 +5,16 @@ import type { Project } from '../../../../model/type/Project';
 import type { Todo } from '../../../../model/type/Todo';
 import FormState from './../../../../lib/forms/model/FormState';
 import FormInput from './../../../../lib/forms/component/FormInput';
-import FormSelect from './../../../../lib/forms/component/FormSelect';
+import FormSelectAutocomplete from '../../../shared/FormSelectAutocomplete';
 import FormCheckbox from './../../../../lib/forms/component/FormCheckbox';
 import FormGroup from '../../../shared/FormGroup';
 import FormErrorList from '../../../shared/formErrorList/FormErrorList';
 import Form from './../../../../lib/forms/component/Form';
 import { createTodoFormState } from '../../../../form/factory/formStateFactory';
 import type { ProjectsReducerState } from '../../../../reducers/projectsReducer';
+import { convertProjectCollectionToFormSelectAutocompleteOptionList } from '../../../../helper/formValueHelper';
+
+import 'react-select/dist/react-select.css';
 
 export type TodoFormData = {
     title: string,
@@ -25,7 +28,8 @@ type Props = {
     active: boolean,
     projects: ProjectsReducerState,
     onSubmit: (data: TodoFormData) => void,
-    onCancel: () => void
+    onCancel: () => void,
+    onNewProject: (title: string) => void
 }
 
 type State = {
@@ -55,7 +59,7 @@ export default class TodoForm extends React.Component<Props, State> {
 
     render() : React$Element<any> {
         var { formState } = this.state;
-        var { projects, onCancel } = this.props;
+        var { projects, onCancel, onNewProject } = this.props;
 
         return (
             <Form className="form" formState={ formState }>
@@ -73,19 +77,14 @@ export default class TodoForm extends React.Component<Props, State> {
                 </FormGroup>
                 <FormGroup element={ formState.getElementState('projectId') }>
                     <label htmlFor="project">Project</label>
-                    <FormSelect
-                        element={ formState.getElementState('projectId') }
+                    <FormSelectAutocomplete
+                        elementState={ formState.getElementState('projectId') }
                         id="projectId"
-                        className="form-control"
-                    >
-                        <option value="">-- choose a project --</option>
-
-                        { projects.map(project => (
-                            <option key={ project.id } value={ project.id }>
-                                { project.title }
-                            </option>
-                        )) }
-                    </FormSelect>
+                        placeholder="Select a project"
+                        noResultsText="No projects found.."
+                        options={ convertProjectCollectionToFormSelectAutocompleteOptionList(projects) }
+                        onNewOption={ onNewProject }
+                    />
                     <FormErrorList errors={ formState.getElementState('projectId').errors } />
                 </FormGroup>
                 <FormGroup element={ formState.getElementState('active') }>
