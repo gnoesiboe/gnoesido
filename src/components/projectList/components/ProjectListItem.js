@@ -21,7 +21,7 @@ export default class ProjectListItem extends React.Component<Props> {
         var { item } = this.props;
 
         return (
-            <div className="col-lg-4 col-md-6 spacer-l">
+            <div className="project-list-item col-lg-4 col-md-6 spacer-l">
                 <button className="btn btn-link pull-right project-list-item-delete-button" onClick={ this._onDeleteClick }>
                     <i className="glyphicon glyphicon-remove" />
                 </button>

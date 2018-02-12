@@ -92,5 +92,11 @@ body {
 }
 
 .project-list-item-delete-button {
+    display: none;
     margin-right: -10px;
+    color: #999;
+}
+
+.project-list-item:hover .project-list-item-delete-button {
+    display: block;
 }
