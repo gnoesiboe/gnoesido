@@ -1,8 +1,13 @@
 // @flow
 
 import type { Action } from './../action/types';
-import { UPDATE_TODO, ADD_TODO, DELETE_TODO } from '../action/types';
-import type { UpdateTodoAction, AddTodoAction, DeleteTodoAction } from '../action/types';
+import {
+    UPDATE_TODO,
+    ADD_TODO,
+    DELETE_TODO,
+    DELETE_PROJECT
+} from '../action/types';
+import type { UpdateTodoAction, AddTodoAction, DeleteTodoAction, DeleteProjectAction } from '../action/types';
 import type { Todo } from '../model/type/Todo';
 import { createTodoFromAddTodoAction } from '../model/factory/todoFactory';
 
@@ -37,6 +42,12 @@ function _handleDeleteTodoAction(currentState: TodosReducerState, action: Delete
     });
 }
 
+function _handleDeleteProjectAction(currentState : TodosReducerState, action : DeleteProjectAction) : TodosReducerState {
+    return currentState.filter((item: Todo) => {
+        return item.projectId !== action.id;
+    });
+}
+
 export function todosReducer(currentState: TodosReducerState = [], action: UpdateTodoAction | Action) : TodosReducerState {
     switch (action.type) {
         case UPDATE_TODO:
@@ -53,6 +64,11 @@ export function todosReducer(currentState: TodosReducerState = [], action: Updat
             // $ExpectError
             var deleteAction : DeleteTodoAction = (action: Action);
             return _handleDeleteTodoAction(currentState, deleteAction);
+
+        case DELETE_PROJECT:
+            // $ExpectError
+            var deleteProjectAction : DeleteProjectAction = (action: Action);
+            return _handleDeleteProjectAction(currentState, deleteProjectAction);
 
         default:
             return currentState;

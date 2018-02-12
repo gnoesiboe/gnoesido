@@ -9,6 +9,7 @@ import type {
     AddTodoAction,
     DeleteTodoAction,
     AddProjectAction,
+    DeleteProjectAction,
     MoveTodoAction
 } from './types';
 import {
@@ -16,6 +17,7 @@ import {
     ADD_TODO,
     DELETE_TODO,
     ADD_PROJECT,
+    DELETE_PROJECT,
     ACTIVATE_PREVIOUS_PROJECT,
     ACTIVATE_NEXT_PROJECT,
     ACTIVATE_NEXT_TODO,
@@ -59,6 +61,10 @@ export function createAddProjectAction(data : ProjectFormData) : AddProjectActio
         title: data.title,
         abbrevation: data.abbrevation
     };
+}
+
+export function createDeleteProjectAction(id: string) : DeleteProjectAction {
+    return { type: DELETE_PROJECT, id };
 }
 
 export function createActivatePreviousProjectAction(list: string) : ActivatePreviousProjectAction {

@@ -9,7 +9,12 @@ import Modal from '../shared/Modal';
 import ProjectForm from './components/ProjectForm';
 import type { ProjectFormData } from './components/ProjectForm';
 import type { Action } from '../../action/types';
-import { createAddProjectAction, createActivatePreviousProjectAction, createActivateNextProjectAction } from '../../action/actionFactory';
+import {
+    createAddProjectAction,
+    createActivatePreviousProjectAction,
+    createActivateNextProjectAction,
+    createDeleteProjectAction
+} from '../../action/actionFactory';
 import Equalizer from 'react-equalizer';
 import keyboardInputListener from 'mousetrap';
 import type { Current } from '../../reducers/currentReducer';
@@ -122,6 +127,18 @@ class ProjectList extends React.Component<Props, State> {
         );
     }
 
+    _onProjectDelete = (projectId: string) => {
+        if (!window.confirm('Are you sure?')) {
+            return;
+        }
+
+        var { dispatch } = this.props;
+
+        dispatch(
+            createDeleteProjectAction(projectId)
+        );
+    }
+
     render() : ?React$Element<any> {
         var { items } = this.props;
 
@@ -131,7 +148,11 @@ class ProjectList extends React.Component<Props, State> {
                 <div className="row">
                     <Equalizer>
                         { items.map((item: Project) => (
-                            <ProjectListItem item={ item} key={ item.id } />
+                            <ProjectListItem
+                                item={ item}
+                                key={ item.id }
+                                onDelete={ this._onProjectDelete }
+                            />
                         )) }
                     </Equalizer>
                 </div>
