@@ -146,7 +146,7 @@ class ProjectList extends React.Component<Props, State> {
             <div className="project-list">
                 { this._renderAddFormModalIfRequired() }
                 <div className="row">
-                    <Equalizer>
+                    <Equalizer property="minHeight">
                         { items.map((item: Project) => (
                             <ProjectListItem
                                 item={ item}
