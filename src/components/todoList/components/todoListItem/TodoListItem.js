@@ -8,6 +8,7 @@ import TodoForm from '../todoForm/TodoForm';
 import createClassName from 'classnames';
 import type { ProjectsReducerState } from '../../../../reducers/projectsReducer';
 import SortableListItemHandle from '../../../shared/sortableList/SortableHandle';
+import InlineMarkdown from '../../../shared/InlineMarkdown';
 
 export type OnChangeCallback = (checked: boolean, title: string, projectId: string, active: boolean) => void;
 export type OnDeleteCallback = (id: string) => void;
@@ -167,7 +168,9 @@ class TodoListItem extends React.Component<Props, State> {
                             checked={ item.checked }
                         />
                         <div onDoubleClick={ this._onTitleDoubleClick.bind(this) } className={ titleClassName }>
-                            <strong>{ project.abbrevation }</strong> — { item.title }
+                            <strong>{ project.abbrevation }</strong>
+                            —
+                            <InlineMarkdown source={ item.title } />
                         </div>
                     </div>
                 </form>
