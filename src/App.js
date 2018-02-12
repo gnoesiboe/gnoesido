@@ -25,6 +25,7 @@ class App extends React.Component<Props> {
                             />
                         </div>
                     </div>
+                    <hr />
                     <ProjectList />
                 </div>
             </Provider>
