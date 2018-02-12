@@ -20,10 +20,8 @@ type Props = {
 
 export default class FormSelectAutocomplete extends React.Component<Props> {
 
-    _onChange(selectedOption: FormSelectAutocompleteOption) : void {
-        console.log('on change');
-
-        this.props.elementState.applyChange(selectedOption.value);
+    _onChange(selectedOption: ?FormSelectAutocompleteOption) : void {
+        this.props.elementState.applyChange(selectedOption ? selectedOption.value : '');
     }
 
     _onBlur() : void {

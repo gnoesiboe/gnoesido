@@ -25,7 +25,7 @@ export default class ProjectListItem extends React.Component<Props> {
                 <button className="btn btn-link pull-right project-list-item-delete-button" onClick={ this._onDeleteClick }>
                     <i className="glyphicon glyphicon-remove" />
                 </button>
-                <h3><strong>[{ item.abbrevation }]</strong> { item.title }</h3>
+                <h3 className="project-list-item-title"><strong>[{ item.abbrevation }]</strong> { item.title }</h3>
                 <TodoList
                     currentProject={ item }
                     showOnlyActive={ false }
