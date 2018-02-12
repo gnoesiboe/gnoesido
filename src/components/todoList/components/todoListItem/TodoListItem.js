@@ -184,9 +184,7 @@ class TodoListItem extends React.Component<Props, State> {
                             checked={ item.checked }
                         />
                         <div onDoubleClick={ this._onTitleDoubleClick.bind(this) } className={ titleClassName }>
-                            <strong>{ project.abbrevation }</strong>
-                            —
-                            <InlineMarkdown source={ item.title } />
+                            <strong>{ project.abbrevation }</strong> — <InlineMarkdown source={ item.title } />
                         </div>
                     </div>
                     <ReactTooltip id="action-remove-from-active-list">
