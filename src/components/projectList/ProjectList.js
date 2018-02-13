@@ -15,12 +15,14 @@ import {
     createActivateNextProjectAction,
     createDeleteProjectAction
 } from '../../action/actionFactory';
-import Equalizer from 'react-equalizer';
 import keyboardInputListener from 'mousetrap';
 import type { Current } from '../../reducers/currentReducer';
 import ProjectListItem from './components/ProjectListItem';
 import { determineNextList, determinePreviousList } from '../../helper/activeItemHelper';
 import type { ProjectsReducerState } from '../../reducers/projectsReducer';
+import SortableContainer from '../shared/sortableList/SortableContainer';
+import SortableContainerElement from '../shared/sortableList/components/SortableContainerElement';
+import type { OnSortEndData } from '../shared/sortableList/SortableList';
 
 type Props = {
     items: ProjectsReducerState,
@@ -139,23 +141,42 @@ class ProjectList extends React.Component<Props, State> {
         );
     }
 
+    _onItemSortEnd = (data: OnSortEndData) => {
+        console.log('_onItemSortEnd', data);
+    }
+
+    _renderListItem(item: Project, index: number) : React$Element<any> {
+        return (
+            <SortableContainerElement
+                key={ item.id }
+                index={ index }
+                className="col-lg-4 col-md-6"
+            >
+                <ProjectListItem
+                    item={ item}
+
+                    onDelete={ this._onProjectDelete }
+                />
+            </SortableContainerElement>
+        );
+    }
+
     render() : ?React$Element<any> {
         var { items } = this.props;
 
         return (
             <div className="project-list">
                 { this._renderAddFormModalIfRequired() }
-                <div className="row">
-                    <Equalizer property="minHeight">
-                        { items.map((item: Project) => (
-                            <ProjectListItem
-                                item={ item}
-                                key={ item.id }
-                                onDelete={ this._onProjectDelete }
-                            />
-                        )) }
-                    </Equalizer>
-                </div>
+                <SortableContainer
+                    className="row"
+                    onSortEnd={ this._onItemSortEnd }
+                    useDragHandle={ true }
+                    helperClass="project-list-moving-item"
+                    lockToContainerEdges={ true }
+                    axis="xy"
+                >
+                    { items.map((item: Project, index) => this._renderListItem(item, index)) }
+                </SortableContainer>
                 <div className="row">
                     <button className="btn btn-default btn-lg project-list--add-button" onClick={ this._onAddClick.bind(this) }>
                         <i className="glyphicon glyphicon-plus" /> Add project

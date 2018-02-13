@@ -23,7 +23,7 @@ export default class ProjectListItem extends React.Component<Props> {
         var { item } = this.props;
 
         return (
-            <div className="project-list-item col-lg-4 col-md-6 spacer-l">
+            <div className="project-list-item spacer-l">
                 <ul className="list-inline pull-right project-list-item-actions">
                     <li>
                         <SortableListItemHandle
