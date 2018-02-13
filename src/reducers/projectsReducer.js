@@ -8,7 +8,8 @@ import type {
     UpdateTodoAction,
     DeleteTodoAction,
     MoveTodoAction,
-    DeleteProjectAction
+    DeleteProjectAction,
+    MoveProjectAction
 } from '../action/types';
 import {
     ADD_PROJECT,
@@ -16,7 +17,8 @@ import {
     UPDATE_TODO,
     DELETE_TODO,
     MOVE_TODO,
-    DELETE_PROJECT
+    DELETE_PROJECT,
+    MOVE_PROJECT
 } from '../action/types';
 import { createProjectFromAddProjectAction } from '../model/factory/projectFactory';
 import { arrayMove } from 'react-sortable-hoc';
@@ -102,10 +104,12 @@ function _handleMoveTodoAction(currentState: ProjectsReducerState, action: MoveT
 
 function _handleDeleteProjectAction(currentState : ProjectsReducerState, action: DeleteProjectAction) : ProjectsReducerState {
     return currentState.filter((project : Project) => {
-        console.log('test: ', project.id, action.id);
-
         return project.id !== action.id;
     });
+}
+
+function _handleMoveProjectAction(currentState : ProjectsReducerState, action : MoveProjectAction) : ProjectsReducerState {
+    return arrayMove(currentState, action.oldIndex, action.newIndex);
 }
 
 export function projectsReducer(currentState: ProjectsReducerState = [], action: Action) : ProjectsReducerState {
@@ -119,6 +123,11 @@ export function projectsReducer(currentState: ProjectsReducerState = [], action:
             // $ExpectError
             var deleteProjectAction : DeleteTodoAction = (action: Action);
             return _handleDeleteProjectAction(currentState, deleteProjectAction);
+
+        case MOVE_PROJECT:
+            // $ExpectError
+            var moveProjectAction : MoveProjectAction = (action : Action);
+            return _handleMoveProjectAction(currentState, moveProjectAction);
 
         case ADD_TODO:
             // $ExpectError
