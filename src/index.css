@@ -49,6 +49,10 @@ body {
     display: none;
 }
 
+.todo-list-item-actions li {
+    padding: 0;
+}
+
 .todo-list-item:hover .todo-list-item-actions {
     display: inline;
 }
@@ -92,11 +96,18 @@ body {
 }
 
 .project-list-item-delete-button {
-    display: none;
-    margin-right: -10px;
     color: #999;
 }
 
-.project-list-item:hover .project-list-item-delete-button {
+.project-list-item-actions {
+    margin-right: -10px;
+    display: none;
+}
+
+.project-list-item-actions li {
+    padding: 0;
+}
+
+.project-list-item:hover .project-list-item-actions {
     display: block;
 }
