@@ -359,6 +359,7 @@ class TodoList extends React.Component<Props, State> {
                         className="list-unstyled"
                         onSortEnd={ this._onItemSortEnd }
                         useDragHandle={ true }
+                        lockToContainerEdges={ true }
                         helperClass="todo-list-moving-item"
                     >
                         { filteredAndOrderedItems.map((item, index) => {

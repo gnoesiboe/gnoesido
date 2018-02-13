@@ -5,6 +5,7 @@ export const ADD_TODO : string = 'add_todo';
 export const DELETE_TODO : string = 'delete_todo';
 export const ADD_PROJECT : string = 'add_project';
 export const DELETE_PROJECT : string = 'delete_project';
+export const MOVE_PROJECT : string = 'move_project';
 export const ACTIVATE_PREVIOUS_PROJECT : string = 'activate_previous_project';
 export const ACTIVATE_NEXT_PROJECT : string = 'activate_next_project';
 export const ACTIVATE_PREVIOUS_TODO : string = 'activate_previous_todo';
@@ -76,4 +77,9 @@ export type MoveTodoAction = $ReadOnly<{
     oldIndex: number,
     projectId: ?string,
     active: boolean
+}>;
+
+export type MoveProjectAction = $ReadOnly<{
+    oldIndex: number,
+    newIndex: number
 }>;

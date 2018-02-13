@@ -13,7 +13,8 @@ import {
     createAddProjectAction,
     createActivatePreviousProjectAction,
     createActivateNextProjectAction,
-    createDeleteProjectAction
+    createDeleteProjectAction,
+    createMoveProjectAction
 } from '../../action/actionFactory';
 import keyboardInputListener from 'mousetrap';
 import type { Current } from '../../reducers/currentReducer';
@@ -27,7 +28,7 @@ import type { OnSortEndData } from '../shared/sortableList/SortableList';
 type Props = {
     items: ProjectsReducerState,
     current: Current,
-    dispatch: (action: Action) => void
+    dispatch: (action: Action | MoveProjectAction) => void
 };
 
 type OwnProps = {
@@ -142,7 +143,11 @@ class ProjectList extends React.Component<Props, State> {
     }
 
     _onItemSortEnd = (data: OnSortEndData) => {
-        console.log('_onItemSortEnd', data);
+        var { dispatch } = this.props;
+
+        dispatch(
+            createMoveProjectAction(data.oldIndex, data.newIndex)
+        );
     }
 
     _renderListItem(item: Project, index: number) : React$Element<any> {

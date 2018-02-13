@@ -10,6 +10,7 @@ import type {
     DeleteTodoAction,
     AddProjectAction,
     DeleteProjectAction,
+    MoveProjectAction,
     MoveTodoAction
 } from './types';
 import {
@@ -18,6 +19,7 @@ import {
     DELETE_TODO,
     ADD_PROJECT,
     DELETE_PROJECT,
+    MOVE_PROJECT,
     ACTIVATE_PREVIOUS_PROJECT,
     ACTIVATE_NEXT_PROJECT,
     ACTIVATE_NEXT_TODO,
@@ -65,6 +67,10 @@ export function createAddProjectAction(data : ProjectFormData) : AddProjectActio
 
 export function createDeleteProjectAction(id: string) : DeleteProjectAction {
     return { type: DELETE_PROJECT, id };
+}
+
+export function createMoveProjectAction(oldIndex : number, newIndex : number) : MoveProjectAction {
+    return { type: MOVE_PROJECT, oldIndex, newIndex };
 }
 
 export function createActivatePreviousProjectAction(list: string) : ActivatePreviousProjectAction {
