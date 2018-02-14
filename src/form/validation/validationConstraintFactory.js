@@ -1,5 +1,8 @@
 // @flow
 
+import { createStartsAtValues } from '../../helper/formValueHelper';
+import type { FormSelectAutocompleteOption } from '../../components/shared/FormSelectAutocomplete';
+
 type ConstraintSet = {
     [string] : {
         [string] : any
@@ -31,8 +34,12 @@ var abbrevation = {
     }
 }
 
+var startsAt = {
+    inclusion: createStartsAtValues().map((data: FormSelectAutocompleteOption) => data.value)
+}
+
 export function createTodoFormConstraintSet() : ConstraintSet {
-    return { title, projectId, active };
+    return { title, projectId, active, startsAt };
 }
 
 export function createProjectFormConstraintSet() : ConstraintSet {
