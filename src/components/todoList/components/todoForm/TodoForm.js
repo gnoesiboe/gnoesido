@@ -12,7 +12,10 @@ import FormErrorList from '../../../shared/formErrorList/FormErrorList';
 import Form from './../../../../lib/forms/component/Form';
 import { createTodoFormState } from '../../../../form/factory/formStateFactory';
 import type { ProjectsReducerState } from '../../../../reducers/projectsReducer';
-import { convertProjectCollectionToFormSelectAutocompleteOptionList } from '../../../../helper/formValueHelper';
+import {
+    convertProjectCollectionToFormSelectAutocompleteOptionList,
+    createStartsAtValues
+} from '../../../../helper/formValueHelper';
 
 import 'react-select/dist/react-select.css';
 
@@ -84,11 +87,24 @@ export default class TodoForm extends React.Component<Props, State> {
                         noResultsText="No projects found.."
                         options={ convertProjectCollectionToFormSelectAutocompleteOptionList(projects) }
                         onNewOption={ onNewProject }
+                        allowCreate={ true }
                     />
                     <FormErrorList errors={ formState.getElementState('projectId').errors } />
                 </FormGroup>
+                <FormGroup element={ formState.getElementState('startsAt') }>
+                    <label htmlFor="startsAt">Start at</label>
+                    <FormSelectAutocomplete
+                        elementState={ formState.getElementState('startsAt') }
+                        allowCreate={ false }
+                        id="startsAt"
+                        placeholder="Select a starts day"
+                        noResultsText="No starts day found"
+                        options={ createStartsAtValues() }
+                        onNewOption={ null }
+                    />
+                    <FormErrorList errors={ formState.getElementState('startsAt').errors } />
+                </FormGroup>
                 <FormGroup element={ formState.getElementState('active') }>
-                    <label htmlFor="active">Active</label>
                     <div className="checkbox">
                         <label>
                             <FormCheckbox

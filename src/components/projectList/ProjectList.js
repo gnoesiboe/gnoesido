@@ -24,6 +24,7 @@ import type { ProjectsReducerState } from '../../reducers/projectsReducer';
 import SortableContainer from '../shared/sortableList/SortableContainer';
 import SortableContainerElement from '../shared/sortableList/components/SortableContainerElement';
 import type { OnSortEndData } from '../shared/sortableList/SortableList';
+import type { MoveProjectAction } from '../../action/types';
 
 type Props = {
     items: ProjectsReducerState,

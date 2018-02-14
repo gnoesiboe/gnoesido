@@ -13,6 +13,7 @@ export function createTodoFormState(currentState: ?Todo, onChange: OnChangeCallb
 
     formState.addElement('title', currentState ? currentState.title : undefined);
     formState.addElement('projectId', currentState ? currentState.projectId : projectId);
+    formState.addElement('startsAt', currentState && currentState.startsAt ? currentState.startsAt : undefined);
     formState.addElement('active', currentState ? currentState.active : active);
 
     return formState;

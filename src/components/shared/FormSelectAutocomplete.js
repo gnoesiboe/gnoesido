@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { Creatable } from 'react-select';
+import ReactSelect, { Creatable } from 'react-select';
 import FormElementState from '../../lib/forms/model/FormElementState';
 
 export type FormSelectAutocompleteOption = {
@@ -15,7 +15,8 @@ type Props = {
     elementState: FormElementState,
     [string]: any,
     options: Array<FormSelectAutocompleteOption>,
-    onNewOption: NewOptionCallBack
+    allowCreate: boolean,
+    onNewOption: ?NewOptionCallBack
 };
 
 export default class FormSelectAutocomplete extends React.Component<Props> {
@@ -29,21 +30,37 @@ export default class FormSelectAutocomplete extends React.Component<Props> {
     }
 
     _onNewOptionClick(option : { value: string }) : void {
-        this.props.onNewOption(option.value);
+        var { onNewOption } = this.props;
+
+        if (onNewOption) {
+            onNewOption(option.value);
+        }
     }
 
     render() : React$Element<any> {
-        var { elementState, options, ...restOfProps } = this.props;
+        var { elementState, options, onNewOption, allowCreate, ...restOfProps } = this.props;
 
-        return (
-            <Creatable
-                value={ elementState.data }
-                onChange={ this._onChange.bind(this) }
-                onBlur={ this._onBlur.bind(this) }
-                onNewOptionClick={ this._onNewOptionClick.bind(this) }
-                options={ options }
-                { ...restOfProps }
-            />
-        );
+        if (allowCreate) {
+            return (
+                <Creatable
+                    value={ elementState.data }
+                    onChange={ this._onChange.bind(this) }
+                    onBlur={ this._onBlur.bind(this) }
+                    onNewOptionClick={ this._onNewOptionClick.bind(this) }
+                    options={ options }
+                    { ...restOfProps }
+                />
+            );
+        } else {
+            return (
+                <ReactSelect
+                    value={ elementState.data }
+                    onChange={ this._onChange.bind(this) }
+                    onBlur={ this._onBlur.bind(this) }
+                    options={ options }
+                    { ...restOfProps }
+                />
+            );
+        }
     }
 }

@@ -5,5 +5,6 @@ export type Todo = {
     projectId: string,
     active: boolean,
     title: string,
-    checked: boolean
+    checked: boolean,
+    startsAt: ?string
 };
