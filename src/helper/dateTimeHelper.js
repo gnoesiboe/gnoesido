@@ -3,6 +3,7 @@
 import Moment from 'moment';
 
 export const DEFAULT_DATE_FORMAT : string = 'YYYY-MM-DD';
+export const MEDIUM_LONG_DATE_FORMAT : string = 'D MMM';
 
 export function createToday() : Moment {
     return new Moment();
@@ -76,5 +77,5 @@ export function formatDateRelativeToToday(value : string | Moment) : string {
         return 'tomorrow';
     }
 
-    return value;
+    return moment.format(MEDIUM_LONG_DATE_FORMAT);
 }
