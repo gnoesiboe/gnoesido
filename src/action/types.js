@@ -24,7 +24,8 @@ export type UpdateTodoAction = $ReadOnly<{
     previousProjectId: string,
     projectId: string,
     previousActive: boolean,
-    active: boolean
+    active: boolean,
+    startsAt: string
 }>;
 
 export type AddTodoAction = $ReadOnly<{

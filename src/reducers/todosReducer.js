@@ -21,7 +21,8 @@ function _handleUpdateTodoAction(currentState: TodosReducerState, action: Update
                 checked:  action.checked,
                 title:  action.title,
                 projectId: action.projectId,
-                active: action.active
+                active: action.active,
+                startsAt: action.startsAt
             };
         } else {
             return { ...currentTodo };

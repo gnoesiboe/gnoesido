@@ -6,5 +6,5 @@ export type Todo = {
     active: boolean,
     title: string,
     checked: boolean,
-    startsAt: ?string
+    startsAt: string
 };

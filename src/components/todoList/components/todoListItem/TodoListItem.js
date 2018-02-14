@@ -11,7 +11,7 @@ import SortableListItemHandle from '../../../shared/sortableList/SortableHandle'
 import InlineMarkdown from '../../../shared/InlineMarkdown';
 import ReactTooltip from 'react-tooltip';
 
-export type OnChangeCallback = (checked: boolean, title: string, projectId: string, active: boolean) => void;
+export type OnChangeCallback = (checked: boolean, title: string, projectId: string, active: boolean, startsAt: string) => void;
 export type OnDeleteCallback = (id: string) => void;
 
 type Props = {
@@ -45,7 +45,8 @@ class TodoListItem extends React.Component<Props, State> {
             target.checked,
             item.title,
             item.projectId,
-            item.active
+            item.active,
+            item.startsAt
         );
     }
 
@@ -83,7 +84,8 @@ class TodoListItem extends React.Component<Props, State> {
                 item.checked,
                 data.title,
                 data.projectId,
-                data.active
+                data.active,
+                data.startsAt
             )
         });
     }
@@ -95,7 +97,8 @@ class TodoListItem extends React.Component<Props, State> {
             item.checked,
             item.title,
             item.projectId,
-            !item.active
+            !item.active,
+            item.startsAt
         );
     }
 
