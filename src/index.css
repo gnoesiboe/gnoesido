@@ -45,6 +45,10 @@ body {
     border-top-color: #ff9900;
 }
 
+.todo-list-item {
+    position: relative;
+}
+
 .todo-list-item-meta-list li {
     color: #999;
     font-size: 12px;
@@ -59,7 +63,13 @@ body {
 }
 
 .todo-list-item:hover .todo-list-item-actions {
-    display: inline;
+    background: #f1f1f1;
+    border-radius: 4px;
+    padding: 2px;
+    display: block;
+    right: 10px;
+    top: 0;
+    position: absolute;
 }
 
 .todo-list-item--active,
