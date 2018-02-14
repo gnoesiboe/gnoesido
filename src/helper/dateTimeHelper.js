@@ -56,3 +56,25 @@ export function createNextDay(dayNumber : number) : Moment {
 export function formatNextDayDate(dayNumber : number) : string {
     return createNextDay(dayNumber).format(DEFAULT_DATE_FORMAT);
 }
+
+export function formatDateRelativeToToday(value : string | Moment) : string {
+    if (!(value instanceof Moment)) {
+        var moment = new Moment(value, DEFAULT_DATE_FORMAT);
+
+        if (!moment.isValid()) {
+            return value;
+        }
+    } else {
+        moment = value;
+    }
+
+    if (moment.isSame(createToday(), 'day')) {
+        return 'today';
+    }
+
+    if (moment.isSame(createTomorrow(), 'day')) {
+        return 'tomorrow';
+    }
+
+    return value;
+}

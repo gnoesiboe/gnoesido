@@ -45,6 +45,11 @@ body {
     border-top-color: #ff9900;
 }
 
+.todo-list-item-meta-list li {
+    color: #999;
+    font-size: 12px;
+}
+
 .todo-list-item-actions {
     display: none;
 }
