@@ -22,6 +22,7 @@ import 'react-select/dist/react-select.css';
 export type TodoFormData = {
     title: string,
     projectId: string,
+    startsAt: string,
     active: boolean
 }
 

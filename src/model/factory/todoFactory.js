@@ -6,6 +6,7 @@ export function createTodoFromAddTodoAction(action: AddTodoAction): Todo {
         id: action.id,
         projectId: action.projectId,
         active: action.active,
+        startsAt: action.startsAt,
         title: action.title,
         checked: false
     };

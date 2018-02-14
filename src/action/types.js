@@ -32,6 +32,7 @@ export type AddTodoAction = $ReadOnly<{
     type: string,
     title: string,
     projectId: string,
+    startsAt: string,
     active: boolean
 }>;
 

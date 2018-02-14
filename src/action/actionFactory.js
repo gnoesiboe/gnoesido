@@ -49,6 +49,7 @@ export function createAddTodoAction(data: TodoFormData) : AddTodoAction {
         id: uuid(),
         title: data.title,
         projectId: data.projectId,
+        startsAt: data.startsAt,
         active: data.active
     };
 }

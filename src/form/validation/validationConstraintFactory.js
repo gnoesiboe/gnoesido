@@ -34,8 +34,13 @@ var abbrevation = {
     }
 }
 
+var alllowedStartsAtValues = [
+    ...createStartsAtValues().map((data: FormSelectAutocompleteOption) => data.value),
+    ''
+];
+
 var startsAt = {
-    inclusion: createStartsAtValues().map((data: FormSelectAutocompleteOption) => data.value)
+    inclusion: alllowedStartsAtValues
 }
 
 export function createTodoFormConstraintSet() : ConstraintSet {
