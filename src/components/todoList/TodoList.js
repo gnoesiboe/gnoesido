@@ -243,15 +243,17 @@ class TodoList extends React.Component<Props, State> {
             return null;
         }
 
+        var { showOnlyActive, currentProject, projects } = this.props;
+
         return (
             <Modal onClose={ this._onAddModalClose.bind(this) }>
                 <h1>Add todo</h1>
                 <TodoForm
-                    active={ this.props.showOnlyActive }
+                    active={ showOnlyActive }
                     currentTodo={ null }
-                    currentProject={ this.props.currentProject }
-                    projects={ this.props.projects }
-                    project={ this.props.currentProject }
+                    currentProject={ currentProject }
+                    projects={ projects }
+                    project={ currentProject }
                     onSubmit={ this._onAddFormSubmit.bind(this) }
                     onCancel={ () => this._hideAddModal() }
                     onNewProject={ this._onNewProject }
