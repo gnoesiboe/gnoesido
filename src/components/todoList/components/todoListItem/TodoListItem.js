@@ -7,13 +7,13 @@ import type { TodoFormData } from '../todoForm/TodoForm';
 import TodoForm from '../todoForm/TodoForm';
 import createClassName from 'classnames';
 import type { ProjectsReducerState } from '../../../../reducers/projectsReducer';
-import SortableListItemHandle from '../../../shared/sortableList/SortableHandle';
 import InlineMarkdown from '../../../shared/InlineMarkdown';
 import ReactTooltip from 'react-tooltip';
 import TodolistItemMeta from './components/TodolistItemMeta';
+import type { OnDeleteCallback, OnToggleActiveStatusCallback } from './components/TodoListItemActions';
+import TodoListItemActions from './components/TodoListItemActions';
 
 export type OnChangeCallback = (checked: boolean, title: string, projectId: string, active: boolean, startsAt: string) => void;
-export type OnDeleteCallback = (id: string) => void;
 
 type Props = {
     item: Todo,
@@ -91,7 +91,7 @@ class TodoListItem extends React.Component<Props, State> {
         });
     }
 
-    _onToggleActiveStateClick = (event: SyntheticInputEvent<HTMLInputElement>) : void => {
+    _onToggleActiveStateClick : OnToggleActiveStatusCallback = () : void => {
         var { item, onChange } = this.props;
 
         onChange(
@@ -105,36 +105,6 @@ class TodoListItem extends React.Component<Props, State> {
 
     _onTitleDoubleClick(event: SyntheticInputEvent<HTMLInputElement>): void {
         this.edit();
-    }
-
-    _renderToggleActiveStatusAction() : ?React$Element<any> {
-        var { item } = this.props;
-
-        if (item.active) {
-            return (
-                <li>
-                    <button
-                        className="btn-link"
-                        onClick={ this._onToggleActiveStateClick }
-                        data-tip data-for="action-remove-from-active-list"
-                    >
-                        <i className="glyphicon glyphicon-ban-circle" />
-                    </button>
-                </li>
-            )
-        } else {
-            return (
-                <li>
-                    <button
-                        className="btn-link"
-                        onClick={ this._onToggleActiveStateClick }
-                        data-tip data-for="action-add-to-active-list"
-                    >
-                        <i className="glyphicon glyphicon-record" />
-                    </button>
-                </li>
-            );
-        }
     }
 
     _renderInner(): React$Element<any> {
@@ -163,28 +133,12 @@ class TodoListItem extends React.Component<Props, State> {
             return (
                 <form className="form" onSubmit={ (event: SyntheticInputEvent<HTMLInputElement>) : void => event.preventDefault() }>
                     <div className="checkbox">
-                        <ul className="list-inline pull-right todo-list-item-actions">
-                            { this._renderToggleActiveStatusAction() }
-                            <li>
-                                <SortableListItemHandle
-                                    data-tip data-for="action-sort"
-                                    className="todo-list-item-drag-handle"
-                                >
-                                    <i className="glyphicon glyphicon-menu-hamburger" />
-                                </SortableListItemHandle>
-                            </li>
-                            <li>
-                                <button
-                                    className="btn-link todo-list-item-remove-button"
-                                    onClick={ onDelete }
-                                    data-tip data-for="action-delete"
-                                >
-                                    <i className="glyphicon glyphicon-remove" />
-                                </button>
-                            </li>
-                        </ul>
+                        <TodoListItemActions
+                            onDelete={ onDelete }
+                            todo={ item }
+                            onToggleActiveStatus={ this._onToggleActiveStateClick }
+                        />
                         <input
-                            name="checked"
                             onChange={ this._onCheckboxChange.bind(this) }
                             type="checkbox"
                             checked={ item.checked }
