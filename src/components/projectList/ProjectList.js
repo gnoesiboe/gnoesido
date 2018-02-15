@@ -78,7 +78,11 @@ class ProjectList extends React.Component<Props, State> {
                 createActivateTodosThatStartTodayAction(ids)
             );
 
-            NotificationManager.success(`${ids.length} todo(s) were activated because they start today`);
+            var successMessage = ids.length === 1
+                ? '1 todo was activated because it starts today'
+                : `${ids.length} todos were activated because they start today`;
+
+            NotificationManager.success(successMessage);
         }
     }
 
