@@ -58,11 +58,7 @@ class ProjectList extends React.Component<Props, State> {
         windowVisibilityHelper.startListening();
     }
 
-    _onWindowVisibilityChange = (isNowVisible : boolean) : void => {
-        if (!isNowVisible) {
-            return;
-        }
-
+    _onWindowVisibilityChange = () : void => {
         var { dispatch } = this.props;
 
         dispatch(

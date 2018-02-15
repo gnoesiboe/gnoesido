@@ -2,11 +2,12 @@
 
 import uuid from 'uuid';
 
-export type VisibilityChangeCallback = (visible : boolean) => void;
+export type VisibilityChangeCallback = () => void;
 
 var _listeners : { [string]: VisibilityChangeCallback } = {},
     eventName : ?string = null,
-    apiEndpoint : ?string = null;
+    apiEndpoint : ?string = null,
+    hasEmittedRecently : boolean = false;
 
 function _determineEventName() : string {
     if (eventName) {
@@ -62,12 +63,33 @@ export function unregisterListener(key: string) : void {
     }
 }
 
+function _emit() {
+    if (hasEmittedRecently) {
+        return;
+    }
+
+    Object.keys(_listeners).forEach((key: string) => _listeners[key]());
+
+    hasEmittedRecently = true;
+
+    setTimeout(
+        () => { hasEmittedRecently = false; },
+        5000
+    );
+}
+
+function _onFocus() : void {
+    _emit();
+}
+
 function _onVisiblityChange() : void {
 
     // $ExpectError
     var isNowVisible : boolean = document[_determineApiEndpoint()];
 
-    Object.keys(_listeners).forEach((key: string) => _listeners[key](isNowVisible));
+    if (isNowVisible) {
+        _emit();
+    }
 }
 
 export function startListening() : void {
@@ -75,6 +97,7 @@ export function startListening() : void {
         console.error('This demo requires a browser, such as Google Chrome or Firefox, that supports the Page Visibility API.');
     } else {
         document.addEventListener(_determineEventName(), _onVisiblityChange, false);
+        window.addEventListener('focus', _onFocus, true);
     }
 }
 
