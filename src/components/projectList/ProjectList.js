@@ -60,9 +60,15 @@ class ProjectList extends React.Component<Props, State> {
 
         this._windowVisibilityChangeListenerId = windowVisibilityHelper.registerListener(this._onWindowVisibilityChange);
         windowVisibilityHelper.startListening();
+
+        this._dispatchActivateTodosThatStartTodayAction();
     }
 
     _onWindowVisibilityChange = () : void => {
+        this._dispatchActivateTodosThatStartTodayAction();
+    };
+
+    _dispatchActivateTodosThatStartTodayAction() : void {
         var { dispatch, todos } = this.props;
 
         var ids = filterOutIdsOfAllTodosThatShouldBeActivatedToday(todos);
@@ -74,7 +80,7 @@ class ProjectList extends React.Component<Props, State> {
 
             NotificationManager.success(`${ids.length} todo(s) were activated because they start today`);
         }
-    };
+    }
 
     componentWillUnmount() : void {
         keyboardInputListener.unbind('p', this._onPreviousProjectKeyboardBindingPressed);
