@@ -3,7 +3,6 @@
 import React from 'react';
 import type { Project } from '../../model/type/Project';
 import type { GlobalStateType } from '../../store/globalStateType';
-import type { Connector } from 'react-redux';
 import { connect } from 'react-redux';
 import Modal from '../shared/Modal';
 import ProjectForm from './components/ProjectForm';
@@ -51,9 +50,9 @@ class ProjectList extends React.Component<Props, State> {
 
     state : State = {
         showAddForm: false
-    }
+    };
 
-    _windowVisibilityChangeListenerId : ?string = null
+    _windowVisibilityChangeListenerId : ?string = null;
 
     componentDidMount() : void {
         keyboardInputListener.bind('p', this._onPreviousProjectKeyboardBindingPressed);
@@ -75,7 +74,7 @@ class ProjectList extends React.Component<Props, State> {
 
             NotificationManager.success(`${ids.length} todo(s) were activated because they start today`);
         }
-    }
+    };
 
     componentWillUnmount() : void {
         keyboardInputListener.unbind('p', this._onPreviousProjectKeyboardBindingPressed);
@@ -96,7 +95,7 @@ class ProjectList extends React.Component<Props, State> {
                 determinePreviousList(current, items)
             )
         );
-    }
+    };
 
     _onNextProjectKeyboardBindingPressed = () => {
         var { dispatch, current, items } = this.props;
@@ -106,9 +105,9 @@ class ProjectList extends React.Component<Props, State> {
                 determineNextList(current, items)
             )
         )
-    }
+    };
 
-    _onAddClick(event: SyntheticInputEvent<HTMLInputElement>) : void {
+    _onAddClick() : void {
         this._showAddFormModal();
     }
 
@@ -173,7 +172,7 @@ class ProjectList extends React.Component<Props, State> {
         dispatch(
             createDeleteProjectAction(projectId)
         );
-    }
+    };
 
     _onItemSortEnd = (data: OnSortEndData) => {
         var { dispatch } = this.props;
@@ -181,7 +180,7 @@ class ProjectList extends React.Component<Props, State> {
         dispatch(
             createMoveProjectAction(data.oldIndex, data.newIndex)
         );
-    }
+    };
 
     _renderListItem(item: Project, index: number) : React$Element<any> {
         return (
@@ -233,6 +232,4 @@ function _mapGlobalStateToProps(globalState: GlobalStateType) : OwnProps {
     };
 }
 
-var connector: Connector<{}, Props> = connect(_mapGlobalStateToProps);
-
-export default connector(ProjectList);
+export default connect(_mapGlobalStateToProps)(ProjectList);
