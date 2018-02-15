@@ -1,6 +1,7 @@
 // @flow
 
 import type {
+    Action,
     ActivateNextProjectAction,
     ActivatePreviousProjectAction,
     ActivateNextTodoAction,
@@ -24,7 +25,8 @@ import {
     ACTIVATE_NEXT_PROJECT,
     ACTIVATE_NEXT_TODO,
     ACTIVATE_PREVIOUS_TODO,
-    MOVE_TODO
+    MOVE_TODO,
+    ACTIVATE_TODOS_THAT_START_TODAY
 } from './types';
 import type { TodoFormData } from '../components/todoList/components/todoForm/TodoForm';
 import type { ProjectFormData } from '../components/projectList/components/ProjectForm';
@@ -92,4 +94,8 @@ export function createActivatePreviousTodoAction(todoIndex: number) : ActivatePr
 
 export function createMoveTodoAction(oldIndex: number, newIndex: number, projectId: ?string, active: boolean) : MoveTodoAction {
     return { type: MOVE_TODO, oldIndex, newIndex, projectId, active };
+}
+
+export function createActivateTodosThatStartTodayAction() : Action {
+    return { type: ACTIVATE_TODOS_THAT_START_TODAY };
 }

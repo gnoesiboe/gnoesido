@@ -14,7 +14,8 @@ import {
     createActivatePreviousProjectAction,
     createActivateNextProjectAction,
     createDeleteProjectAction,
-    createMoveProjectAction
+    createMoveProjectAction,
+    createActivateTodosThatStartTodayAction
 } from '../../action/actionFactory';
 import keyboardInputListener from 'mousetrap';
 import type { Current } from '../../reducers/currentReducer';
@@ -25,6 +26,7 @@ import SortableContainer from '../shared/sortableList/SortableContainer';
 import SortableContainerElement from '../shared/sortableList/components/SortableContainerElement';
 import type { OnSortEndData } from '../shared/sortableList/SortableList';
 import type { MoveProjectAction } from '../../action/types';
+import * as windowVisibilityHelper from './../../helper/windowVisibilityHelper';
 
 type Props = {
     items: ProjectsReducerState,
@@ -46,14 +48,37 @@ class ProjectList extends React.Component<Props, State> {
         showAddForm: false
     }
 
+    _windowVisibilityChangeListenerId : ?string = null
+
     componentDidMount() : void {
         keyboardInputListener.bind('p', this._onPreviousProjectKeyboardBindingPressed);
         keyboardInputListener.bind('n', this._onNextProjectKeyboardBindingPressed);
+
+        this._windowVisibilityChangeListenerId = windowVisibilityHelper.registerListener(this._onWindowVisibilityChange);
+        windowVisibilityHelper.startListening();
+    }
+
+    _onWindowVisibilityChange = (isNowVisible : boolean) : void => {
+        if (!isNowVisible) {
+            return;
+        }
+
+        var { dispatch } = this.props;
+
+        dispatch(
+            createActivateTodosThatStartTodayAction()
+        );
     }
 
     componentWillUnmount() : void {
         keyboardInputListener.unbind('p', this._onPreviousProjectKeyboardBindingPressed);
         keyboardInputListener.unbind('n', this._onNextProjectKeyboardBindingPressed);
+
+        if (this._windowVisibilityChangeListenerId) {
+            windowVisibilityHelper.unregisterListener(this._windowVisibilityChangeListenerId);
+        }
+
+        windowVisibilityHelper.stopListening();
     }
 
     _onPreviousProjectKeyboardBindingPressed = () => {

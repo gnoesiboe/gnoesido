@@ -11,6 +11,7 @@ export const ACTIVATE_NEXT_PROJECT : string = 'activate_next_project';
 export const ACTIVATE_PREVIOUS_TODO : string = 'activate_previous_todo';
 export const ACTIVATE_NEXT_TODO : string = 'activate_next_todo';
 export const MOVE_TODO : string = 'move_todo';
+export const ACTIVATE_TODOS_THAT_START_TODAY : string = 'activate_todos_that_start_today';
 
 export type Action = $ReadOnly<{
     type: string
