@@ -5,6 +5,9 @@ import { createStore } from './store/createStore';
 import { Provider } from 'react-redux';
 import TodoList from './components/todoList/TodoList';
 import ProjectList from './components/projectList/ProjectList';
+import { NotificationContainer } from 'react-notifications';
+
+import 'react-notifications/lib/notifications.css';
 
 type Props = {};
 
@@ -27,6 +30,7 @@ class App extends React.Component<Props> {
                     </div>
                     <hr />
                     <ProjectList />
+                    <NotificationContainer/>
                 </div>
             </Provider>
         );

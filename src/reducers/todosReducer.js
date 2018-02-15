@@ -1,15 +1,23 @@
 // @flow
 
-import type { Action } from './../action/types';
 import {
     UPDATE_TODO,
     ADD_TODO,
     DELETE_TODO,
-    DELETE_PROJECT
+    DELETE_PROJECT,
+    ACTIVATE_TODOS_THAT_START_TODAY
 } from '../action/types';
-import type { UpdateTodoAction, AddTodoAction, DeleteTodoAction, DeleteProjectAction } from '../action/types';
+import type {
+    UpdateTodoAction,
+    AddTodoAction,
+    DeleteTodoAction,
+    DeleteProjectAction,
+    Action
+} from '../action/types';
 import type { Todo } from '../model/type/Todo';
 import { createTodoFromAddTodoAction } from '../model/factory/todoFactory';
+import { createToday, createMomentFromDate } from '../helper/dateTimeHelper';
+import { NotificationManager } from 'react-notifications';
 
 export type TodosReducerState = Array<Todo>;
 
@@ -49,6 +57,31 @@ function _handleDeleteProjectAction(currentState : TodosReducerState, action : D
     });
 }
 
+function _handleActivateTodosThatStartToday(currentState : TodosReducerState): TodosReducerState {
+    var countActivated = 0;
+
+    var newState = currentState.map((todo : Todo) => {
+        var todoIsToStartToday = createMomentFromDate(todo.startsAt).isSame(createToday(), 'day');
+
+        if (todoIsToStartToday && !todo.checked && !todo.active) {
+            countActivated++;
+
+            return {
+                ...todo,
+                active: true
+            };
+        }
+
+        return todo;
+    });
+
+    if (countActivated > 0) {
+        NotificationManager.success(`${countActivated} todo's have been activated as they start today`);
+    }
+
+    return newState;
+}
+
 export function todosReducer(currentState: TodosReducerState = [], action: UpdateTodoAction | Action) : TodosReducerState {
     switch (action.type) {
         case UPDATE_TODO:
@@ -70,6 +103,9 @@ export function todosReducer(currentState: TodosReducerState = [], action: Updat
             // $ExpectError
             var deleteProjectAction : DeleteProjectAction = (action: Action);
             return _handleDeleteProjectAction(currentState, deleteProjectAction);
+
+        case ACTIVATE_TODOS_THAT_START_TODAY:
+            return _handleActivateTodosThatStartToday(currentState);
 
         default:
             return currentState;
