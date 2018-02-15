@@ -58,15 +58,21 @@ export function formatNextDayDate(dayNumber : number) : string {
     return createNextDay(dayNumber).format(DEFAULT_DATE_FORMAT);
 }
 
-export function createMomentFromDate(value : string) : Moment {
-    return new Moment(value, DEFAULT_DATE_FORMAT)
+export function createMomentFromDate(value : string) : ?Moment {
+    var moment = new Moment(value, DEFAULT_DATE_FORMAT)
+
+    if (!moment.isValid()) {
+        return null;
+    }
+
+    return moment;
 }
 
 export function formatDateRelativeToToday(value : string | Moment) : string {
     if (!(value instanceof Moment)) {
         var moment = createMomentFromDate(value);
 
-        if (!moment.isValid()) {
+        if (!moment) {
             return value;
         }
     } else {

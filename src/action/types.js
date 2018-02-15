@@ -17,6 +17,11 @@ export type Action = $ReadOnly<{
     type: string
 }>;
 
+export type ActivateTodosThatStartToday = $ReadOnly<{
+    type: string,
+    ids: Array<string>
+}>;
+
 export type UpdateTodoAction = $ReadOnly<{
     type: string,
     id: string,

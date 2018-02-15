@@ -1,7 +1,6 @@
 // @flow
 
 import type {
-    Action,
     ActivateNextProjectAction,
     ActivatePreviousProjectAction,
     ActivateNextTodoAction,
@@ -12,7 +11,8 @@ import type {
     AddProjectAction,
     DeleteProjectAction,
     MoveProjectAction,
-    MoveTodoAction
+    MoveTodoAction,
+    ActivateTodosThatStartToday
 } from './types';
 import {
     UPDATE_TODO,
@@ -96,6 +96,6 @@ export function createMoveTodoAction(oldIndex: number, newIndex: number, project
     return { type: MOVE_TODO, oldIndex, newIndex, projectId, active };
 }
 
-export function createActivateTodosThatStartTodayAction() : Action {
-    return { type: ACTIVATE_TODOS_THAT_START_TODAY };
+export function createActivateTodosThatStartTodayAction(ids : Array<string>) : ActivateTodosThatStartToday {
+    return { type: ACTIVATE_TODOS_THAT_START_TODAY, ids };
 }

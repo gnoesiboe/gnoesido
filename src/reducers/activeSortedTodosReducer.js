@@ -4,14 +4,16 @@ import {
     ADD_TODO,
     UPDATE_TODO,
     DELETE_TODO,
-    MOVE_TODO
+    MOVE_TODO,
+    ACTIVATE_TODOS_THAT_START_TODAY
 } from '../action/types';
 import type {
     Action,
     AddTodoAction,
     UpdateTodoAction,
     DeleteTodoAction,
-    MoveTodoAction
+    MoveTodoAction,
+    ActivateTodosThatStartToday
 } from '../action/types';
 import { arrayMove } from 'react-sortable-hoc';
 
@@ -60,6 +62,21 @@ function _handleMoveTodoAction(currentState: ActiveSortedTodosReducerState, acti
     return arrayMove(currentState, action.oldIndex, action.newIndex);
 }
 
+function _handleActivateTodosThatStartTodayAction(currentState : ActiveSortedTodosReducerState, action : ActivateTodosThatStartToday) : ActiveSortedTodosReducerState {
+    var idsToAdd : Array<string> = [];
+
+    action.ids.forEach((id : string) => {
+        if (currentState.indexOf(id) === -1) {
+            idsToAdd.push(id);
+        }
+    });
+
+    return [
+        ...currentState,
+        ...idsToAdd
+    ];
+}
+
 export function activeSortedTodosReducer(currentState: ActiveSortedTodosReducerState = [], action: Action) : ActiveSortedTodosReducerState {
     switch (action.type) {
         case ADD_TODO:
@@ -81,6 +98,11 @@ export function activeSortedTodosReducer(currentState: ActiveSortedTodosReducerS
             // $ExpectError
             var moveTodoAction : MoveTodoAction = (action: Action);
             return _handleMoveTodoAction(currentState, moveTodoAction);
+
+        case ACTIVATE_TODOS_THAT_START_TODAY:
+            // $ExpectError
+            var activateTodosThatStartTodayAction : ActivateTodosThatStartToday = (action : Action);
+            return _handleActivateTodosThatStartTodayAction(currentState, activateTodosThatStartTodayAction);
 
         default:
             return currentState;

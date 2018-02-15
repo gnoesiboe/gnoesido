@@ -27,15 +27,20 @@ import SortableContainerElement from '../shared/sortableList/components/Sortable
 import type { OnSortEndData } from '../shared/sortableList/SortableList';
 import type { MoveProjectAction } from '../../action/types';
 import * as windowVisibilityHelper from './../../helper/windowVisibilityHelper';
+import type { TodosReducerState } from '../../reducers/todosReducer';
+import { filterOutIdsOfAllTodosThatShouldBeActivatedToday } from '../../model/filter/todoFilters';
+import { NotificationManager } from 'react-notifications';
 
 type Props = {
     items: ProjectsReducerState,
+    todos: TodosReducerState,
     current: Current,
     dispatch: (action: Action | MoveProjectAction) => void
 };
 
 type OwnProps = {
-    items: ProjectsReducerState
+    items: ProjectsReducerState,
+    todos: TodosReducerState
 };
 
 type State = {
@@ -59,11 +64,17 @@ class ProjectList extends React.Component<Props, State> {
     }
 
     _onWindowVisibilityChange = () : void => {
-        var { dispatch } = this.props;
+        var { dispatch, todos } = this.props;
 
-        dispatch(
-            createActivateTodosThatStartTodayAction()
-        );
+        var ids = filterOutIdsOfAllTodosThatShouldBeActivatedToday(todos);
+
+        if (ids.length > 0) {
+            dispatch(
+                createActivateTodosThatStartTodayAction(ids)
+            );
+
+            NotificationManager.success(`${ids.length} todo(s) were activated because they start today`);
+        }
     }
 
     componentWillUnmount() : void {
@@ -217,7 +228,8 @@ class ProjectList extends React.Component<Props, State> {
 function _mapGlobalStateToProps(globalState: GlobalStateType) : OwnProps {
     return {
         items: globalState.projects,
-        current: globalState.current
+        current: globalState.current,
+        todos: globalState.todos
     };
 }
 

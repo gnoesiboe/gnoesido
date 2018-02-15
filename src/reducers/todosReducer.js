@@ -12,12 +12,11 @@ import type {
     AddTodoAction,
     DeleteTodoAction,
     DeleteProjectAction,
+    ActivateTodosThatStartToday,
     Action
 } from '../action/types';
 import type { Todo } from '../model/type/Todo';
 import { createTodoFromAddTodoAction } from '../model/factory/todoFactory';
-import { createToday, createMomentFromDate } from '../helper/dateTimeHelper';
-import { NotificationManager } from 'react-notifications';
 
 export type TodosReducerState = Array<Todo>;
 
@@ -57,15 +56,9 @@ function _handleDeleteProjectAction(currentState : TodosReducerState, action : D
     });
 }
 
-function _handleActivateTodosThatStartToday(currentState : TodosReducerState): TodosReducerState {
-    var countActivated = 0;
-
-    var newState = currentState.map((todo : Todo) => {
-        var todoIsToStartToday = createMomentFromDate(todo.startsAt).isSame(createToday(), 'day');
-
-        if (todoIsToStartToday && !todo.checked && !todo.active) {
-            countActivated++;
-
+function _handleActivateTodosThatStartToday(currentState : TodosReducerState, action : ActivateTodosThatStartToday): TodosReducerState {
+    return currentState.map((todo : Todo) => {
+        if (action.ids.indexOf(todo.id) !== -1) {
             return {
                 ...todo,
                 active: true
@@ -74,12 +67,6 @@ function _handleActivateTodosThatStartToday(currentState : TodosReducerState): T
 
         return todo;
     });
-
-    if (countActivated > 0) {
-        NotificationManager.success(`${countActivated} todo's have been activated as they start today`);
-    }
-
-    return newState;
 }
 
 export function todosReducer(currentState: TodosReducerState = [], action: UpdateTodoAction | Action) : TodosReducerState {
@@ -105,7 +92,10 @@ export function todosReducer(currentState: TodosReducerState = [], action: Updat
             return _handleDeleteProjectAction(currentState, deleteProjectAction);
 
         case ACTIVATE_TODOS_THAT_START_TODAY:
-            return _handleActivateTodosThatStartToday(currentState);
+
+            // $ExpectError
+            var activateAction : ActivateTodosThatStartToday = (action : Action);
+            return _handleActivateTodosThatStartToday(currentState, activateAction);
 
         default:
             return currentState;
