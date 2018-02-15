@@ -10,7 +10,7 @@ import type { ProjectsReducerState } from '../../../../reducers/projectsReducer'
 import SortableListItemHandle from '../../../shared/sortableList/SortableHandle';
 import InlineMarkdown from '../../../shared/InlineMarkdown';
 import ReactTooltip from 'react-tooltip';
-import { formatDateRelativeToToday } from '../../../../helper/dateTimeHelper';
+import TodolistItemMeta from './components/TodolistItemMeta';
 
 export type OnChangeCallback = (checked: boolean, title: string, projectId: string, active: boolean, startsAt: string) => void;
 export type OnDeleteCallback = (id: string) => void;
@@ -137,22 +137,6 @@ class TodoListItem extends React.Component<Props, State> {
         }
     }
 
-    _renderMetaInformationIfRequired() : ?React$Element<any> {
-        var { item } = this.props;
-
-        var startsAt = item.startsAt;
-
-        if (!startsAt) {
-            return null;
-        }
-
-        return (
-            <ul className="list-inline todo-list-item-meta-list">
-                <li><i className="glyphicon glyphicon-calendar" /> { formatDateRelativeToToday(item.startsAt) }</li>
-            </ul>
-        )
-    }
-
     _renderInner(): React$Element<any> {
         var { item, project, onDelete } = this.props;
         var { showEditForm } = this.state;
@@ -208,7 +192,7 @@ class TodoListItem extends React.Component<Props, State> {
                         <div onDoubleClick={ this._onTitleDoubleClick.bind(this) } className={ titleClassName }>
                             <strong>{ project.abbrevation }</strong> — <InlineMarkdown source={ item.title } />
                         </div>
-                        { this._renderMetaInformationIfRequired() }
+                        <TodolistItemMeta todo={ item } />
                     </div>
                     <ReactTooltip id="action-remove-from-active-list">
                         <span>Remove item from active list</span>
