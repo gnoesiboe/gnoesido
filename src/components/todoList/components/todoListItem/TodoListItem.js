@@ -174,10 +174,11 @@ class TodoListItem extends React.Component<Props, State> {
     }
 
     render(): React$Element<any> {
-        var { active } = this.props;
+        var { active, item } = this.props;
 
         var className : string = createClassName('todo-list-item', {
-            'todo-list-item__active': active
+            'todo-list-item__active': active,
+            'todo-list-item__checked': item.checked
         });
 
         return (

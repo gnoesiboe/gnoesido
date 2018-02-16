@@ -93,6 +93,10 @@
             border: 1px dotted #ff9900;
         }
 
+        .todo-list-item__checked .todo-list-item-meta .todo-list-item-meta--start__late {
+            color: #999;
+        }
+
 
     /* 2.3. Todo list item meta */
 
