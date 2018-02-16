@@ -31,6 +31,7 @@ import type { TodosReducerState } from '../../reducers/todosReducer';
 import type { ActiveSortedTodosReducerState } from '../../reducers/activeSortedTodosReducer';
 import { sortTodosWithSorting } from '../../helper/todoSortingHelper';
 import { determineNextTodoIndex, determinePreviousTodoIndex } from '../../helper/activeItemHelper';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 type Props = {
     items: TodosReducerState,
@@ -374,9 +375,15 @@ class TodoList extends React.Component<Props, State> {
                         lockToContainerEdges={ true }
                         helperClass="todo-list--item-being-dragged"
                     >
-                        { filteredAndOrderedItems.map((item, index) => {
-                            return this._renderItem(item, index);
-                        }) }
+                        <ReactCSSTransitionGroup
+                            transitionName="transaction--ease-in"
+                            transitionEnterTimeout={ 500 }
+                            transitionLeaveTimeout={ 300 }
+                        >
+                            { filteredAndOrderedItems.map((item, index) => {
+                                return this._renderItem(item, index);
+                            }) }
+                        </ReactCSSTransitionGroup>
                     </SortableList>
                 </div>
                 <div className="text-center spacer-m">

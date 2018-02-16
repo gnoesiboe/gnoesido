@@ -200,3 +200,24 @@
         text-decoration: underline;
         color: #000;
     }
+
+
+/* 3. Transitions */
+
+.transaction--ease-in-enter {
+  opacity: 0.01;
+}
+
+.transaction--ease-in-enter.transaction--ease-in-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in-out;
+}
+
+.transaction--ease-in-leave {
+  opacity: 1;
+}
+
+.transaction--ease-in-leave.transaction--ease-in-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in-out;
+}
