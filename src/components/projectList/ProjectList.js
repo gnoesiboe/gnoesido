@@ -30,6 +30,7 @@ import * as windowVisibilityHelper from './../../helper/windowVisibilityHelper';
 import type { TodosReducerState } from '../../reducers/todosReducer';
 import { filterOutIdsOfAllTodosThatShouldBeActivatedToday } from '../../model/filter/todoFilters';
 import { NotificationManager } from 'react-notifications';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 type Props = {
     items: ProjectsReducerState,
@@ -235,7 +236,13 @@ class ProjectList extends React.Component<Props, State> {
                     lockToContainerEdges={ true }
                     axis="xy"
                 >
-                    { items.map((item: Project, index) => this._renderListItem(item, index)) }
+                    <ReactCSSTransitionGroup
+                        transitionName="transaction--slide-in-ease-out"
+                        transitionEnterTimeout={ 300 }
+                        transitionLeaveTimeout={ 600 }
+                    >
+                        { items.map((item: Project, index) => this._renderListItem(item, index)) }
+                    </ReactCSSTransitionGroup>
                 </SortableContainer>
                 <div className="row">
                     <button className="btn btn-default btn-lg project-list--add-button" onClick={ this._onAddClick.bind(this) }>
