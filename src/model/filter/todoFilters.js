@@ -15,7 +15,11 @@ export function filterOutIdsOfAllTodosThatShouldBeActivatedToday(todos : TodosRe
                 return false;
             }
 
-            return !todo.active && !todo.checked && startsAtMoment.isSame(today, 'day');
+            if (todo.active || todo.checked) {
+                return false;
+            }
+
+            return startsAtMoment.isSame(today, 'day') || startsAtMoment.isBefore(today, 'day');
         })
         .map((todo : Todo) => {
             return todo.id;
