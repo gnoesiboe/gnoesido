@@ -40,6 +40,10 @@ export default class ProjectListItem extends React.Component<Props, State> {
         });
     }
 
+    _onEditClick = () : void => {
+        this._showEditForm();
+    };
+
     render() : React$Element<any> {
         var { item, onDelete } = this.props;
 
@@ -48,18 +52,22 @@ export default class ProjectListItem extends React.Component<Props, State> {
                 <ProjectListItemActions
                     onDelete={ onDelete }
                     project={ item }
+                    onEdit={ this._onEditClick }
                 />
                 <h3 className="project-list-item-title"><strong>[{ item.abbrevation }]</strong> { item.title }</h3>
                 <TodoList
                     currentProject={ item }
                     showOnlyActive={ false }
                 />
-            <ReactTooltip id="action-delete-project">
-                <span>Remove project</span>
-            </ReactTooltip>
-            <ReactTooltip id="action-sort-project">
-                <span>Drag to sort projects</span>
-            </ReactTooltip>
+                <ReactTooltip id="action-delete-project">
+                    <span>Remove project</span>
+                </ReactTooltip>
+                <ReactTooltip id="action-sort-project">
+                    <span>Drag to sort projects</span>
+                </ReactTooltip>
+                <ReactTooltip id="action-edit-project">
+                    <span>Edit project</span>
+                </ReactTooltip>
             </div>
         );
     }

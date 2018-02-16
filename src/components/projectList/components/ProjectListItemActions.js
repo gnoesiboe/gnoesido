@@ -5,10 +5,12 @@ import SortableListItemHandle from '../../shared/sortableList/SortableHandle';
 import type { Project } from '../../../model/type/Project';
 
 export type OnDeleteCallback = (id: string) => void;
+export type OnEditCallback = (id: string) => void;
 
 type Props = {
     project: Project,
-    onDelete: OnDeleteCallback
+    onDelete: OnDeleteCallback,
+    onEdit: OnEditCallback
 }
 
 export default class ProjectListItemActions extends React.Component<Props> {
@@ -24,7 +26,7 @@ export default class ProjectListItemActions extends React.Component<Props> {
             <li>
                 <SortableListItemHandle
                     data-tip data-for="action-sort-project"
-                    className="todo-list-item-drag-handle"
+                    className="project-list-item-drag-handle"
                 >
                     <i className="glyphicon glyphicon-menu-hamburger" />
                 </SortableListItemHandle>
@@ -46,9 +48,30 @@ export default class ProjectListItemActions extends React.Component<Props> {
         );
     }
 
+    _onEditClick = (event: SyntheticInputEvent<HTMLInputElement>) : void => {
+        var { project, onEdit } = this.props;
+
+        onEdit(project.id);
+    };
+
+    _renderEditAction() : React$Element<any> {
+        return (
+            <li>
+                <button
+                    className="btn btn-link"
+                    onClick={ this._onEditClick }
+                    data-tip data-for="action-edit-project"
+                >
+                    <i className="glyphicon glyphicon-pencil" />
+                </button>
+            </li>
+        )
+    }
+
     render() : React$Element<any> {
         return (
             <ul className="list-inline pull-right project-list-item-actions">
+                { this._renderEditAction() }
                 { this._renderSortHandle() }
                 { this._renderRemoveAction() }
             </ul>
