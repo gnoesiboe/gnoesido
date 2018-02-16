@@ -24,8 +24,8 @@ export default class TodolistItemMeta extends React.Component<Props> {
 
         var today = createToday();
 
-        var className = createClassName('todo-list-item-meta-start', {
-            'todo-list-item-meta-start--late': startsAt.isBefore(today, 'day')
+        var className = createClassName('todo-list-item-meta--start', {
+            'todo-list-item-meta--start__late': startsAt.isBefore(today, 'day')
         });
 
         return (
@@ -37,7 +37,7 @@ export default class TodolistItemMeta extends React.Component<Props> {
 
     render() : ?React$Element<any> {
         return (
-            <ul className="list-inline todo-list-item-meta-list">
+            <ul className="list-inline todo-list-item-meta">
                 { this._renderStartsAt() }
             </ul>
         )

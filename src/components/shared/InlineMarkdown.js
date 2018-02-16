@@ -19,7 +19,7 @@ export default class InlineMarkdown extends React.Component<Props> {
         // prevent <p> wrapping of paragraph (is block ellement)
 
         return (
-            <span className="markdown markdown-inline">
+            <span className="inline-markdown">
                 { props.children }
             </span>
         );

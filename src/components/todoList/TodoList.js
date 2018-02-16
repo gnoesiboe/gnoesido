@@ -202,7 +202,7 @@ class TodoList extends React.Component<Props, State> {
         var isActive = this._checkIsActiveList() && index === current.todoIndex;
 
         return (
-            <SortableListItem key={ item.id } index={ index } className="todo-list-li">
+            <SortableListItem key={ item.id } index={ index } className="todo-list--list-item">
                 <TodoListItem
                     active={ isActive }
                     ref={ (el) => this._refs[item.id] = el }
@@ -360,7 +360,7 @@ class TodoList extends React.Component<Props, State> {
             filteredAndOrderedItems : TodosReducerState = this._orderItems(filteredItems);
 
         var className = createClassName('todo-list', {
-            'todo-list--active': this._checkIsActiveList()
+            'todo-list__active': this._checkIsActiveList()
         });
 
         return (
@@ -372,7 +372,7 @@ class TodoList extends React.Component<Props, State> {
                         onSortEnd={ this._onItemSortEnd }
                         useDragHandle={ true }
                         lockToContainerEdges={ true }
-                        helperClass="todo-list-moving-item"
+                        helperClass="todo-list--item-being-dragged"
                     >
                         { filteredAndOrderedItems.map((item, index) => {
                             return this._renderItem(item, index);

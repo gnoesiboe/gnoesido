@@ -26,7 +26,7 @@ export default class ProjectListItemActions extends React.Component<Props> {
             <li>
                 <SortableListItemHandle
                     data-tip data-for="action-sort-project"
-                    className="project-list-item-drag-handle"
+                    className="project-list-item-actions--drag-handle"
                 >
                     <i className="glyphicon glyphicon-menu-hamburger" />
                 </SortableListItemHandle>
@@ -38,7 +38,7 @@ export default class ProjectListItemActions extends React.Component<Props> {
         return (
             <li>
                 <button
-                    className="btn btn-link project-list-item-delete-button"
+                    className="btn btn-link project-list-item-actions--delete-button"
                     onClick={ this._onDeleteClick }
                     data-tip data-for="action-delete-project"
                 >

@@ -64,7 +64,7 @@ export default class TodoListItemActions extends React.Component<Props> {
             <li>
                 <SortableListItemHandle
                     data-tip data-for="action-sort"
-                    className="todo-list-item-drag-handle"
+                    className="todo-list-item-actions--drag-handle"
                 >
                     <i className="glyphicon glyphicon-menu-hamburger" />
                 </SortableListItemHandle>

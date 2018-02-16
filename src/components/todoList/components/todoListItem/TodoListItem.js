@@ -117,7 +117,7 @@ class TodoListItem extends React.Component<Props, State> {
 
         if (showEditForm) {
             return (
-                <div className="todo-list-item-edit-form">
+                <div className="todo-list-item--edit-form">
                     <TodoForm
                         onSubmit={ this._onEditFormSubmit.bind(this) }
                         onCancel={ () => this._hideEditForm() }
@@ -130,8 +130,8 @@ class TodoListItem extends React.Component<Props, State> {
                 </div>
             );
         } else {
-            var titleClassName : string = createClassName('todo-list-item-title', {
-                'todo-list-item-title--checked': item.checked
+            var titleClassName : string = createClassName('todo-list-item--title', {
+                'todo-list-item--title__checked': item.checked
             });
 
             return (
@@ -177,7 +177,7 @@ class TodoListItem extends React.Component<Props, State> {
         var { active } = this.props;
 
         var className : string = createClassName('todo-list-item', {
-            'todo-list-item--active': active
+            'todo-list-item__active': active
         });
 
         return (

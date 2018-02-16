@@ -1,151 +1,194 @@
-/* GENERAL */
+/* 1. GENERAL */
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-}
+    /* 1.1 General tags */
 
-.spacer-m {
-    margin-bottom: 20px;
-}
-
-.spacer-l {
-    margin-bottom: 40px;
-}
-
-.markdown-inline a {
-    text-decoration: underline;
-    color: #000;
-}
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
 
 
-/* COMPONENTS */
+    /* 1.2. Spacers */
 
-.todo-list {
-    background: #f1f1f1;
-    padding: 20px 5px 5px 30px;
-    position: relative;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    border-top: 5px solid #000;
-}
+    .spacer {
+    }
 
-.todo-list-li {
-    list-style: none;
-    list-style-type: none;
-}
+        .spacer-m {
+            margin-bottom: 20px;
+        }
 
-.todo-list-moving-item input[type=checkbox] {
-    display: none;
-}
+        .spacer-l {
+            margin-bottom: 40px;
+        }
 
-.todo-list--active {
-    border-color: #ff9900;
-    border-top-color: #ff9900;
-}
 
-.todo-list-item {
-    position: relative;
-}
+/* 2. COMPONENTS */
 
-.todo-list-item-meta-list li {
-    color: #999;
-    font-size: 12px;
-}
+    /* 2.1. Todo list */
 
-.todo-list-item-meta-list .todo-list-item-meta-start--late {
-    color: rgb(144, 30, 30);
-}
+    .todo-list {
+        background: #f1f1f1;
+        padding: 20px 5px 5px 30px;
+        position: relative;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        border-top: 5px solid #000;
+    }
 
-.todo-list-item-actions {
-    display: none;
-}
+        .todo-list__active {
+            border-color: #ff9900;
+            border-top-color: #ff9900;
+        }
 
-.todo-list-item-actions button {
-    padding: 0;
-    color: #999;
-}
+        .todo-list--list-item {
+            list-style: none;
+            list-style-type: none;
+        }
 
-.todo-list-item-actions li {
-    padding: 0 3px;
-    font-size: 10px;
-    color: #999;
-}
+        .todo-list--item-being-dragged input[type=checkbox] {
+            display: none;
+        }
 
-.todo-list-item:hover .todo-list-item-actions {
-    background: #f1f1f1;
-    border-radius: 4px;
-    padding: 2px;
-    display: block;
-    right: 10px;
-    top: 0;
-    position: absolute;
-}
 
-.todo-list-item--active,
-.todo-list-item--active a {
-    color: #ff9900;
-}
+    /* 2.2. Todo list item */
 
-.todo-list-item-drag-handle {
-    cursor: row-resize;
-}
+    .todo-list-item {
+        position: relative;
+    }
 
-.todo-list-item-drag-handle:hover {
-    color: #23527c;
-}
+        .todo-list-item:hover .todo-list-item-actions {
+            background: #f1f1f1;
+            border-radius: 4px;
+            padding: 2px;
+            display: block;
+            right: 10px;
+            top: 0;
+            position: absolute;
+        }
 
-.todo-list-item-edit-form {
-    padding: 15px;
-    background: white;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    margin: 10px 0 15px -20px;
-}
+        .todo-list-item--edit-form {
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin: 10px 0 15px -20px;
+        }
 
-.todo-list-item-title--checked {
-    text-decoration: line-through;
-    color: #ccc;
-}
+        .todo-list-item--title__checked {
+            text-decoration: line-through;
+            color: #ccc;
+        }
 
-.project-list-item-title {
-    margin-top: 0px;
-}
+        .todo-list-item__active,
+        .todo-list-item__active a {
+            color: #ff9900;
+        }
 
-.project-list--add-button {
-    display: block;
-    margin: 50px auto 0;
-}
 
-.project-list-item-delete-button {
-    color: #999;
-}
+    /* 2.3. Todo list item meta */
 
-.project-list-item-actions {
-    margin: 3px -5px 0 0;
-    display: none;
-    font-size: 12px;
-}
+    .todo-list-item-meta {
+    }
 
-.project-list-item-drag-handle {
-    cursor: row-resize;
-}
+        .todo-list-item-meta li {
+            color: #999;
+            font-size: 12px;
+        }
 
-.project-list-item-drag-handle:hover {
-    color: #23527c;
-}
+        .todo-list-item-meta .todo-list-item-meta--start__late {
+            color: rgb(144, 30, 30);
+        }
 
-.project-list-item-actions li {
-    padding: 0 3px;
-    color: #999;
-}
 
-.project-list-item-actions button {
-    color: #999;
-    padding: 0;
-}
+    /* 2.4. Todo list item actions */
 
-.project-list-item:hover .project-list-item-actions {
-    display: block;
-}
+    .todo-list-item-actions {
+    }
+
+        .todo-list-item-actions {
+            display: none;
+        }
+
+        .todo-list-item-actions button {
+            padding: 0;
+            color: #999;
+        }
+
+        .todo-list-item-actions li {
+            padding: 0 3px;
+            font-size: 10px;
+            color: #999;
+        }
+
+        .todo-list-item-actions--drag-handle {
+            cursor: row-resize;
+        }
+
+        .todo-list-item-actions--drag-handle:hover {
+            color: #23527c;
+        }
+
+
+    /* 2.5. Project list */
+
+    .project-list--add-button {
+        display: block;
+        margin: 50px auto 0;
+    }
+
+
+    /* 2.6. Project list item */
+
+    .project-list-item {
+    }
+
+        .project-list-item--title {
+            margin-top: 0px;
+        }
+
+        .project-list-item:hover .project-list-item-actions {
+            display: block;
+        }
+
+
+    /* 2.7. Project list item actions */
+
+    .project-list-item-actions {
+        margin: 3px -5px 0 0;
+        display: none;
+        font-size: 12px;
+    }
+
+        .project-list-item-actions--delete-button {
+            color: #999;
+        }
+
+        .project-list-item-actions--drag-handle {
+            cursor: row-resize;
+        }
+
+        .project-list-item-actions--drag-handle:hover {
+            color: #23527c;
+        }
+
+        .project-list-item-actions li {
+            padding: 0 3px;
+            color: #999;
+        }
+
+        .project-list-item-actions button {
+            color: #999;
+            padding: 0;
+        }
+
+
+    /* 2.8 Inline markdown */
+
+    .inline-markdown {
+    }
+
+    .inline-markdown a {
+        text-decoration: underline;
+        color: #000;
+    }

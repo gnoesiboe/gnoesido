@@ -59,7 +59,7 @@ export default class ProjectListItem extends React.Component<Props, State> {
                     project={ item }
                     onEdit={ this._onEditClick }
                 />
-                <h3 className="project-list-item-title"><strong>[{ item.abbrevation }]</strong> { item.title }</h3>
+                <h3 className="project-list-item--title"><strong>[{ item.abbrevation }]</strong> { item.title }</h3>
                 <TodoList
                     currentProject={ item }
                     showOnlyActive={ false }
