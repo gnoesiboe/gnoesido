@@ -54,6 +54,10 @@ body {
     font-size: 12px;
 }
 
+.todo-list-item-meta-list .todo-list-item-meta-start--late {
+    color: rgb(144, 30, 30);
+}
+
 .todo-list-item-actions {
     display: none;
 }
