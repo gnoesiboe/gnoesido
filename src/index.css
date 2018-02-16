@@ -63,6 +63,7 @@
 
         .todo-list-item:hover .todo-list-item-actions {
             background: #f1f1f1;
+            border: 1px solid #aaa;
             border-radius: 4px;
             padding: 2px;
             display: block;
