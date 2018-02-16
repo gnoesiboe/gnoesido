@@ -5,6 +5,14 @@ import Moment from 'moment';
 export const DEFAULT_DATE_FORMAT : string = 'YYYY-MM-DD';
 export const MEDIUM_LONG_DATE_FORMAT : string = 'D MMM';
 
+export function createYesterday() : Moment {
+    var moment = new Moment();
+
+    moment.subtract(1, 'days');
+
+    return moment;
+}
+
 export function createToday() : Moment {
     return new Moment();
 }
@@ -77,6 +85,10 @@ export function formatDateRelativeToToday(value : string | Moment) : string {
         }
     } else {
         moment = value;
+    }
+
+    if (moment.isSame(createYesterday(), 'day')) {
+        return 'yesterday';
     }
 
     if (moment.isSame(createToday(), 'day')) {
