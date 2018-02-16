@@ -84,6 +84,8 @@ export default class ProjectListItem extends React.Component<Props, State> {
     _onEditSubmit = (data: ProjectFormData) : void => {
         var { item, onChange } = this.props;
 
+        this._hideEditForm();
+
         onChange(
             item.id,
             data.title,
