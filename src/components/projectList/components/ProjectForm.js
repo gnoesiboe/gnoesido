@@ -26,7 +26,7 @@ type State = {
 
 export default class ProjectForm extends React.Component<Props, State> {
 
-    state : State =  {
+    state : State = {
         formState: createProjectFormState(
             this._onFormChange.bind(this),
             this.props.onSubmit,

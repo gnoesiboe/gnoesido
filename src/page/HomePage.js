@@ -3,7 +3,7 @@
 import React from 'react';
 import uuid from 'uuid';
 import * as localStorageRepository from '../repository/localStorageRepository';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { generatePagePath } from '../routing/urlGenerator';
 
 type Props = {};
@@ -38,10 +38,19 @@ export default class HomePage extends React.Component<Props, State> {
         }
 
         return (
-            <div className="container text-center">
+            <div className="container">
                 <h1>Home</h1>
+                <ul className="list-unstyled spacer-m">
+                    { localStorageRepository.getAllKeys().map((key: string) => {
+                        return (
+                            <li key={ key }>
+                                <Link to={ generatePagePath(key) }>{ key}</Link>
+                            </li>
+                        );
+                    })}
+                </ul>
                 <a className="btn btn-primary" onClick={ this._onAddClick }>
-                    Add new page
+                    Add new todo page
                 </a>
             </div>
         );
