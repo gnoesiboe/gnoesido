@@ -4,45 +4,51 @@ import React from 'react';
 import TodoList from '../../todoList/TodoList';
 import type { Project } from '../../../model/type/Project';
 import ReactTooltip from 'react-tooltip';
-import SortableListItemHandle from '../../shared/sortableList/SortableHandle';
+import ProjectListItemActions from './ProjectListItemActions';
+import type { OnDeleteCallback } from './ProjectListItemActions';
 
 type Props = {
     item: Project,
-    onDelete: (projectId: string) => void
+    onDelete: OnDeleteCallback
 };
 
-export default class ProjectListItem extends React.Component<Props> {
+type State = {
+    showEditForm: boolean
+}
 
-    _onDeleteClick = (event: SyntheticInputEvent<HTMLInputElement>) => {
-        var { item, onDelete } = this.props;
+export default class ProjectListItem extends React.Component<Props, State> {
 
-        onDelete(item.id);
+    state : State = {
+        showEditForm: false
+    };
+
+    _showEditForm() {
+        this.setState((currentState : State) => {
+            return {
+                ...currentState,
+                showEditForm: true
+            };
+        });
+    }
+
+    _hideEditForm() {
+        this.setState((currentState : State) => {
+            return {
+                ...currentState,
+                showEditForm: false
+            };
+        });
     }
 
     render() : React$Element<any> {
-        var { item } = this.props;
+        var { item, onDelete } = this.props;
 
         return (
             <div className="project-list-item spacer-l">
-                <ul className="list-inline pull-right project-list-item-actions">
-                    <li>
-                        <SortableListItemHandle
-                            data-tip data-for="action-sort-project"
-                            className="todo-list-item-drag-handle"
-                        >
-                            <i className="glyphicon glyphicon-menu-hamburger" />
-                        </SortableListItemHandle>
-                    </li>
-                    <li>
-                        <button
-                            className="btn btn-link project-list-item-delete-button"
-                            onClick={ this._onDeleteClick }
-                            data-tip data-for="action-delete-project"
-                        >
-                            <i className="glyphicon glyphicon-remove" />
-                        </button>
-                    </li>
-                </ul>
+                <ProjectListItemActions
+                    onDelete={ onDelete }
+                    project={ item }
+                />
                 <h3 className="project-list-item-title"><strong>[{ item.abbrevation }]</strong> { item.title }</h3>
                 <TodoList
                     currentProject={ item }
