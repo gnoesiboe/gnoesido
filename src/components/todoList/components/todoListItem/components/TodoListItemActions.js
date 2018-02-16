@@ -6,10 +6,12 @@ import type { Todo } from '../../../../../model/type/Todo';
 
 export type OnDeleteCallback = (id: string) => void;
 export type OnToggleActiveStatusCallback = (id: string) => void;
+export type OnEditCallback = (id: string) => void;
 
 type Props = {
     onToggleActiveStatus: OnToggleActiveStatusCallback,
     onDelete: OnDeleteCallback,
+    onEdit: OnEditCallback,
     todo: Todo
 };
 
@@ -74,7 +76,7 @@ export default class TodoListItemActions extends React.Component<Props> {
         return (
             <li>
                 <button
-                    className="btn-link todo-list-item-remove-button"
+                    className="btn-link"
                     onClick={ this._onDelete }
                     data-tip data-for="action-delete"
                 >
@@ -84,9 +86,30 @@ export default class TodoListItemActions extends React.Component<Props> {
         );
     }
 
+    _onEdit = () : void => {
+        var { todo, onEdit } = this.props;
+
+        onEdit(todo.id);
+    }
+
+    _renderEditAction() : React$Element<any> {
+        return (
+            <li>
+                <button
+                    className="btn-link"
+                    onClick={ this._onEdit }
+                    data-tip data-for="action-edit"
+                >
+                    <i className="glyphicon glyphicon-pencil" />
+                </button>
+            </li>
+        );
+    }
+
     render() : React$Element<any> {
         return (
             <ul className="list-inline pull-right todo-list-item-actions">
+                { this._renderEditAction() }
                 { this._renderToggleActiveStatusAction() }
                 { this._renderSortHandle() }
                 { this._renderDeleteAction() }

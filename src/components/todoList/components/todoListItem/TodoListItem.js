@@ -107,6 +107,10 @@ class TodoListItem extends React.Component<Props, State> {
         this.edit();
     }
 
+    _onEditClick = () : void => {
+        this.edit();
+    }
+
     _renderInner(): React$Element<any> {
         var { item, project, onDelete } = this.props;
         var { showEditForm } = this.state;
@@ -135,6 +139,7 @@ class TodoListItem extends React.Component<Props, State> {
                     <div className="checkbox">
                         <TodoListItemActions
                             onDelete={ onDelete }
+                            onEdit={ this._onEditClick }
                             todo={ item }
                             onToggleActiveStatus={ this._onToggleActiveStateClick }
                         />
@@ -159,6 +164,9 @@ class TodoListItem extends React.Component<Props, State> {
                     </ReactTooltip>
                     <ReactTooltip id="action-delete">
                         <span>Remove item</span>
+                    </ReactTooltip>
+                    <ReactTooltip id="action-edit">
+                        <span>Edit item</span>
                     </ReactTooltip>
                 </form>
             );
