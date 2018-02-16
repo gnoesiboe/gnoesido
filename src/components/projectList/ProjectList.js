@@ -157,6 +157,10 @@ class ProjectList extends React.Component<Props, State> {
         this._hideAddFormModal(callback);
     }
 
+    _onAddCancel = () : void => {
+        this._hideAddFormModal();
+    }
+
     _renderAddFormModalIfRequired() : ?React$Element<any> {
         if (!this.state.showAddForm) {
             return null;
@@ -166,6 +170,8 @@ class ProjectList extends React.Component<Props, State> {
             <Modal onClose={ this._onAddModalClose.bind(this) }>
                 <h1>Add project</h1>
                 <ProjectForm
+                    project={ null }
+                    onCancel={ this._onAddCancel }
                     onSubmit={ this._onAddFormSubmit.bind(this) }
                 />
             </Modal>
@@ -192,6 +198,10 @@ class ProjectList extends React.Component<Props, State> {
         );
     };
 
+    _onChange = (id: string, title: string, abbrevation: string) : void => {
+        console.log('_onChange', id, title, abbrevation);
+    };
+
     _renderListItem(item: Project, index: number) : React$Element<any> {
         return (
             <SortableContainerElement
@@ -201,7 +211,7 @@ class ProjectList extends React.Component<Props, State> {
             >
                 <ProjectListItem
                     item={ item}
-
+                    onChange={ this._onChange }
                     onDelete={ this._onProjectDelete }
                 />
             </SortableContainerElement>

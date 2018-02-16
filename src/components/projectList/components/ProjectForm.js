@@ -7,6 +7,7 @@ import FormInput from '../../../lib/forms/component/FormInput';
 import FormState from '../../../lib/forms/model/FormState';
 import FormErrorList from '../../shared/formErrorList/FormErrorList';
 import { createProjectFormState } from '../../../form/factory/formStateFactory';
+import type { Project } from '../../../model/type/Project';
 
 export type ProjectFormData = {
     title: string,
@@ -14,7 +15,9 @@ export type ProjectFormData = {
 }
 
 type Props = {
-    onSubmit: (data: ProjectFormData) => void
+    project: ?Project,
+    onSubmit: (data: ProjectFormData) => void,
+    onCancel: () => void
 }
 
 type State = {
@@ -26,7 +29,8 @@ export default class ProjectForm extends React.Component<Props, State> {
     state : State =  {
         formState: createProjectFormState(
             this._onFormChange.bind(this),
-            this.props.onSubmit
+            this.props.onSubmit,
+            this.props.project
         )
     }
 
@@ -40,6 +44,7 @@ export default class ProjectForm extends React.Component<Props, State> {
     }
 
     render() : React$Element<any> {
+        var { onCancel } = this.props;
         var { formState } = this.state;
 
         return (
@@ -65,7 +70,14 @@ export default class ProjectForm extends React.Component<Props, State> {
                     />
                     <FormErrorList errors={ formState.getElementState('abbrevation').errors } />
                 </FormGroup>
-                <button type="submit" className="btn btn-success">Save</button>
+                <ul className="list-inline">
+                    <li>
+                        <button type="submit" className="btn btn-success">Save</button>
+                    </li>
+                    <li>
+                        <button className="btn btn-link" onClick={ onCancel }>Cancel</button>
+                    </li>
+                </ul>
             </Form>
         );
     }
