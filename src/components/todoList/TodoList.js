@@ -91,6 +91,7 @@ class TodoList extends React.Component<Props, State> {
         keyboardInputListener.bind('k', this._onPreviousTodoIndexShortcutPressed);
         keyboardInputListener.bind('e', this._onEditCurrentTodoShortcutPressed);
         keyboardInputListener.bind('space', this._onToggleCheckedKeyboardShortcutPressed);
+        keyboardInputListener.bind('x', this._onDeleteCurrentTodoShortcutPressed);
     }
 
     componentWillUnmount() {
@@ -103,6 +104,7 @@ class TodoList extends React.Component<Props, State> {
         keyboardInputListener.unbind('k', this._onPreviousTodoIndexShortcutPressed);
         keyboardInputListener.unbind('e', this._onEditCurrentTodoShortcutPressed);
         keyboardInputListener.unbind('space', this._onToggleCheckedKeyboardShortcutPressed);
+        keyboardInputListener.unbind('x', this._onDeleteCurrentTodoShortcutPressed);
     }
 
     componentDidUpdate(prevProps: Props, prevState: State) : void {
@@ -152,6 +154,15 @@ class TodoList extends React.Component<Props, State> {
         this._refs[todoIdToEdit].edit();
     }
 
+    _onDeleteCurrentTodoShortcutPressed = (event: SyntheticInputEvent<HTMLInputElement>) => {
+        var { currentProject, activeSortedTodos, current } = this.props;
+
+        var todoIds = currentProject ? currentProject.sortedTodos : activeSortedTodos,
+            todoIdToDelete = todoIds[current.todoIndex];
+
+        this._initiateTodoDelete(todoIdToDelete);
+    }
+
     _onPreviousTodoIndexShortcutPressed = (event: SyntheticInputEvent<HTMLInputElement>) => {
         var { dispatch, current, currentProject, activeSortedTodos } = this.props;
 
@@ -190,6 +201,10 @@ class TodoList extends React.Component<Props, State> {
     }
 
     _onTodoDelete(id: string): void {
+        this._initiateTodoDelete(id);
+    }
+
+    _initiateTodoDelete(id: string): void {
         if (window.confirm('Are you sure?')) {
             this.props.dispatch(
                 createDeleteTodoAction(id)
