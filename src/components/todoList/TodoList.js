@@ -376,9 +376,9 @@ class TodoList extends React.Component<Props, State> {
                         helperClass="todo-list--item-being-dragged"
                     >
                         <ReactCSSTransitionGroup
-                            transitionName="transaction--ease-in"
-                            transitionEnterTimeout={ 500 }
-                            transitionLeaveTimeout={ 300 }
+                            transitionName="transaction--slide-in-ease-out"
+                            transitionEnterTimeout={ 300 }
+                            transitionLeaveTimeout={ 600 }
                         >
                             { filteredAndOrderedItems.map((item, index) => {
                                 return this._renderItem(item, index);

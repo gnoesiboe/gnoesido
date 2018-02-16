@@ -204,20 +204,27 @@
 
 /* 3. Transitions */
 
-.transaction--ease-in-enter {
-  opacity: 0.01;
+.transaction--slide-in-ease-out-enter {
+    opacity: 0;
+    transform:   translate(-250px,0);
+    transform: translate3d(-250px,0,0);
 }
 
-.transaction--ease-in-enter.transaction--ease-in-enter-active {
+.transaction--slide-in-ease-out-enter.transaction--slide-in-ease-out-enter-active {
+    opacity: 1;
+	transition: opacity 1s ease;
+	transform: translate(0, 0);
+	transform: translate3d(0, 0, 0);
+	transition-property: transform, opacity;
+	transition-duration: 300ms;
+	transition-timing-function: cubic-bezier(0.175, 0.665, 0.320, 1), linear;
+}
+
+.transaction--slide-in-ease-out-leave {
   opacity: 1;
-  transition: opacity 500ms ease-in-out;
 }
 
-.transaction--ease-in-leave {
-  opacity: 1;
-}
-
-.transaction--ease-in-leave.transaction--ease-in-leave-active {
+.transaction--slide-in-ease-out-leave.transaction--slide-in-ease-out-leave-active {
   opacity: 0.01;
-  transition: opacity 300ms ease-in-out;
+  transition: opacity 600ms ease-in-out;
 }
