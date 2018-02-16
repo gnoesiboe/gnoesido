@@ -55,6 +55,10 @@
 
     .todo-list-item {
         position: relative;
+        padding: 1px 7px;
+        margin: 0 10px 0 0;
+        border-radius: 5px;
+        border: 1px solid #f1f1f1;
     }
 
         .todo-list-item:hover .todo-list-item-actions {
@@ -77,12 +81,16 @@
 
         .todo-list-item--title__checked {
             text-decoration: line-through;
-            color: #ccc;
+            color: #bbb;
         }
 
-        .todo-list-item__active,
-        .todo-list-item__active a {
-            color: #ff9900;
+        .todo-list-item .checkbox input[type=checkbox] {
+            margin-left: -25px;
+        }
+
+        .todo-list-item__active {
+            background: rgba(255, 153, 0, 0.2);
+            border: 1px dotted #ff9900;
         }
 
 
