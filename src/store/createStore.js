@@ -8,7 +8,7 @@ import reducers from './../reducers/reducers'
 import localPersistingMiddleware from '../middleware/localPersistingMiddleware';
 import * as localStorageRepository from './../repository/localStorageRepository';
 
-export function createStore(): Object {
+export function createStore(id: string): Object {
     var middleware : Array<Function> = [
         localPersistingMiddleware,
         createLogger({ collapsed: true }),
@@ -20,7 +20,7 @@ export function createStore(): Object {
 
     var createStoreWithMiddleware : StoreFactoryType = applyMiddleware(...middleware)(reduxCreateStore);
 
-    var initialState = localStorageRepository.getState() || undefined;
+    var initialState = localStorageRepository.getState(id) || undefined;
 
     return createStoreWithMiddleware(reducers, initialState);
 }

@@ -1,10 +1,13 @@
 // @flow
 
 import * as React from 'react';
-import { createStore } from './store/createStore';
-import { Provider } from 'react-redux';
-import TodoList from './components/todoList/TodoList';
-import ProjectList from './components/projectList/ProjectList';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch
+} from 'react-router-dom';
+import TodoListPage from './page/TodoListPage';
+import HomePage from './page/HomePage';
 import { NotificationContainer } from 'react-notifications';
 
 import 'react-notifications/lib/notifications.css';
@@ -14,25 +17,16 @@ type Props = {};
 class App extends React.Component<Props> {
 
     render() : React$Element<any> {
-        var store = createStore();
-
         return (
-            <Provider store={ store }>
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-md-6 col-md-offset-3">
-                            <h2>Active</h2>
-                            <TodoList
-                                currentProject={ null }
-                                showOnlyActive={ true }
-                            />
-                        </div>
-                    </div>
-                    <hr />
-                    <ProjectList />
-                    <NotificationContainer/>
-                </div>
-            </Provider>
+            <div>
+                <Router>
+                    <Switch>
+                        <Route path="/" exact component={ HomePage } />
+                        <Route path="/:id" exact component={ TodoListPage } />
+                    </Switch>
+                </Router>
+                <NotificationContainer/>
+            </div>
         );
     }
 }

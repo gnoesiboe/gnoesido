@@ -13,7 +13,10 @@ export default (store: Store) => (next: Next) => (action: Action) : any => {
     var response = next(action),
         newState : GlobalStateType = store.getState();
 
-    localStorageRepository.save(newState);
+    // @todo get better solution than this
+    var id = window.location.pathname.substr(1);
+
+    localStorageRepository.save(id, newState);
 
     return response;
 }
