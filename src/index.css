@@ -58,8 +58,13 @@ body {
     display: none;
 }
 
-.todo-list-item-actions li {
+.todo-list-item-actions button {
     padding: 0;
+    color: #999;
+}
+
+.todo-list-item-actions li {
+    padding: 0 3px;
     font-size: 10px;
     color: #999;
 }
@@ -81,6 +86,10 @@ body {
 
 .todo-list-item-drag-handle {
     cursor: row-resize;
+}
+
+.todo-list-item-drag-handle:hover {
+    color: #23527c;
 }
 
 .todo-list-item-edit-form {
