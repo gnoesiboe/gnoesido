@@ -4,6 +4,7 @@ export const UPDATE_TODO : string = 'update_todo';
 export const ADD_TODO : string = 'add_todo';
 export const DELETE_TODO : string = 'delete_todo';
 export const ADD_PROJECT : string = 'add_project';
+export const EDIT_PROJECT : string = 'edit_project';
 export const DELETE_PROJECT : string = 'delete_project';
 export const MOVE_PROJECT : string = 'move_project';
 export const ACTIVATE_PREVIOUS_PROJECT : string = 'activate_previous_project';
@@ -50,6 +51,13 @@ export type DeleteTodoAction = $ReadOnly<{
 
 export type AddProjectAction = $ReadOnly<{
     type: string,
+    title: string,
+    abbrevation: string
+}>;
+
+export type EditProjectAction = $ReadOnly<{
+    type: string,
+    id: string,
     title: string,
     abbrevation: string
 }>;

@@ -14,7 +14,8 @@ import {
     createActivateNextProjectAction,
     createDeleteProjectAction,
     createMoveProjectAction,
-    createActivateTodosThatStartTodayAction
+    createActivateTodosThatStartTodayAction,
+    createEditProjectAction
 } from '../../action/actionFactory';
 import keyboardInputListener from 'mousetrap';
 import type { Current } from '../../reducers/currentReducer';
@@ -199,7 +200,9 @@ class ProjectList extends React.Component<Props, State> {
     };
 
     _onChange = (id: string, title: string, abbrevation: string) : void => {
-        console.log('_onChange', id, title, abbrevation);
+        this.props.dispatch(
+            createEditProjectAction(id, title, abbrevation)
+        );
     };
 
     _renderListItem(item: Project, index: number) : React$Element<any> {

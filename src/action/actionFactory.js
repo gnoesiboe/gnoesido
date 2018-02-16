@@ -12,7 +12,8 @@ import type {
     DeleteProjectAction,
     MoveProjectAction,
     MoveTodoAction,
-    ActivateTodosThatStartToday
+    ActivateTodosThatStartToday,
+    EditProjectAction
 } from './types';
 import {
     UPDATE_TODO,
@@ -26,7 +27,8 @@ import {
     ACTIVATE_NEXT_TODO,
     ACTIVATE_PREVIOUS_TODO,
     MOVE_TODO,
-    ACTIVATE_TODOS_THAT_START_TODAY
+    ACTIVATE_TODOS_THAT_START_TODAY,
+    EDIT_PROJECT
 } from './types';
 import type { TodoFormData } from '../components/todoList/components/todoForm/TodoForm';
 import type { ProjectFormData } from '../components/projectList/components/ProjectForm';
@@ -66,6 +68,10 @@ export function createAddProjectAction(data : ProjectFormData) : AddProjectActio
         title: data.title,
         abbrevation: data.abbrevation
     };
+}
+
+export function createEditProjectAction(id: string, title: string, abbrevation: string) : EditProjectAction {
+    return { type: EDIT_PROJECT, id, title, abbrevation};
 }
 
 export function createDeleteProjectAction(id: string) : DeleteProjectAction {
