@@ -39,18 +39,17 @@ export default class HomePage extends React.Component<Props, State> {
 
         return (
             <div className="container">
-                <h1>Home</h1>
-                <ul className="list-unstyled spacer-m">
-                    { localStorageRepository.getAllKeys().map((key: string) => {
-                        return (
-                            <li key={ key }>
-                                <Link to={ generatePagePath(key) }>{ key}</Link>
-                            </li>
-                        );
-                    })}
+                <h1>@_GNoesiDO</h1>
+                <h2>My pages:</h2>
+                <ul className="list-group spacer-l">
+                    { localStorageRepository.getAllKeys().map((key: string) => (
+                        <li className="list-group-item" key={ key }>
+                            <Link to={ generatePagePath(key) }>{ key}</Link>
+                        </li>
+                    )) }
                 </ul>
-                <a className="btn btn-primary" onClick={ this._onAddClick }>
-                    Add new todo page
+                <a className="btn btn-primary btn-lg" onClick={ this._onAddClick }>
+                    <i className="glyphicon glyphicon-plus" /> Add todo page
                 </a>
             </div>
         );
